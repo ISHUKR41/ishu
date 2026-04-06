@@ -38,13 +38,16 @@ artifacts/ishu/src/pages/
       news-preview/  → NewsPreview.tsx + news-preview.module.css
       blog-preview/  → BlogPreview.tsx + blog-preview.module.css
       notification-cta/ → NotificationCTA.tsx + notification-cta.module.css
-      testimonials/  → Testimonials.tsx + testimonials.module.css
-  resources/         → Free study resources hub (real API data)
+      exam-categories/ → ExamCategories.tsx + exam-categories.module.css (16 exam categories)
+      testimonials/  → Testimonials.tsx + testimonials.module.css (6 reviews with location)
+      faq/           → FAQ.tsx + faq.module.css (11 accordion FAQs with JSON-LD schema)
+  resources/         → Free study resources hub (54 resources, in-memory)
     index.tsx
     sections/
       hero/          → ResourcesHero.tsx + resources-hero.module.css
       categories/    → ResourcesCategories.tsx + resources-categories.module.css (API-driven with counts)
-      grid/          → ResourcesGrid.tsx + resources-grid.module.css (API-driven)
+      featured/      → FeaturedResources.tsx + featured-resources.module.css (most-downloaded, shown only on all+no-search)
+      grid/          → ResourcesGrid.tsx + resources-grid.module.css (API-driven, sort: downloads/year/title)
   privacy/           → Privacy Policy page
     index.tsx
     sections/hero/ + sections/content/
@@ -88,7 +91,7 @@ Every page uses fully isolated section components:
 
 The resources route uses in-memory data (no DB dependency):
 - `artifacts/api-server/src/routes/resources/index.ts` — route handler
-- `artifacts/api-server/src/routes/resources/data.ts` — 18 real resources (UPSC, SSC, IBPS, NEET, JEE, GATE etc.)
+- `artifacts/api-server/src/routes/resources/data.ts` — 54 real resources (UPSC, SSC, IBPS, RRB, NEET, JEE, GATE, NDA, CDS, UGC NET, CLAT, CAT, State PCS, etc.) all with official govt source URLs
 
 ## Database Seed Data (Real Indian Exam Data)
 
@@ -108,12 +111,12 @@ The seed function checks each table independently before inserting:
 
 ## Pages & Routes
 
-- `/` — Home (hero, stats, results, tools, news, notifications, blog, testimonials)
-- `/results` + `/results/:id` — Government exam results & vacancies
-- `/tools` + `/tools/:slug` — 100+ PDF utility tools
-- `/news` + `/news/:id` — Educational news
-- `/blog` + `/blog/:slug` — Blog posts
-- `/resources` — Free study materials hub (18 real resources, API-driven)
+- `/` — Home (hero → stats → exam-categories → featured-results → tools-showcase → news-preview → notification-cta → blog-preview → testimonials → faq)
+- `/results` + `/results/:id` — Government exam results & vacancies (12 real seeded)
+- `/tools` + `/tools/:slug` — 100+ PDF utility tools (28 seeded)
+- `/news` + `/news/:id` — Educational news (15 articles seeded)
+- `/blog` + `/blog/:slug` — Blog posts (7 expert posts seeded)
+- `/resources` — Free study materials hub (54 real resources, in-memory data)
 - `/about` — About page
 - `/contact` — Contact form
 - `/privacy` — Privacy Policy
