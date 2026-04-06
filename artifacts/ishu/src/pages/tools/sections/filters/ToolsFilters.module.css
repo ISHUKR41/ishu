@@ -1,0 +1,74 @@
+.section {
+  padding: 2rem 0 0;
+  contain: layout style;
+}
+
+.inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.searchWrap {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.35);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.7rem 0.875rem 0.7rem 2.5rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.625rem;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.searchInput:focus {
+  border-color: rgba(168,85,247,0.5);
+  background: rgba(255,255,255,0.07);
+}
+
+.searchInput::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 0.45rem 1.1rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.55);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.85);
+}
+
+.tabActive {
+  background: rgba(168,85,247,0.2);
+  border-color: rgba(168,85,247,0.5);
+  color: #c084fc;
+}

@@ -1,0 +1,129 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 5rem 0 4rem;
+  background: linear-gradient(180deg, rgba(30, 58, 138, 0.4) 0%, transparent 100%);
+  contain: layout style;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 3.5rem 3.5rem;
+  pointer-events: none;
+}
+
+.orb1 {
+  position: absolute;
+  top: -4rem;
+  left: 15%;
+  width: 28rem;
+  height: 28rem;
+  background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.orb2 {
+  position: absolute;
+  bottom: -2rem;
+  right: 10%;
+  width: 20rem;
+  height: 20rem;
+  background: radial-gradient(circle, rgba(249,115,22,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(59,130,246,0.4);
+  background: rgba(59,130,246,0.1);
+  border-radius: 9999px;
+  padding: 0.35rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #60a5fa;
+  margin-bottom: 1.5rem;
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3b82f6;
+  animation: pulseDot 2s ease infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.titleAccent {
+  background: linear-gradient(135deg, #3b82f6, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: clamp(0.95rem, 2vw, 1.125rem);
+  color: rgba(255,255,255,0.55);
+  max-width: 36rem;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+.trustRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.trustIcon {
+  color: #3b82f6;
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 4rem 0 3rem; }
+  .trustRow { gap: 1rem; }
+}
