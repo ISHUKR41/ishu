@@ -24,7 +24,7 @@
 }
 
 .resultCount strong {
-  color: rgba(255,255,255,0.6);
+  color: hsl(var(--muted-foreground));
   font-weight: 600;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .sortIcon {
-  color: rgba(255,255,255,0.25);
+  color: hsl(var(--border));
 }
 
 .sortLabel {
@@ -65,8 +65,8 @@
 }
 
 .sortBtn:hover {
-  border-color: rgba(255,255,255,0.18);
-  color: rgba(255,255,255,0.75);
+  border-color: hsl(var(--border));
+  color: hsl(var(--muted-foreground));
 }
 
 .sortBtnActive {
@@ -217,7 +217,7 @@
 
 .fileSize {
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.25);
+  color: hsl(var(--border));
 }
 
 .downloadBtn {
@@ -243,7 +243,7 @@
 
 .downloadCount {
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.2);
+  color: hsl(var(--border));
 }
 
 .loadingState {
@@ -281,7 +281,7 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 1rem;
-  color: rgba(255,255,255,0.2);
+  color: hsl(var(--border));
 }
 
 .emptyTitle {
@@ -293,7 +293,7 @@
 
 .emptyDesc {
   font-size: 0.875rem;
-  color: rgba(255,255,255,0.25);
+  color: hsl(var(--border));
   margin: 0;
 }
 

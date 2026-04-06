@@ -91,13 +91,13 @@
 .chipCategory {
   color: hsl(var(--muted-foreground));
   background: hsl(var(--muted)/0.4);
-  border-color: rgba(255,255,255,0.1);
+  border-color: hsl(var(--border));
 }
 
 .title {
   font-size: 0.95rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.88);
+  color: hsl(var(--foreground));
   line-height: 1.45;
   margin-bottom: 0.625rem;
   display: -webkit-box;
@@ -143,7 +143,7 @@
 }
 
 .arrow {
-  color: rgba(255,255,255,0.2);
+  color: hsl(var(--border));
   transition: color 0.15s, transform 0.15s;
 }
 
@@ -181,7 +181,7 @@
 }
 
 .emptyIcon { margin: 0 auto 1rem; opacity: 0.4; }
-.emptyTitle { font-size: 1.1rem; font-weight: 600; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem; }
+.emptyTitle { font-size: 1.1rem; font-weight: 600; color: hsl(var(--muted-foreground)); margin-bottom: 0.5rem; }
 .emptyDesc { font-size: 0.875rem; }
 
 .pagination {
@@ -197,7 +197,7 @@
   border-radius: 0.5rem;
   border: 1px solid hsl(var(--border));
   background: hsl(var(--muted)/0.4);
-  color: rgba(255,255,255,0.65);
+  color: hsl(var(--muted-foreground));
   font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.18s;
@@ -205,7 +205,7 @@
 
 .pageBtn:hover:not(:disabled) {
   background: rgba(255,255,255,0.09);
-  color: #fff;
+  color: hsl(var(--foreground));
 }
 
 .pageBtn:disabled { opacity: 0.35; cursor: not-allowed; }

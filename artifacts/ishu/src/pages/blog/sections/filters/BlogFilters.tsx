@@ -1,14 +1,6 @@
 import { Search } from "lucide-react";
+import { useListBlogCategories } from "@workspace/api-client-react";
 import styles from "./BlogFilters.module.css";
-
-const CATEGORIES = [
-  { value: "", label: "All Posts" },
-  { value: "career-guidance", label: "Career Guidance" },
-  { value: "exam-tips", label: "Exam Tips" },
-  { value: "study-material", label: "Study Material" },
-  { value: "success-stories", label: "Success Stories" },
-  { value: "news-analysis", label: "News Analysis" },
-];
 
 interface BlogFiltersProps {
   search: string;
@@ -23,6 +15,9 @@ export function BlogFilters({
   onSearch,
   onCategory,
 }: BlogFiltersProps) {
+  const { data: catData } = useListBlogCategories();
+  const categories = Array.isArray(catData) ? catData : [];
+
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
@@ -38,14 +33,21 @@ export function BlogFilters({
           />
         </div>
         <div className={styles.tabs}>
-          {CATEGORIES.map((c) => (
+          <button
+            onClick={() => onCategory("")}
+            className={`${styles.tab} ${category === "" ? styles.tabActive : ""}`}
+            aria-pressed={category === ""}
+          >
+            All Posts
+          </button>
+          {categories.map((c) => (
             <button
-              key={c.value}
-              onClick={() => onCategory(c.value)}
-              className={`${styles.tab} ${category === c.value ? styles.tabActive : ""}`}
-              aria-pressed={category === c.value}
+              key={c.slug}
+              onClick={() => onCategory(c.slug)}
+              className={`${styles.tab} ${category === c.slug ? styles.tabActive : ""}`}
+              aria-pressed={category === c.slug}
             >
-              {c.label}
+              {c.name}
             </button>
           ))}
         </div>

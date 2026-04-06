@@ -24,7 +24,7 @@ const DEFAULT_META = { icon: Layers, color: "#6366f1", bg: "rgba(99,102,241,0.12
 
 export function ExamCategories() {
   const { data, isLoading } = useListResultCategories();
-  const categories = data?.categories ?? [];
+  const categories = Array.isArray(data) ? data : [];
 
   return (
     <section className={styles.section}>

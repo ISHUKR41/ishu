@@ -52,13 +52,13 @@
 .logoLetter {
   font-size: 1.5rem;
   font-weight: 800;
-  color: #fff;
+  color: hsl(var(--foreground));
 }
 
 .title {
   font-size: clamp(2.5rem, 7vw, 5rem);
   font-weight: 800;
-  color: #ffffff;
+  color: hsl(var(--foreground));
   line-height: 1.1;
   margin-bottom: 1.25rem;
   letter-spacing: -0.03em;

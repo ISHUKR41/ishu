@@ -95,16 +95,41 @@ The resources route uses in-memory data (no DB dependency):
 
 ## Database Seed Data (Real Indian Exam Data)
 
+Manual seed script: `cd artifacts/api-server && npx tsx src/seed.ts`
+Auto-seed on server start: `artifacts/api-server/src/lib/seed.ts` (uses `onConflictDoNothing()`)
+
 All seed data is real, verified, and points to official government websites:
-- **News**: 15 articles (SSC CGL, UPSC, JEE, NEET, GATE, CBSE, RRB, IBPS, Bihar BPSC, etc.)
-- **Blogs**: 11 expert articles (UPSC topper strategies, JEE syllabus, IBPS PO guide, salary guide, etc.)
-- **Results**: 12 vacancies (UPSC CSE, SSC CGL/CHSL, IBPS PO/Clerk, UP Police, Bihar Police, MP Police, RRB NTPC, GATE, JEE Main, NEET UG)
-- **Tools**: 28 PDF tools (merge, split, compress, convert, OCR, sign, watermark, etc.)
+- **Result Categories** (14): `upsc-civil-services`, `ssc-cgl`, `ssc-chsl`, `banking-ibps`, `railway-rrb`, `army-defence`, `jee-mains`, `neet-ug`, `police`, `teaching-tet`, `state-psc`, `engineering-jobs`, `judiciary`, `nursing`
+- **News Categories** (7): `exam-notification`, `result-update`, `education-policy`, `admit-card`, `syllabus-pattern`, `interview-tips`, `technology-in-education`
+- **Blog Categories** (6): `career-guidance`, `exam-analysis`, `government-jobs`, `pdf-tools-tips`, `study-strategy`, `success-stories`
+- **News**: 12 real articles (UPSC, SSC, JEE, NEET, GATE, RRB, IBPS, etc.)
+- **Blogs**: 6 expert articles (UPSC strategies, JEE prep, IBPS guide, etc.)
+- **Results**: 20 exam results/vacancies (UPSC CSE, SSC CGL, IBPS PO/Clerk, RRB NTPC, NEET, JEE, etc.)
+- **Tools**: 46+ PDF & AI tools across 6 categories
+
+## API Shape Alignment (All Filter Components)
+
+All filter components use real API data (no hardcoded categories):
+- `ResultsFilters.tsx` → `useListResultCategories()` returning `ResultCategory[]`
+- `NewsFilters.tsx` → `useListNewsCategories()` returning `NewsCategory[]`
+- `BlogFilters.tsx` → `useListBlogCategories()` returning `BlogCategory[]`
+- `ExamCategories.tsx` → `useListResultCategories()` returning `ResultCategory[]`
+- `StatsSection.tsx` (home) → `useGetResultStats()` + `useListTools()` + `useListNews()` (all public; no admin endpoints)
+
+## API Response Shape Mapping
+
+- `GET /api/tools` → `Tool[]` (plain array, no wrapper) — use `Array.isArray(data) ? data : []`
+- `GET /api/results/categories` → `ResultCategory[]` (plain array) — use `Array.isArray(data) ? data : []`
+- `GET /api/news/categories` → `NewsCategory[]` (plain array) — use `Array.isArray(data) ? data : []`
+- `GET /api/blogs/categories` → `BlogCategory[]` (plain array) — use `Array.isArray(data) ? data : []`
+- `GET /api/results` → `{ results: Result[], total, page, totalPages }` — use `data?.results ?? []`
+- `GET /api/news` → `{ articles: NewsPost[], total, page, totalPages }` — use `data?.articles ?? []`
+- `GET /api/blogs` → `{ posts: BlogPost[], total, page, totalPages }` — use `data?.posts ?? []`
 
 ## Seed Logic (Idempotent Per Table)
 
-The seed function checks each table independently before inserting:
-1. `resultCategoriesTable` → only seeds categories/tools/admin on first run
+The auto-seed checks each table independently before inserting:
+1. `resultCategoriesTable` → only seeds if empty; skips all categories/tools/admin if exists
 2. `resultsTable` → seeds independently if empty
 3. `newsTable` → seeds independently if empty
 4. `blogsTable` → seeds independently if empty

@@ -1,37 +1,41 @@
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
-import { useGetAdminStats, useGetResultStats } from "@workspace/api-client-react";
+import { useGetResultStats, useListTools, useListNews } from "@workspace/api-client-react";
 import styles from "./stats.module.css";
 
 export function StatsSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
-  const { data: adminStats } = useGetAdminStats();
   const { data: resultStats } = useGetResultStats();
+  const { data: toolsData } = useListTools();
+  const { data: newsData } = useListNews({ limit: 1 });
 
-  const totalVacancies = resultStats
-    ? (resultStats.totalActive + resultStats.totalUpcoming) * 850
-    : 50000;
+  const totalResults = resultStats
+    ? resultStats.totalActive + resultStats.totalUpcoming + resultStats.totalExpired
+    : 0;
+
+  const toolCount = Array.isArray(toolsData) ? toolsData.length : (toolsData as any)?.total ?? 0;
+  const newsTotal = (newsData as any)?.total ?? 0;
 
   const stats = [
     {
-      label: "Active Vacancies",
-      value: Math.max(totalVacancies, 50000),
+      label: "Exam Results Covered",
+      value: totalResults > 0 ? totalResults : 20,
       suffix: "+",
     },
     {
-      label: "Free PDF Tools",
-      value: 100,
+      label: "Free PDF & AI Tools",
+      value: toolCount > 0 ? toolCount : 46,
       suffix: "+",
     },
     {
-      label: "News Published",
-      value: adminStats ? Math.max(adminStats.totalNews, 1000) : 1000,
+      label: "News Articles",
+      value: newsTotal > 0 ? newsTotal : 12,
       suffix: "+",
     },
     {
-      label: "Students Helped",
-      value: adminStats ? Math.max(adminStats.totalUsers * 50, 500) : 500,
+      label: "Students Served",
+      value: 500,
       suffix: "K+",
     },
   ];

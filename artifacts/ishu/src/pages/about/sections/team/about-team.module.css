@@ -26,7 +26,7 @@
 .title {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
-  color: #fff;
+  color: hsl(var(--foreground));
   letter-spacing: -0.02em;
   margin-bottom: 1rem;
 }
@@ -80,13 +80,13 @@
   margin: 0 auto 1rem;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #fff;
+  color: hsl(var(--foreground));
 }
 
 .name {
   font-size: 1rem;
   font-weight: 600;
-  color: #fff;
+  color: hsl(var(--foreground));
   margin-bottom: 0.25rem;
 }
 
@@ -120,7 +120,7 @@
 .ctaTitle {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: hsl(var(--foreground));
   margin-bottom: 0.75rem;
 }
 
@@ -147,7 +147,7 @@
   background: linear-gradient(135deg, #2563eb, #4f46e5);
   border: none;
   border-radius: 0.625rem;
-  color: #fff;
+  color: hsl(var(--foreground));
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
@@ -167,7 +167,7 @@
   background: hsl(var(--muted)/0.5);
   border: 1px solid hsl(var(--border));
   border-radius: 0.625rem;
-  color: rgba(255,255,255,0.75);
+  color: hsl(var(--muted-foreground));
   font-size: 0.875rem;
   font-weight: 500;
   text-decoration: none;
@@ -176,5 +176,5 @@
 
 .btnOutline:hover {
   background: hsl(var(--muted));
-  color: #fff;
+  color: hsl(var(--foreground));
 }

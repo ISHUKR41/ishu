@@ -6,7 +6,7 @@
 .title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #fff;
+  color: hsl(var(--foreground));
   margin-bottom: 1.5rem;
 }
 
@@ -37,7 +37,7 @@
 .label {
   font-size: 0.8rem;
   font-weight: 500;
-  color: rgba(255,255,255,0.65);
+  color: hsl(var(--muted-foreground));
 }
 
 .input,
@@ -47,7 +47,7 @@
   background: hsl(var(--muted)/0.5);
   border: 1px solid hsl(var(--border));
   border-radius: 0.625rem;
-  color: #fff;
+  color: hsl(var(--foreground));
   font-size: 0.875rem;
   outline: none;
   transition: border-color 0.2s, background 0.2s;
@@ -62,7 +62,7 @@
 
 .input::placeholder,
 .textarea::placeholder {
-  color: rgba(255,255,255,0.25);
+  color: hsl(var(--border));
 }
 
 .textarea {
@@ -80,7 +80,7 @@
   background: linear-gradient(135deg, #f97316, #fb923c);
   border: none;
   border-radius: 0.75rem;
-  color: #fff;
+  color: hsl(var(--foreground));
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -119,7 +119,7 @@
 .successTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #fff;
+  color: hsl(var(--foreground));
   margin-bottom: 0.5rem;
 }
 
@@ -135,7 +135,7 @@
   background: hsl(var(--muted)/0.6);
   border: 1px solid hsl(var(--border));
   border-radius: 0.5rem;
-  color: rgba(255,255,255,0.75);
+  color: hsl(var(--muted-foreground));
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -143,5 +143,5 @@
 
 .resetBtn:hover {
   background: rgba(255,255,255,0.12);
-  color: #fff;
+  color: hsl(var(--foreground));
 }

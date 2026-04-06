@@ -64,7 +64,7 @@
 
 .desc {
   font-size: clamp(0.9375rem, 2vw, 1.125rem);
-  color: rgba(255, 255, 255, 0.5);
+  color: hsl(var(--muted-foreground));
   max-width: 38rem;
   margin: 0 auto;
   line-height: 1.7;
@@ -73,7 +73,7 @@
 .meta {
   margin-top: 1.5rem;
   font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.3);
+  color: hsl(var(--border));
   display: flex;
   align-items: center;
   justify-content: center;

@@ -62,7 +62,7 @@
 }
 
 .card:hover {
-  border-color: rgba(255,255,255,0.15);
+  border-color: hsl(var(--border));
   background: hsl(var(--muted)/0.5);
   transform: translateY(-2px);
   box-shadow: 0 12px 30px -8px rgba(0,0,0,0.4);
@@ -141,7 +141,7 @@
 }
 
 .extIcon {
-  color: rgba(255,255,255,0.2);
+  color: hsl(var(--border));
   transition: color 0.2s ease;
 }
 

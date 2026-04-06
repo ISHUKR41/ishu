@@ -1,14 +1,6 @@
 import { Search } from "lucide-react";
+import { useListNewsCategories } from "@workspace/api-client-react";
 import styles from "./NewsFilters.module.css";
-
-const CATEGORIES = [
-  { value: "", label: "All News" },
-  { value: "education", label: "Education" },
-  { value: "government-jobs", label: "Govt Jobs" },
-  { value: "entrance-exams", label: "Entrance Exams" },
-  { value: "results", label: "Results" },
-  { value: "scholarships", label: "Scholarships" },
-];
 
 interface NewsFiltersProps {
   search: string;
@@ -23,6 +15,9 @@ export function NewsFilters({
   onSearch,
   onCategory,
 }: NewsFiltersProps) {
+  const { data: catData } = useListNewsCategories();
+  const categories = Array.isArray(catData) ? catData : [];
+
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
@@ -38,14 +33,21 @@ export function NewsFilters({
           />
         </div>
         <div className={styles.tabs}>
-          {CATEGORIES.map((c) => (
+          <button
+            onClick={() => onCategory("")}
+            className={`${styles.tab} ${category === "" ? styles.tabActive : ""}`}
+            aria-pressed={category === ""}
+          >
+            All News
+          </button>
+          {categories.map((c) => (
             <button
-              key={c.value}
-              onClick={() => onCategory(c.value)}
-              className={`${styles.tab} ${category === c.value ? styles.tabActive : ""}`}
-              aria-pressed={category === c.value}
+              key={c.slug}
+              onClick={() => onCategory(c.slug)}
+              className={`${styles.tab} ${category === c.slug ? styles.tabActive : ""}`}
+              aria-pressed={category === c.slug}
             >
-              {c.label}
+              {c.name}
             </button>
           ))}
         </div>

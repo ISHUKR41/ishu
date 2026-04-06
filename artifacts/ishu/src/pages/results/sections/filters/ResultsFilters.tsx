@@ -1,17 +1,6 @@
 import { Search } from "lucide-react";
+import { useListResultCategories } from "@workspace/api-client-react";
 import styles from "./ResultsFilters.module.css";
-
-const CATEGORIES = [
-  { value: "", label: "All Categories" },
-  { value: "upsc", label: "UPSC" },
-  { value: "ssc-cgl", label: "SSC CGL" },
-  { value: "banking-ibps", label: "Banking / IBPS" },
-  { value: "railway-rrb", label: "Railway RRB" },
-  { value: "jee-mains", label: "JEE Mains" },
-  { value: "neet-ug", label: "NEET UG" },
-  { value: "police", label: "Police" },
-  { value: "teaching", label: "Teaching" },
-];
 
 const STATUSES = [
   { value: "", label: "All Status" },
@@ -39,6 +28,9 @@ export function ResultsFilters({
   onStatus,
   onReset,
 }: ResultsFiltersProps) {
+  const { data: catData } = useListResultCategories();
+  const categories = Array.isArray(catData) ? catData : [];
+
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
@@ -61,9 +53,10 @@ export function ResultsFilters({
               onChange={(e) => onCategory(e.target.value)}
               aria-label="Filter by category"
             >
-              {CATEGORIES.map((c) => (
-                <option key={c.value} value={c.value} className="bg-gray-900">
-                  {c.label}
+              <option value="" className="bg-background text-foreground">All Categories</option>
+              {categories.map((c) => (
+                <option key={c.slug} value={c.slug} className="bg-background text-foreground">
+                  {c.name}
                 </option>
               ))}
             </select>
@@ -74,7 +67,7 @@ export function ResultsFilters({
               aria-label="Filter by status"
             >
               {STATUSES.map((s) => (
-                <option key={s.value} value={s.value} className="bg-gray-900">
+                <option key={s.value} value={s.value} className="bg-background text-foreground">
                   {s.label}
                 </option>
               ))}

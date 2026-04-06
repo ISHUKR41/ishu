@@ -29,7 +29,7 @@
   background: hsl(var(--muted)/0.5);
   border: 1px solid hsl(var(--border));
   border-radius: 0.625rem;
-  color: #fff;
+  color: hsl(var(--foreground));
   font-size: 0.9rem;
   outline: none;
   transition: border-color 0.2s, background 0.2s;
