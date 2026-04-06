@@ -7,6 +7,7 @@ interface PageMetaProps {
   ogImage?: string;
   canonical?: string;
   type?: "website" | "article";
+  structuredData?: Record<string, unknown>;
 }
 
 function setOrCreateMeta(name: string, content: string, attr: "name" | "property" = "name") {
@@ -26,6 +27,7 @@ export function PageMeta({
   ogImage = "https://ishu.in/og-image.jpg",
   canonical,
   type = "website",
+  structuredData,
 }: PageMetaProps) {
   useEffect(() => {
     const siteTitle = "Ishu";
@@ -69,10 +71,24 @@ export function PageMeta({
       document.head.appendChild(iconLink);
     }
 
+    let jsonLdEl: HTMLScriptElement | null = null;
+    if (structuredData) {
+      jsonLdEl = document.querySelector('script[data-page-meta-ld]') as HTMLScriptElement | null;
+      if (!jsonLdEl) {
+        jsonLdEl = document.createElement("script");
+        jsonLdEl.type = "application/ld+json";
+        jsonLdEl.setAttribute("data-page-meta-ld", "1");
+        document.head.appendChild(jsonLdEl);
+      }
+      jsonLdEl.textContent = JSON.stringify(structuredData);
+    }
+
     return () => {
       document.title = `${siteTitle} - India's Premier Education & Tools Platform`;
+      const ld = document.querySelector('script[data-page-meta-ld]');
+      if (ld) ld.remove();
     };
-  }, [title, description, keywords, ogImage, canonical, type]);
+  }, [title, description, keywords, ogImage, canonical, type, structuredData]);
 
   return null;
 }

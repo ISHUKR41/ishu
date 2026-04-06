@@ -1,0 +1,147 @@
+.section {
+  padding: 0;
+  contain: layout style;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.65rem 0.875rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.625rem;
+  color: #fff;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: inherit;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: rgba(249,115,22,0.5);
+  background: rgba(255,255,255,0.07);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+
+.textarea {
+  resize: none;
+  min-height: 130px;
+}
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #f97316, #fb923c);
+  border: none;
+  border-radius: 0.75rem;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  letter-spacing: 0.01em;
+}
+
+.submitBtn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.successBox {
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.successIcon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: rgba(34,197,94,0.15);
+  border: 1px solid rgba(34,197,94,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  color: #4ade80;
+}
+
+.successTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.successDesc {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.resetBtn {
+  padding: 0.6rem 1.5rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.5rem;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.resetBtn:hover {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}

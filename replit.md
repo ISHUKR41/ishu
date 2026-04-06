@@ -56,6 +56,23 @@ artifacts/ishu/src/pages/
   admin/
 ```
 
+## Modular Section Architecture (per page)
+
+Every page uses fully isolated section components:
+
+- **Results**: `ResultsHero` → `ResultsFilters` → `ResultsGrid` (API: category, status, page)
+- **News**: `NewsHero` → `NewsFilters` → `NewsGrid` (API: category, search, page)
+- **Blog**: `BlogHero` → `BlogFilters` → `BlogGrid` (API: category, search, page; field: `author`)
+- **Tools**: `ToolsHero` → `ToolsFilters` → `ToolsGrid` (API: category only; search is client-side)
+- **Contact**: `ContactHero` → `ContactInfo` → `ContactForm`
+- **About**: `AboutHero` → `AboutStats` → `AboutValues` → `AboutTeam`
+
+### API data shapes (actual)
+- `GET /api/tools` → plain array (no wrapper object)
+- `GET /api/news` → `{ articles: [...], total, page, totalPages }`
+- `GET /api/blogs` → `{ posts: [...], total, page, totalPages }`
+- `GET /api/results` → `{ results: [...], total, page, totalPages }`
+
 ## Pages & Routes
 
 - `/` — Home (hero, stats, results, tools, news, notifications, blog, testimonials)

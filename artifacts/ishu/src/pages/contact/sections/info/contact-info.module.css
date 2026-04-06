@@ -1,0 +1,93 @@
+.section {
+  padding: 0;
+  contain: layout style;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.iconBox {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 0.15rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.value {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.value:hover {
+  color: #fff;
+}
+
+.socialRow {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.socialTitle {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.875rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.socialLink:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border-color: rgba(255,255,255,0.2);
+}

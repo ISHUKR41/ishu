@@ -1,0 +1,112 @@
+.section {
+  padding: 4rem 0;
+  contain: layout style;
+}
+
+.inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.divider {
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #818cf8);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+.storyBox {
+  max-width: 52rem;
+  margin: 0 auto 4rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  padding: 2.5rem 3rem;
+}
+
+@media (max-width: 640px) {
+  .storyBox { padding: 1.75rem 1.5rem; }
+}
+
+.storyText {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.85;
+  margin-bottom: 1.25rem;
+}
+
+.storyText:last-child {
+  margin-bottom: 0;
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .valuesGrid { grid-template-columns: 1fr; }
+}
+
+.valueCard {
+  border-radius: 1rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.valueCard:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.iconBox {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.valueTitle {
+  font-size: 0.975rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.35rem;
+}
+
+.valueDesc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+}

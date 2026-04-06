@@ -74,10 +74,20 @@
   border-color: rgba(59,130,246,0.5);
 }
 
-.count {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.4);
-  margin-top: 0.75rem;
+.resetBtn {
+  padding: 0.65rem 1rem;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 0.625rem;
+  color: #f87171;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.resetBtn:hover {
+  background: rgba(239,68,68,0.18);
 }
 
 @media (min-width: 640px) {
