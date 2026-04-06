@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -57,9 +57,8 @@
   --app-font-display: 'Outfit', sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: Menlo, monospace;
-  --radius: 0.75rem; 
+  --radius: 0.75rem;
 
-  /* Light Theme (Fallbacks, though app is dark by default) */
   --background: 220 33% 98%;
   --foreground: 224 71% 4%;
   --border: 220 13% 91%;
@@ -74,10 +73,10 @@
   --popover-foreground: 224 71% 4%;
   --popover-border: 220 13% 91%;
 
-  --primary: 221 83% 53%; /* Electric Blue */
+  --primary: 221 83% 53%;
   --primary-foreground: 210 40% 98%;
 
-  --secondary: 25 95% 53%; /* Saffron Orange */
+  --secondary: 25 95% 53%;
   --secondary-foreground: 210 40% 98%;
 
   --muted: 220 14% 96%;
@@ -91,11 +90,9 @@
 }
 
 .dark {
-  /* Dark cinematic ultra-modern theme */
-  /* Deep navy/midnight blue: #0a0f1e -> HSL: 225 50% 8% */
   --background: 225 50% 8%;
   --foreground: 210 40% 98%;
-  
+
   --border: 225 30% 18%;
   --input: 225 30% 18%;
   --ring: 217 91% 60%;
@@ -108,10 +105,10 @@
   --popover-foreground: 210 40% 98%;
   --popover-border: 225 30% 18%;
 
-  --primary: 217 91% 60%; /* #3b82f6 Electric Blue */
+  --primary: 217 91% 60%;
   --primary-foreground: 222 47% 11%;
 
-  --secondary: 25 95% 53%; /* #f97316 Saffron */
+  --secondary: 25 95% 53%;
   --secondary-foreground: 210 40% 98%;
 
   --muted: 225 30% 18%;
@@ -127,13 +124,95 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--app-font-display);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  ::selection {
+    background: rgba(59, 130, 246, 0.3);
+    color: white;
+  }
+}
+
+@layer utilities {
+  .container {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

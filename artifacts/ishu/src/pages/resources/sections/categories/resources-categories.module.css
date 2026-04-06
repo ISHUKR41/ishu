@@ -1,0 +1,38 @@
+.section {
+  padding: 2rem 0;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.6);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.tab:hover {
+  border-color: rgba(255,255,255,0.2);
+  color: white;
+  background: rgba(255,255,255,0.08);
+}
+
+.tabActive {
+  border-color: rgba(59,130,246,0.5) !important;
+  background: rgba(59,130,246,0.12) !important;
+  color: #60a5fa !important;
+}

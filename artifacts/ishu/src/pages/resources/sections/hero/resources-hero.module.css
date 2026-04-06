@@ -1,0 +1,96 @@
+.section {
+  padding: 6rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rem;
+  height: 20rem;
+  background: radial-gradient(ellipse, rgba(59,130,246,0.15) 0%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.inner {
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sectionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3b82f6;
+  margin-bottom: 1.25rem;
+}
+
+.title {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  color: white;
+  margin: 0 0 1.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.gradientText {
+  background: linear-gradient(135deg, #60a5fa, #3b82f6, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.desc {
+  font-size: 1.125rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  margin: 0 0 2.5rem;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  max-width: 36rem;
+  margin: 0 auto;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.searchBox:focus-within {
+  border-color: rgba(59,130,246,0.4);
+}
+
+.searchIcon {
+  padding: 0 1rem;
+  color: rgba(255,255,255,0.35);
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.875rem 0;
+  font-size: 0.9375rem;
+  color: white;
+}
+
+.searchInput::placeholder {
+  color: rgba(255,255,255,0.3);
+}

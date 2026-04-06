@@ -2,11 +2,11 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/not-found";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ThemeProvider } from "next-themes";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SmoothScrollProvider } from "@/providers/SmoothScrollProvider";
 
 import Home from "@/pages/home/index";
 import Results from "@/pages/results/index";
@@ -19,9 +19,11 @@ import Blog from "@/pages/blog/index";
 import BlogDetail from "@/pages/blog/detail";
 import About from "@/pages/about/index";
 import Contact from "@/pages/contact/index";
+import Resources from "@/pages/resources/index";
 import Login from "@/pages/auth/login";
 import Register from "@/pages/auth/register";
 import AdminDashboard from "@/pages/admin/index";
+import NotFound from "@/pages/not-found/index";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,6 +66,7 @@ function Router() {
       <Route path="/blog/:slug" component={() => <Layout><BlogDetail /></Layout>} />
       <Route path="/about" component={() => <Layout><About /></Layout>} />
       <Route path="/contact" component={() => <Layout><Contact /></Layout>} />
+      <Route path="/resources" component={() => <Layout><Resources /></Layout>} />
       <Route path="/auth/login" component={() => <AuthLayout><Login /></AuthLayout>} />
       <Route path="/auth/register" component={() => <AuthLayout><Register /></AuthLayout>} />
       <Route path="/admin" component={() => <AdminDashboard />} />
@@ -80,8 +83,10 @@ function App() {
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <AuthProvider>
             <TooltipProvider>
-              <Router />
-              <Toaster />
+              <SmoothScrollProvider>
+                <Router />
+                <Toaster />
+              </SmoothScrollProvider>
             </TooltipProvider>
           </AuthProvider>
         </WouterRouter>
