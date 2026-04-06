@@ -4,15 +4,31 @@ import { useGetTool as useGetToolBySlug } from "@workspace/api-client-react";
 import { PageMeta } from "@/components/layout/PageMeta";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, Upload, Download, Info, Star, Zap, AlertCircle } from "lucide-react";
+import { ArrowLeft, Upload, Download, Zap, AlertCircle, Info, BarChart2 } from "lucide-react";
 import { useState } from "react";
+
+const HOW_TO_USE: Record<string, string> = {
+  "merge-pdf": "Upload two or more PDF files, arrange them in order, then click Process to combine them into a single PDF.",
+  "split-pdf": "Upload your PDF, choose the pages or page ranges you want to split, then download each part separately.",
+  "compress-pdf": "Upload your PDF file and select the compression level. The tool will reduce the file size while maintaining quality.",
+  "pdf-to-word": "Upload your PDF and click Process. The tool will extract text and layout to create an editable Word document.",
+  "word-to-pdf": "Upload your Word document (.docx) and click Process to convert it into a PDF with full formatting preserved.",
+};
+
+const FEATURES: Record<string, string[]> = {
+  "merge-pdf": ["Merge unlimited PDFs", "Drag-and-drop reordering", "No file size limit", "Preserve original quality"],
+  "compress-pdf": ["Reduce size up to 90%", "Choose compression level", "Batch processing", "No quality loss option"],
+  "pdf-to-word": ["Editable output", "Preserve formatting", "Table extraction", "Image extraction"],
+};
 
 export default function ToolDetail() {
   const [, params] = useRoute("/tools/:slug");
   const slug = params?.slug ?? "";
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const { data: tool, isLoading, error } = useGetToolBySlug(slug, { query: { enabled: !!slug } });
+  const { data: tool, isLoading, error } = useGetToolBySlug(slug, {
+    query: { queryKey: ["tool", slug], enabled: !!slug },
+  });
 
   if (isLoading) {
     return (
@@ -32,9 +48,12 @@ export default function ToolDetail() {
     );
   }
 
+  const howToUse = HOW_TO_USE[tool.slug] ?? `Upload your file and click Process to use the ${tool.name} tool.`;
+  const features = FEATURES[tool.slug] ?? ["Fast processing", "Secure & private", "No registration required", "Free to use"];
+
   return (
     <>
-      <PageMeta title={tool.name} description={tool.description ?? ""} />
+      <PageMeta title={`${tool.name} - Free Online Tool | Ishu`} description={tool.description ?? ""} />
       <div className="min-h-screen bg-background">
         <div className="border-b border-white/10 bg-gradient-to-b from-indigo-950/30 to-background py-10">
           <div className="container mx-auto px-4 md:px-6">
@@ -46,13 +65,12 @@ export default function ToolDetail() {
                 <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-muted-foreground capitalize">
                   {tool.category}
                 </span>
-                {tool.isPremium ? (
-                  <span className="rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1 text-xs text-yellow-400 flex items-center gap-1">
-                    <Star className="h-3 w-3 fill-yellow-400" /> Premium
-                  </span>
-                ) : (
-                  <span className="rounded-full border border-green-500/30 bg-green-500/10 px-3 py-1 text-xs text-green-400 flex items-center gap-1">
-                    <Zap className="h-3 w-3" /> Free
+                <span className="rounded-full border border-green-500/30 bg-green-500/10 px-3 py-1 text-xs text-green-400 flex items-center gap-1">
+                  <Zap className="h-3 w-3" /> Free
+                </span>
+                {tool.isNew && (
+                  <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs text-blue-400">
+                    New
                   </span>
                 )}
               </div>
@@ -127,34 +145,32 @@ export default function ToolDetail() {
             </div>
 
             <div className="space-y-6">
-              {tool.howToUse && (
-                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
-                  className="rounded-xl border border-white/10 bg-white/5 p-6">
-                  <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                    <Info className="h-5 w-5 text-blue-400" /> How to Use
-                  </h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{tool.howToUse}</p>
-                </motion.div>
-              )}
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
+                className="rounded-xl border border-white/10 bg-white/5 p-6">
+                <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <Info className="h-5 w-5 text-blue-400" /> How to Use
+                </h2>
+                <p className="text-muted-foreground text-sm leading-relaxed">{howToUse}</p>
+              </motion.div>
 
-              {tool.features && (tool.features as string[]).length > 0 && (
-                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}
-                  className="rounded-xl border border-white/10 bg-white/5 p-6">
-                  <h2 className="text-lg font-semibold text-foreground mb-4">Features</h2>
-                  <ul className="space-y-2">
-                    {(tool.features as string[]).map((f: string, i: number) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="h-1.5 w-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-2" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              )}
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}
+                className="rounded-xl border border-white/10 bg-white/5 p-6">
+                <h2 className="text-lg font-semibold text-foreground mb-4">Features</h2>
+                <ul className="space-y-2">
+                  {features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="h-1.5 w-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-2" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
 
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
                 className="rounded-xl border border-white/10 bg-white/5 p-6">
-                <h2 className="text-lg font-semibold text-foreground mb-3">Stats</h2>
+                <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+                  <BarChart2 className="h-5 w-5 text-blue-400" /> Stats
+                </h2>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Times Used</span>
@@ -166,7 +182,7 @@ export default function ToolDetail() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Type</span>
-                    <span className="font-medium">{tool.isPremium ? "Premium" : "Free"}</span>
+                    <span className="font-medium text-green-400">Free</span>
                   </div>
                 </div>
               </motion.div>

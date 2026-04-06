@@ -8,6 +8,7 @@ import blogsRouter from "./blogs";
 import contactRouter from "./contact";
 import notificationsRouter from "./notifications";
 import adminRouter from "./admin";
+import resourcesRouter from "./resources";
 
 const router: IRouter = Router();
 
@@ -20,5 +21,6 @@ router.use(blogsRouter);
 router.use(contactRouter);
 router.use(notificationsRouter);
 router.use(adminRouter);
+router.use(resourcesRouter);
 
 export default router;

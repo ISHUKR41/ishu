@@ -10,7 +10,9 @@ export default function NewsDetail() {
   const [, params] = useRoute("/news/:id");
   const id = params?.id ? parseInt(params.id) : 0;
 
-  const { data: article, isLoading, error } = useGetNewsArticle(id, { query: { enabled: !!id } });
+  const { data: article, isLoading, error } = useGetNewsArticle(id, {
+    query: { queryKey: ["news", id], enabled: !!id },
+  });
 
   if (isLoading) {
     return (
@@ -34,7 +36,7 @@ export default function NewsDetail() {
 
   return (
     <>
-      <PageMeta title={article.title} description={article.summary ?? ""} />
+      <PageMeta title={article.title} description={article.shortDescription} />
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 md:px-6 py-10 max-w-4xl">
           <Link href="/news" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-purple-400 transition-colors mb-8">
@@ -56,7 +58,7 @@ export default function NewsDetail() {
               )}
               {article.category && (
                 <span className="flex items-center gap-1 text-xs text-muted-foreground border border-white/10 rounded-full px-2.5 py-1 bg-white/5 capitalize">
-                  <Tag className="h-3 w-3" /> {article.category.replace("-", " ")}
+                  <Tag className="h-3 w-3" /> {article.category.replace(/-/g, " ")}
                 </span>
               )}
             </div>
@@ -66,7 +68,7 @@ export default function NewsDetail() {
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 pb-8 border-b border-white/10">
               <div className="flex items-center gap-1.5">
                 <Clock className="h-4 w-4" />
-                {new Date(article.publishedAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
+                {new Date(article.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
               </div>
               {article.author && (
                 <div className="flex items-center gap-1.5">
@@ -80,22 +82,9 @@ export default function NewsDetail() {
               {article.content ? (
                 <div dangerouslySetInnerHTML={{ __html: article.content.replace(/\n/g, "<br />") }} />
               ) : (
-                <p>{article.summary}</p>
+                <p>{article.shortDescription}</p>
               )}
             </div>
-
-            {article.tags && (article.tags as string[]).length > 0 && (
-              <div className="mt-10 pt-8 border-t border-white/10">
-                <p className="text-sm text-muted-foreground mb-3">Tags:</p>
-                <div className="flex flex-wrap gap-2">
-                  {(article.tags as string[]).map((tag: string) => (
-                    <span key={tag} className="text-xs rounded-full border border-white/10 bg-white/5 px-3 py-1 text-muted-foreground">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
           </motion.article>
 
           <div className="mt-12 pt-8 border-t border-white/10">

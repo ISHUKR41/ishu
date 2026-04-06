@@ -10,7 +10,9 @@ export default function BlogDetail() {
   const [, params] = useRoute("/blog/:slug");
   const slug = params?.slug ?? "";
 
-  const { data: blog, isLoading, error } = useGetBlog(slug, { query: { enabled: !!slug } });
+  const { data: blog, isLoading, error } = useGetBlog(slug, {
+    query: { queryKey: ["blog", slug], enabled: !!slug },
+  });
 
   if (isLoading) {
     return (
@@ -42,9 +44,9 @@ export default function BlogDetail() {
           </Link>
 
           <motion.article initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            {blog.coverImage && (
+            {blog.imageUrl && (
               <div className="rounded-xl overflow-hidden mb-8 h-64 md:h-96">
-                <img src={blog.coverImage} alt={blog.title} className="w-full h-full object-cover" />
+                <img src={blog.imageUrl} alt={blog.title} className="w-full h-full object-cover" />
               </div>
             )}
 
@@ -54,7 +56,7 @@ export default function BlogDetail() {
               )}
               {blog.category && (
                 <span className="flex items-center gap-1 text-xs text-muted-foreground border border-white/10 rounded-full px-2.5 py-1 bg-white/5 capitalize">
-                  <Tag className="h-3 w-3" /> {blog.category.replace("-", " ")}
+                  <Tag className="h-3 w-3" /> {blog.category.replace(/-/g, " ")}
                 </span>
               )}
             </div>
@@ -62,9 +64,9 @@ export default function BlogDetail() {
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">{blog.title}</h1>
 
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 pb-8 border-b border-white/10">
-              {blog.authorName && (
+              {blog.author && (
                 <div className="flex items-center gap-1.5">
-                  <User className="h-4 w-4" /> {blog.authorName}
+                  <User className="h-4 w-4" /> {blog.author}
                 </div>
               )}
               {blog.readTime && (
@@ -77,12 +79,10 @@ export default function BlogDetail() {
                   <Eye className="h-4 w-4" /> {blog.viewCount.toLocaleString()} views
                 </div>
               )}
-              {blog.publishedAt && (
-                <div className="flex items-center gap-1.5">
-                  <Clock className="h-4 w-4" />
-                  {new Date(blog.publishedAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
-                </div>
-              )}
+              <div className="flex items-center gap-1.5">
+                <Clock className="h-4 w-4" />
+                {new Date(blog.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
+              </div>
             </div>
 
             <div className="prose prose-invert prose-sm md:prose-base max-w-none text-muted-foreground leading-relaxed">
@@ -93,11 +93,11 @@ export default function BlogDetail() {
               )}
             </div>
 
-            {blog.tags && (blog.tags as string[]).length > 0 && (
+            {blog.tags && blog.tags.length > 0 && (
               <div className="mt-10 pt-8 border-t border-white/10">
                 <p className="text-sm text-muted-foreground mb-3">Tags:</p>
                 <div className="flex flex-wrap gap-2">
-                  {(blog.tags as string[]).map((tag: string) => (
+                  {blog.tags.map((tag: string) => (
                     <span key={tag} className="text-xs rounded-full border border-white/10 bg-white/5 px-3 py-1 text-muted-foreground">#{tag}</span>
                   ))}
                 </div>

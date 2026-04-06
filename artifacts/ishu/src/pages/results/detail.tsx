@@ -18,7 +18,7 @@ export default function ResultDetail() {
   const [, params] = useRoute("/results/:id");
   const id = params?.id ? parseInt(params.id) : 0;
 
-  const { data: result, isLoading, error } = useGetResult(id, { query: { enabled: !!id } });
+  const { data: result, isLoading, error } = useGetResult(id, { query: { queryKey: ["result", id], enabled: !!id } });
 
   if (isLoading) {
     return (

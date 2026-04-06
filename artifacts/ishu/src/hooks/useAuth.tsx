@@ -27,6 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const { data: currentUser, isLoading } = useGetCurrentUser({
     query: {
+      queryKey: ["currentUser"],
       retry: false,
     },
   });
