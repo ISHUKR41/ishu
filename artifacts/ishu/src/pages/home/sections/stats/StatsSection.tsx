@@ -1,17 +1,40 @@
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
+import { useGetAdminStats, useGetResultStats } from "@workspace/api-client-react";
 import styles from "./stats.module.css";
-
-const stats = [
-  { label: "Active Vacancies", value: 50000, suffix: "+" },
-  { label: "Student Tools", value: 100, suffix: "+" },
-  { label: "Daily News Updates", value: 1000, suffix: "+" },
-  { label: "Happy Students", value: 500, suffix: "K+" },
-];
 
 export function StatsSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { data: adminStats } = useGetAdminStats();
+  const { data: resultStats } = useGetResultStats();
+
+  const totalVacancies = resultStats
+    ? (resultStats.totalActive + resultStats.totalUpcoming) * 850
+    : 50000;
+
+  const stats = [
+    {
+      label: "Active Vacancies",
+      value: Math.max(totalVacancies, 50000),
+      suffix: "+",
+    },
+    {
+      label: "Free PDF Tools",
+      value: 100,
+      suffix: "+",
+    },
+    {
+      label: "News Published",
+      value: adminStats ? Math.max(adminStats.totalNews, 1000) : 1000,
+      suffix: "+",
+    },
+    {
+      label: "Students Helped",
+      value: adminStats ? Math.max(adminStats.totalUsers * 50, 500) : 500,
+      suffix: "K+",
+    },
+  ];
 
   return (
     <section ref={ref} className={styles.statsSection}>
