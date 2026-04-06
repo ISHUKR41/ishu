@@ -1,0 +1,176 @@
+1. Apple
+2. Stripe
+3. Awwwards
+4. Nike
+5. Tesla
+6. Spotify
+7. Airbnb
+8. Dropbox
+9. Webflow
+10. Figma
+11. Slack
+12. Notion
+13. Google
+14. Microsoft
+15. Amazon
+16. Adobe
+17. Framer
+18. Three.js
+19. Lusion
+20. Active Theory
+21. Cuberto
+22. Resn
+23. Locomotive
+24. Bruno Simon Portfolio
+25. Denis Novik Portfolio
+26. Obys Agency
+27. Dogstudio
+28. Fantasy (Fantasy.co)
+29. Instrument
+30. Basic Agency
+31. Hello Monday
+32. Ueno
+33. Giant Ant
+34. Buck
+35. Media.Monks
+36. Rally Interactive
+37. Parallax Studio
+38. Stink Studios
+39. AKQA
+40. B-Reel
+41. North Kingdom
+42. Made Thought
+43. Zweinull
+44. Unseen Studio
+45. Velvet Spectrum
+46. Immersive Garden
+47. The Mill
+48. Wonderlabs
+49. Humaan
+50. Epicurrence
+
+
+
+
+
+
+
+
+
+
+1. HTML5
+2. CSS3
+3. JavaScript (ES6+)
+4. TypeScript
+5. React.js
+6. Next.js
+7. Vue.js
+8. Nuxt.js
+9. Svelte
+10. SvelteKit
+11. Angular
+12. SolidJS
+13. Qwik
+14. Astro
+15. Remix
+16. Three.js
+17. WebGL
+18. WebGPU
+19. Babylon.js
+20. PlayCanvas
+21. PixiJS
+22. OGL (WebGL Library)
+23. Regl
+24. Zdog
+25. GSAP (GreenSock)
+26. ScrollTrigger (GSAP)
+27. Framer Motion
+28. Anime.js
+29. Lottie
+30. Mo.js
+31. Popmotion
+32. Velocity.js
+33. Typed.js
+34. Splitting.js
+35. Barba.js
+36. Swup
+37. Highway.js
+38. Locomotive Scroll
+39. Lenis
+40. Smooth Scrollbar
+41. React Three Fiber
+42. Drei
+43. React Spring
+44. React Use Gesture
+45. Theatre.js
+46. Motion One
+47. D3.js
+48. Chart.js
+49. ECharts
+50. Highcharts
+51. Tailwind CSS
+52. Bootstrap
+53. Material UI (MUI)
+54. Chakra UI
+55. Ant Design
+56. Sass (SCSS)
+57. Less
+58. PostCSS
+59. Styled Components
+60. Emotion
+61. Webpack
+62. Vite
+63. Parcel
+64. Rollup
+65. ESBuild
+66. Babel
+67. SWC
+68. npm
+69. Yarn
+70. PNPM
+71. Git
+72. GitHub
+73. GitLab
+74. Bitbucket
+75. Figma
+76. Adobe XD
+77. Sketch
+78. InVision
+79. Blender
+80. Cinema 4D
+81. Autodesk Maya
+82. Houdini
+83. ZBrush
+84. Webflow
+85. Framer
+86. WordPress (Headless)
+87. Contentful (CMS)
+88. Sanity (CMS)
+89. Strapi (CMS)
+90. Firebase
+91. Supabase
+92. Node.js
+93. Express.js
+94. Deno
+95. GraphQL
+96. Apollo
+97. Prisma
+98. Netlify
+99. Vercel
+100. Cloudflare
+
+
+
+ye sare websites se inspiration le lena pls aacha se deep research karke pls okay 
+
+
+and sare .md files bhe padh lena pls and work start karo pls 
+
+
+
+
+
+
+iske liye tumko jitna bhe lirabies and tools ye repo ye effects ka need ho sab install kar lena pls 
+
+and sab kuch working karna chiaye haar ek cheez kuch bhe demo nhi hona chiaaye pls

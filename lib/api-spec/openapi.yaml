@@ -3,20 +3,36 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Ishu - India's Premier Education, Tools & News Platform API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication & user management
+  - name: results
+    description: Government exam results & vacancies
+  - name: news
+    description: News articles & categories
+  - name: tools
+    description: PDF & file utility tools
+  - name: blogs
+    description: Blog posts & categories
+  - name: contact
+    description: Contact form submissions
+  - name: admin
+    description: Admin panel operations
+  - name: notifications
+    description: WhatsApp/push notification subscriptions
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +40,678 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  # AUTH
+  /auth/register:
+    post:
+      operationId: registerUser
+      tags: [auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterBody"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Validation error
+
+  /auth/login:
+    post:
+      operationId: loginUser
+      tags: [auth]
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginBody"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid credentials
+
+  /auth/logout:
+    post:
+      operationId: logoutUser
+      tags: [auth]
+      summary: Logout user
+      responses:
+        "200":
+          description: Logged out
+
+  /auth/me:
+    get:
+      operationId: getCurrentUser
+      tags: [auth]
+      summary: Get current authenticated user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          description: Not authenticated
+
+  # RESULTS / VACANCIES
+  /results:
+    get:
+      operationId: listResults
+      tags: [results]
+      summary: List all government exam results & vacancies
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: state
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, upcoming, expired, coming_soon]
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: List of results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResultListResponse"
+
+  /results/{id}:
+    get:
+      operationId: getResult
+      tags: [results]
+      summary: Get a specific result/vacancy details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Result details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+        "404":
+          description: Not found
+
+  /results/stats:
+    get:
+      operationId: getResultStats
+      tags: [results]
+      summary: Get stats — total active, by category, by state
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResultStats"
+
+  /results/categories:
+    get:
+      operationId: listResultCategories
+      tags: [results]
+      summary: List all result categories (JEE, NEET, SSC, Banking, etc.)
+      responses:
+        "200":
+          description: Categories list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResultCategory"
+
+  /results/states:
+    get:
+      operationId: listResultStates
+      tags: [results]
+      summary: List all Indian states with vacancy counts
+      responses:
+        "200":
+          description: States list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StateVacancy"
+
+  # NEWS
+  /news:
+    get:
+      operationId: listNews
+      tags: [news]
+      summary: List news articles
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: language
+          in: query
+          schema:
+            type: string
+            default: en
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 30
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: News list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsListResponse"
+
+  /news/{id}:
+    get:
+      operationId: getNews
+      tags: [news]
+      summary: Get a single news article
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: News article
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsArticle"
+        "404":
+          description: Not found
+
+  /news/categories:
+    get:
+      operationId: listNewsCategories
+      tags: [news]
+      summary: List all news categories (Education, Tech, Sports, etc.)
+      responses:
+        "200":
+          description: News categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NewsCategory"
+
+  /news/trending:
+    get:
+      operationId: getTrendingNews
+      tags: [news]
+      summary: Get trending news articles
+      responses:
+        "200":
+          description: Trending news
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NewsArticle"
+
+  # TOOLS
+  /tools:
+    get:
+      operationId: listTools
+      tags: [tools]
+      summary: List all available tools
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tools list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Tool"
+
+  /tools/{slug}:
+    get:
+      operationId: getTool
+      tags: [tools]
+      summary: Get tool details by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tool details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tool"
+        "404":
+          description: Not found
+
+  /tools/pdf/merge:
+    post:
+      operationId: mergePdf
+      tags: [tools]
+      summary: Merge multiple PDF files
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: Merged PDF
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+
+  /tools/pdf/compress:
+    post:
+      operationId: compressPdf
+      tags: [tools]
+      summary: Compress a PDF file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                quality:
+                  type: string
+                  enum: [low, medium, high]
+                  default: medium
+      responses:
+        "200":
+          description: Compressed PDF
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+
+  /tools/pdf/split:
+    post:
+      operationId: splitPdf
+      tags: [tools]
+      summary: Split a PDF file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                pages:
+                  type: string
+                  description: Page ranges like "1-3,5,7-9"
+      responses:
+        "200":
+          description: Split PDF zip
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+
+  /tools/stats:
+    get:
+      operationId: getToolStats
+      tags: [tools]
+      summary: Get tool usage statistics
+      responses:
+        "200":
+          description: Tool usage stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToolStats"
+
+  # BLOGS
+  /blogs:
+    get:
+      operationId: listBlogs
+      tags: [blogs]
+      summary: List blog posts
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: tag
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 12
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Blog list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogListResponse"
+
+  /blogs/{slug}:
+    get:
+      operationId: getBlog
+      tags: [blogs]
+      summary: Get a blog post by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Blog post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+        "404":
+          description: Not found
+
+  /blogs/categories:
+    get:
+      operationId: listBlogCategories
+      tags: [blogs]
+      summary: List blog categories
+      responses:
+        "200":
+          description: Blog categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogCategory"
+
+  /blogs/featured:
+    get:
+      operationId: getFeaturedBlogs
+      tags: [blogs]
+      summary: Get featured blog posts
+      responses:
+        "200":
+          description: Featured blogs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogPost"
+
+  # CONTACT
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit a contact form message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactBody"
+      responses:
+        "201":
+          description: Message sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactResponse"
+
+  # NOTIFICATIONS
+  /notifications/subscribe:
+    post:
+      operationId: subscribeNotifications
+      tags: [notifications]
+      summary: Subscribe to WhatsApp/push notifications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationSubscribeBody"
+      responses:
+        "201":
+          description: Subscribed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationResponse"
+
+  # ADMIN
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Get admin dashboard statistics
+      responses:
+        "200":
+          description: Admin stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+
+  /admin/users:
+    get:
+      operationId: listAdminUsers
+      tags: [admin]
+      summary: List all users (admin only)
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Users list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminUsersResponse"
+
+  /admin/contacts:
+    get:
+      operationId: listAdminContacts
+      tags: [admin]
+      summary: List all contact submissions (admin only)
+      responses:
+        "200":
+          description: Contact submissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContactSubmission"
+
+  /admin/results:
+    post:
+      operationId: createResult
+      tags: [admin]
+      summary: Create a new result/vacancy (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateResultBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+  /admin/results/{id}:
+    put:
+      operationId: updateResult
+      tags: [admin]
+      summary: Update a result/vacancy (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateResultBody"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
+
+    delete:
+      operationId: deleteResult
+      tags: [admin]
+      summary: Delete a result/vacancy (admin only)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+
+  /admin/news:
+    post:
+      operationId: createNews
+      tags: [admin]
+      summary: Create a news article (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateNewsBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsArticle"
+
+  /admin/blogs:
+    post:
+      operationId: createBlog
+      tags: [admin]
+      summary: Create a blog post (admin only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBlogBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +719,574 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        whatsappNumber:
+          type: string
+          nullable: true
+        role:
+          type: string
+          enum: [user, admin]
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, name, email, role, createdAt]
+
+    RegisterBody:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
+        whatsappNumber:
+          type: string
+          nullable: true
+      required: [name, email, password]
+
+    LoginBody:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required: [email, password]
+
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/User"
+        message:
+          type: string
+      required: [user, message]
+
+    Result:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        shortDescription:
+          type: string
+        fullDescription:
+          type: string
+          nullable: true
+        category:
+          type: string
+        state:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [active, upcoming, expired, coming_soon]
+        totalPosts:
+          type: integer
+          nullable: true
+        lastDate:
+          type: string
+          format: date
+          nullable: true
+        examDate:
+          type: string
+          format: date
+          nullable: true
+        requiredDocuments:
+          type: array
+          items:
+            type: string
+        eligibility:
+          type: string
+          nullable: true
+        officialLink:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [id, title, shortDescription, category, status, requiredDocuments, createdAt, updatedAt]
+
+    ResultListResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Result"
+        total:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+      required: [results, total, page, totalPages]
+
+    ResultStats:
+      type: object
+      properties:
+        totalActive:
+          type: integer
+        totalUpcoming:
+          type: integer
+        totalExpired:
+          type: integer
+        byCategory:
+          type: array
+          items:
+            type: object
+            properties:
+              category:
+                type: string
+              count:
+                type: integer
+            required: [category, count]
+        byState:
+          type: array
+          items:
+            type: object
+            properties:
+              state:
+                type: string
+              count:
+                type: integer
+            required: [state, count]
+      required: [totalActive, totalUpcoming, totalExpired, byCategory, byState]
+
+    ResultCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        count:
+          type: integer
+      required: [id, name, slug, count]
+
+    StateVacancy:
+      type: object
+      properties:
+        state:
+          type: string
+        count:
+          type: integer
+        activeCount:
+          type: integer
+      required: [state, count, activeCount]
+
+    NewsArticle:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        shortDescription:
+          type: string
+        content:
+          type: string
+          nullable: true
+        category:
+          type: string
+        imageUrl:
+          type: string
+          nullable: true
+        language:
+          type: string
+          default: en
+        author:
+          type: string
+          nullable: true
+        isTrending:
+          type: boolean
+          default: false
+        viewCount:
+          type: integer
+          default: 0
+        relatedNewsIds:
+          type: array
+          items:
+            type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [id, title, shortDescription, category, language, isTrending, viewCount, relatedNewsIds, createdAt, updatedAt]
+
+    NewsListResponse:
+      type: object
+      properties:
+        articles:
+          type: array
+          items:
+            $ref: "#/components/schemas/NewsArticle"
+        total:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+      required: [articles, total, page, totalPages]
+
+    NewsCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        count:
+          type: integer
+        color:
+          type: string
+          nullable: true
+      required: [id, name, slug, count]
+
+    Tool:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        icon:
+          type: string
+          nullable: true
+        isNew:
+          type: boolean
+          default: false
+        usageCount:
+          type: integer
+          default: 0
+      required: [id, name, slug, description, category, isNew, usageCount]
+
+    ToolStats:
+      type: object
+      properties:
+        totalTools:
+          type: integer
+        totalUsage:
+          type: integer
+        popularTools:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              usageCount:
+                type: integer
+            required: [name, usageCount]
+      required: [totalTools, totalUsage, popularTools]
+
+    BlogPost:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        slug:
+          type: string
+        excerpt:
+          type: string
+        content:
+          type: string
+          nullable: true
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        imageUrl:
+          type: string
+          nullable: true
+        author:
+          type: string
+        readTime:
+          type: integer
+          description: Reading time in minutes
+        isFeatured:
+          type: boolean
+          default: false
+        viewCount:
+          type: integer
+          default: 0
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required: [id, title, slug, excerpt, category, tags, author, readTime, isFeatured, viewCount, createdAt, updatedAt]
+
+    BlogListResponse:
+      type: object
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: "#/components/schemas/BlogPost"
+        total:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+      required: [posts, total, page, totalPages]
+
+    BlogCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        count:
+          type: integer
+      required: [id, name, slug, count]
+
+    ContactBody:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          nullable: true
+        subject:
+          type: string
+        message:
+          type: string
+      required: [name, email, subject, message]
+
+    ContactResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        id:
+          type: integer
+      required: [message, id]
+
+    ContactSubmission:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+          nullable: true
+        subject:
+          type: string
+        message:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, name, email, subject, message, createdAt]
+
+    NotificationSubscribeBody:
+      type: object
+      properties:
+        whatsappNumber:
+          type: string
+        name:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+      required: [whatsappNumber, name]
+
+    NotificationResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        subscriptionId:
+          type: integer
+      required: [message, subscriptionId]
+
+    AdminStats:
+      type: object
+      properties:
+        totalUsers:
+          type: integer
+        totalResults:
+          type: integer
+        totalNews:
+          type: integer
+        totalBlogs:
+          type: integer
+        totalContacts:
+          type: integer
+        totalNotificationSubscribers:
+          type: integer
+        recentActivity:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              description:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+            required: [type, description, createdAt]
+      required: [totalUsers, totalResults, totalNews, totalBlogs, totalContacts, totalNotificationSubscribers, recentActivity]
+
+    AdminUsersResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+        total:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+      required: [users, total, page, totalPages]
+
+    CreateResultBody:
+      type: object
+      properties:
+        title:
+          type: string
+        shortDescription:
+          type: string
+        fullDescription:
+          type: string
+          nullable: true
+        category:
+          type: string
+        state:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [active, upcoming, expired, coming_soon]
+        totalPosts:
+          type: integer
+          nullable: true
+        lastDate:
+          type: string
+          format: date
+          nullable: true
+        examDate:
+          type: string
+          format: date
+          nullable: true
+        requiredDocuments:
+          type: array
+          items:
+            type: string
+        eligibility:
+          type: string
+          nullable: true
+        officialLink:
+          type: string
+          nullable: true
+      required: [title, shortDescription, category, status, requiredDocuments]
+
+    CreateNewsBody:
+      type: object
+      properties:
+        title:
+          type: string
+        shortDescription:
+          type: string
+        content:
+          type: string
+          nullable: true
+        category:
+          type: string
+        imageUrl:
+          type: string
+          nullable: true
+        language:
+          type: string
+          default: en
+        author:
+          type: string
+          nullable: true
+        isTrending:
+          type: boolean
+          default: false
+      required: [title, shortDescription, category]
+
+    CreateBlogBody:
+      type: object
+      properties:
+        title:
+          type: string
+        slug:
+          type: string
+        excerpt:
+          type: string
+        content:
+          type: string
+          nullable: true
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        imageUrl:
+          type: string
+          nullable: true
+        author:
+          type: string
+        readTime:
+          type: integer
+        isFeatured:
+          type: boolean
+          default: false
+      required: [title, slug, excerpt, category, tags, author, readTime]
