@@ -73,7 +73,7 @@
 
 .subtitle {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: rgba(255,255,255,0.55);
+  color: hsl(var(--muted-foreground));
   max-width: 42rem;
   margin: 0 auto;
   line-height: 1.75;

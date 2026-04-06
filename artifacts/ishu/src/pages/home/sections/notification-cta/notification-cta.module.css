@@ -15,8 +15,8 @@
   max-width: 56rem;
   margin: 0 auto;
   border-radius: 1.5rem;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.04);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.4);
   padding: 3rem;
   overflow: hidden;
   position: relative;
@@ -69,14 +69,14 @@
 .title {
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 700;
-  color: white;
+  color: hsl(var(--foreground));
   margin: 0 0 1rem;
   letter-spacing: -0.02em;
 }
 
 .desc {
   font-size: 0.9375rem;
-  color: rgba(255,255,255,0.55);
+  color: hsl(var(--muted-foreground));
   line-height: 1.7;
   margin: 0 0 1.5rem;
 }
@@ -95,7 +95,7 @@
   align-items: center;
   gap: 0.625rem;
   font-size: 0.875rem;
-  color: rgba(255,255,255,0.7);
+  color: hsl(var(--foreground)/0.7);
 }
 
 .checkIcon {
@@ -106,14 +106,14 @@
 .rightCol {
   background: rgba(0,0,0,0.25);
   border-radius: 1rem;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid hsl(var(--border));
   padding: 1.75rem;
 }
 
 .formTitle {
   font-size: 1.25rem;
   font-weight: 600;
-  color: white;
+  color: hsl(var(--foreground));
   margin: 0 0 1.25rem;
 }
 
@@ -124,7 +124,7 @@
 }
 
 .input {
-  background: rgba(255,255,255,0.05) !important;
+  background: hsl(var(--muted)/0.5) !important;
   border-color: rgba(255,255,255,0.1) !important;
 }
 
@@ -153,6 +153,6 @@
 .privacy {
   font-size: 0.75rem;
   text-align: center;
-  color: rgba(255,255,255,0.3);
+  color: hsl(var(--muted-foreground)/0.5);
   margin: 0;
 }

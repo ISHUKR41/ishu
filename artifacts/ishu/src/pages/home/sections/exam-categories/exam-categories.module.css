@@ -14,8 +14,8 @@
   gap: 0.4rem;
   padding: 0.3rem 0.875rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.5);
   font-size: 0.75rem;
   font-weight: 600;
   color: rgba(255,255,255,0.6);
@@ -27,14 +27,14 @@
 .sectionTitle {
   font-size: clamp(1.75rem, 5vw, 2.5rem);
   font-weight: 700;
-  color: white;
+  color: hsl(var(--foreground));
   letter-spacing: -0.025em;
   margin: 0 0 0.875rem;
 }
 
 .sectionDesc {
   font-size: clamp(0.9375rem, 2vw, 1.0625rem);
-  color: rgba(255,255,255,0.45);
+  color: hsl(var(--muted-foreground));
   max-width: 38rem;
   margin: 0 auto;
   line-height: 1.65;
@@ -65,7 +65,7 @@
   padding: 1.125rem 1.25rem;
   border-radius: 1rem;
   border: 1px solid rgba(255,255,255,0.07);
-  background: rgba(255,255,255,0.02);
+  background: hsl(var(--muted)/0.2);
   text-decoration: none;
   transition: all 0.25s ease;
   cursor: pointer;
@@ -73,7 +73,7 @@
 
 .card:hover {
   border-color: rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.05);
+  background: hsl(var(--muted)/0.5);
   transform: translateY(-2px);
   box-shadow: 0 12px 28px -8px rgba(0,0,0,0.35);
 }
@@ -99,7 +99,7 @@
 .cardLabel {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: white;
+  color: hsl(var(--foreground));
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -113,7 +113,7 @@
 
 .cardCount {
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.35);
+  color: hsl(var(--muted-foreground)/0.55);
 }
 
 .arrow {

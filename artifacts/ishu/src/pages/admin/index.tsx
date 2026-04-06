@@ -8,7 +8,7 @@ import { Users, FileText, Newspaper, BookOpen, MessageSquare, TrendingUp, Bell, 
 
 function StatsCard({ icon: Icon, label, value, color, bg }: { icon: any; label: string; value?: number | string; color: string; bg: string }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-6 flex items-center gap-4">
+    <div className="rounded-xl border border-border bg-card p-6 flex items-center gap-4">
       <div className={`h-12 w-12 rounded-xl ${bg} flex items-center justify-center flex-shrink-0`}>
         <Icon className={`h-6 w-6 ${color}`} />
       </div>
@@ -25,7 +25,7 @@ function Dashboard() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-white mb-6">Dashboard Overview</h2>
+      <h2 className="text-2xl font-bold text-foreground mb-6">Dashboard Overview</h2>
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => <Skeleton key={i} className="h-24 rounded-xl" />)}
@@ -52,11 +52,11 @@ function UsersTable() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-white mb-6">Users ({data?.total ?? 0})</h2>
+      <h2 className="text-2xl font-bold text-foreground mb-6">Users ({data?.total ?? 0})</h2>
       {isLoading ? <Skeleton className="h-64 rounded-xl" /> : (
-        <div className="rounded-xl border border-white/10 overflow-hidden">
+        <div className="rounded-xl border border-border overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="border-b border-white/10 bg-white/5">
+            <thead className="border-b border-border bg-card">
               <tr>
                 <th className="text-left p-4 text-muted-foreground">Name</th>
                 <th className="text-left p-4 text-muted-foreground">Email</th>
@@ -66,7 +66,7 @@ function UsersTable() {
             </thead>
             <tbody>
               {users.map((user: any) => (
-                <tr key={user.id} className="border-b border-white/5 hover:bg-white/5">
+                <tr key={user.id} className="border-b border-border/50 hover:bg-card">
                   <td className="p-4 font-medium">{user.name}</td>
                   <td className="p-4 text-muted-foreground">{user.email}</td>
                   <td className="p-4">
@@ -91,13 +91,13 @@ function ContactsTable() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-white mb-6">Contact Messages ({data?.total ?? 0})</h2>
+      <h2 className="text-2xl font-bold text-foreground mb-6">Contact Messages ({data?.total ?? 0})</h2>
       {isLoading ? <Skeleton className="h-64 rounded-xl" /> : contacts.length === 0 ? (
-        <div className="rounded-xl border border-white/10 bg-white/5 p-8 text-center text-muted-foreground">No messages yet.</div>
+        <div className="rounded-xl border border-border bg-card p-8 text-center text-muted-foreground">No messages yet.</div>
       ) : (
         <div className="space-y-4">
           {contacts.map((contact: any) => (
-            <div key={contact.id} className="rounded-xl border border-white/10 bg-white/5 p-5">
+            <div key={contact.id} className="rounded-xl border border-border bg-card p-5">
               <div className="flex items-start justify-between mb-2">
                 <div>
                   <p className="font-medium">{contact.name}</p>

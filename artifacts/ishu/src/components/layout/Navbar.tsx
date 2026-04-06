@@ -36,7 +36,7 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/8 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
@@ -44,7 +44,7 @@ export function Navbar() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-500 shadow-lg shadow-blue-500/25">
                 <span className="font-display font-bold text-white text-sm">I</span>
               </div>
-              <span className="hidden font-display text-xl font-bold tracking-tight text-white sm:inline-block">
+              <span className="hidden font-display text-xl font-bold tracking-tight text-foreground sm:inline-block">
                 Ishu
               </span>
             </Link>
@@ -56,8 +56,8 @@ export function Navbar() {
                   href={link.href}
                   className={`px-3 py-1.5 rounded-md transition-all duration-200 ${
                     location === link.href
-                      ? "text-blue-400 bg-blue-500/8"
-                      : "text-foreground/70 hover:text-foreground hover:bg-white/5"
+                      ? "text-blue-600 dark:text-blue-400 bg-blue-500/10"
+                      : "text-foreground/70 hover:text-foreground hover:bg-accent"
                   }`}
                 >
                   {link.label}
@@ -67,7 +67,7 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="hidden xl:flex items-center rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 transition-colors focus-within:border-blue-500/30">
+            <div className="hidden xl:flex items-center rounded-lg border border-border bg-muted/50 px-3 py-1.5 transition-colors focus-within:border-blue-500/50">
               <Search className="mr-2 h-3.5 w-3.5 text-muted-foreground" />
               <input
                 type="text"
@@ -110,7 +110,7 @@ export function Navbar() {
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="rounded-md border-white/15">
+                    <Button variant="outline" size="sm" className="rounded-md">
                       {user.name}
                     </Button>
                   </DropdownMenuTrigger>
@@ -152,10 +152,10 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="lg:hidden border-t border-white/8 bg-background/95 backdrop-blur-md overflow-hidden"
+            className="lg:hidden border-t border-border bg-background/95 backdrop-blur-md overflow-hidden"
           >
             <div className="container mx-auto px-4 py-4 flex flex-col gap-3">
-              <div className="flex items-center rounded-lg border border-white/10 bg-white/5 px-3 py-2">
+              <div className="flex items-center rounded-lg border border-border bg-muted/50 px-3 py-2">
                 <Search className="mr-2 h-4 w-4 text-muted-foreground" />
                 <input
                   type="text"
@@ -171,7 +171,7 @@ export function Navbar() {
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                      location === link.href ? "bg-blue-500/10 text-blue-400" : "text-foreground/70 hover:bg-white/5"
+                      location === link.href ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" : "text-foreground/70 hover:bg-accent"
                     }`}
                   >
                     {link.label}
@@ -179,7 +179,7 @@ export function Navbar() {
                 ))}
               </nav>
 
-              <div className="flex flex-col gap-2 pt-3 border-t border-white/8">
+              <div className="flex flex-col gap-2 pt-3 border-t border-border">
                 {user ? (
                   <Button variant="outline" className="w-full justify-start" onClick={() => logout()}>
                     Logout

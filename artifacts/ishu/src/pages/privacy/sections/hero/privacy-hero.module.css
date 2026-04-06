@@ -58,7 +58,7 @@
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.03em;
-  color: white;
+  color: hsl(var(--foreground));
   margin: 0 0 1rem;
 }
 

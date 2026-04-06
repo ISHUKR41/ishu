@@ -55,15 +55,15 @@ export default function BlogDetail() {
                 <span className="text-xs text-yellow-400 border border-yellow-500/30 rounded-full px-2.5 py-1 bg-yellow-500/10">Featured</span>
               )}
               {blog.category && (
-                <span className="flex items-center gap-1 text-xs text-muted-foreground border border-white/10 rounded-full px-2.5 py-1 bg-white/5 capitalize">
+                <span className="flex items-center gap-1 text-xs text-muted-foreground border border-border rounded-full px-2.5 py-1 bg-card capitalize">
                   <Tag className="h-3 w-3" /> {blog.category.replace(/-/g, " ")}
                 </span>
               )}
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">{blog.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">{blog.title}</h1>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 pb-8 border-b border-white/10">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 pb-8 border-b border-border">
               {blog.author && (
                 <div className="flex items-center gap-1.5">
                   <User className="h-4 w-4" /> {blog.author}
@@ -94,18 +94,18 @@ export default function BlogDetail() {
             </div>
 
             {blog.tags && blog.tags.length > 0 && (
-              <div className="mt-10 pt-8 border-t border-white/10">
+              <div className="mt-10 pt-8 border-t border-border">
                 <p className="text-sm text-muted-foreground mb-3">Tags:</p>
                 <div className="flex flex-wrap gap-2">
                   {blog.tags.map((tag: string) => (
-                    <span key={tag} className="text-xs rounded-full border border-white/10 bg-white/5 px-3 py-1 text-muted-foreground">#{tag}</span>
+                    <span key={tag} className="text-xs rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">#{tag}</span>
                   ))}
                 </div>
               </div>
             )}
           </motion.article>
 
-          <div className="mt-12 pt-8 border-t border-white/10">
+          <div className="mt-12 pt-8 border-t border-border">
             <Button asChild variant="outline"><Link href="/blog">← More Articles</Link></Button>
           </div>
         </div>

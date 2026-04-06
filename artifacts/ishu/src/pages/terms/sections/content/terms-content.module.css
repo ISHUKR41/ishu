@@ -20,7 +20,7 @@
 .sectionTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: white;
+  color: hsl(var(--foreground));
   letter-spacing: -0.02em;
   margin: 0 0 0.875rem;
   display: flex;
@@ -92,7 +92,7 @@
 .contactTitle {
   font-size: 1rem;
   font-weight: 600;
-  color: white;
+  color: hsl(var(--foreground));
   margin: 0 0 0.5rem;
 }
 

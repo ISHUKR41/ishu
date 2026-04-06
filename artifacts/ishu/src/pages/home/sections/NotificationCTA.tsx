@@ -50,29 +50,29 @@ export function NotificationCTA() {
 
   return (
     <section className="py-20 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-indigo-900/20" />
-      
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5" />
+
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto rounded-3xl border border-white/10 bg-white/5 p-8 md:p-12 overflow-hidden relative backdrop-blur-md"
+          className="max-w-4xl mx-auto rounded-3xl border border-border bg-card/80 p-8 md:p-12 overflow-hidden relative backdrop-blur-md"
         >
           {/* Decorative background circle */}
-          <div className="absolute -top-24 -right-24 w-64 h-64 bg-green-500/20 rounded-full blur-3xl pointer-events-none" />
-          
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-green-500/10 rounded-full blur-3xl pointer-events-none" />
+
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/20 text-green-500 mb-6">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/15 text-green-500 mb-6">
                 <Phone className="h-6 w-6" />
               </div>
               <h2 className="text-3xl font-bold mb-4">Never Miss an Update</h2>
               <p className="text-muted-foreground mb-6">
                 Get instant WhatsApp notifications for new job postings, exam results, admit cards, and important educational news directly on your phone.
               </p>
-              
+
               <ul className="space-y-3 mb-8">
                 {["Instant alerts for new vacancies", "Direct links to exam results", "Daily educational news digest"].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm text-foreground/80">
@@ -82,29 +82,29 @@ export function NotificationCTA() {
                 ))}
               </ul>
             </div>
-            
-            <div className="bg-background rounded-2xl p-6 border border-white/10 shadow-2xl">
+
+            <div className="bg-background rounded-2xl p-6 border border-border shadow-xl">
               <h3 className="text-xl font-bold mb-4">Subscribe Now</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Input 
-                    placeholder="Your Name" 
+                  <Input
+                    placeholder="Your Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="bg-white/5 border-white/10 focus-visible:ring-green-500"
+                    className="focus-visible:ring-green-500"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Input 
-                    placeholder="WhatsApp Number (e.g. +91 9876543210)" 
+                  <Input
+                    placeholder="WhatsApp Number (e.g. +91 9876543210)"
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="bg-white/5 border-white/10 focus-visible:ring-green-500"
+                    className="focus-visible:ring-green-500"
                   />
                 </div>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full bg-green-600 hover:bg-green-700 text-white border-0 h-12 text-base"
                   disabled={subscribe.isPending}
                 >

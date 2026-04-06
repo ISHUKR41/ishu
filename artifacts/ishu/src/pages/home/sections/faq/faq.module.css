@@ -14,8 +14,8 @@
   gap: 0.4rem;
   padding: 0.3rem 0.875rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.5);
   font-size: 0.75rem;
   font-weight: 600;
   color: rgba(255,255,255,0.6);
@@ -27,14 +27,14 @@
 .sectionTitle {
   font-size: clamp(1.75rem, 5vw, 2.5rem);
   font-weight: 700;
-  color: white;
+  color: hsl(var(--foreground));
   letter-spacing: -0.025em;
   margin: 0 0 0.875rem;
 }
 
 .sectionDesc {
   font-size: clamp(0.9375rem, 2vw, 1.0625rem);
-  color: rgba(255,255,255,0.45);
+  color: hsl(var(--muted-foreground));
   max-width: 36rem;
   margin: 0 auto;
   line-height: 1.65;
@@ -51,7 +51,7 @@
 .item {
   border-radius: 0.875rem;
   border: 1px solid rgba(255,255,255,0.07);
-  background: rgba(255,255,255,0.02);
+  background: hsl(var(--muted)/0.2);
   overflow: hidden;
   transition: border-color 0.2s ease, background 0.2s ease;
 }
@@ -74,7 +74,7 @@
   text-align: left;
   font-size: 1rem;
   font-weight: 600;
-  color: white;
+  color: hsl(var(--foreground));
   line-height: 1.45;
   transition: color 0.2s ease;
 }
@@ -85,7 +85,7 @@
 
 .plusIcon {
   flex-shrink: 0;
-  color: rgba(255,255,255,0.4);
+  color: hsl(var(--muted-foreground));
   display: flex;
   align-items: center;
 }
@@ -97,7 +97,7 @@
 .answer {
   padding: 0 1.5rem 1.25rem;
   font-size: 0.9375rem;
-  color: rgba(255,255,255,0.5);
+  color: hsl(var(--muted-foreground));
   line-height: 1.7;
   margin: 0;
 }

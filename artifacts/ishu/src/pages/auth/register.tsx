@@ -43,44 +43,44 @@ export default function Register() {
     <>
       <PageMeta title="Create Account" description="Create your free Ishu account." />
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        <div className="absolute inset-0 dark:bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[linear-gradient(to_right,#00000005_1px,transparent_1px),linear-gradient(to_bottom,#00000005_1px,transparent_1px)] bg-[size:4rem_4rem]" />
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px]" />
 
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
           className="relative w-full max-w-md">
-          <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-8">
+          <div className="rounded-2xl border border-border bg-card/80 backdrop-blur-md p-8 shadow-xl">
             <div className="text-center mb-8">
               <Link href="/" className="inline-flex items-center gap-2 mb-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-blue-400">
                   <span className="font-bold text-white text-lg">I</span>
                 </div>
-                <span className="font-bold text-xl text-white">Ishu</span>
+                <span className="font-bold text-xl text-foreground">Ishu</span>
               </Link>
-              <h1 className="text-2xl font-bold text-white">Create Account</h1>
+              <h1 className="text-2xl font-bold text-foreground">Create Account</h1>
               <p className="text-muted-foreground text-sm mt-1">Join millions of students on Ishu</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" placeholder="Your full name" className="bg-white/5 border-white/10"
+                <Input id="name" placeholder="Your full name"
                   value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="your@email.com" className="bg-white/5 border-white/10"
+                <Input id="email" type="email" placeholder="your@email.com"
                   value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} required autoComplete="email" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="whatsapp">WhatsApp Number (optional)</Label>
-                <Input id="whatsapp" type="tel" placeholder="+91 XXXXXXXXXX" className="bg-white/5 border-white/10"
+                <Input id="whatsapp" type="tel" placeholder="+91 XXXXXXXXXX"
                   value={form.whatsappNumber} onChange={e => setForm(f => ({ ...f, whatsappNumber: e.target.value }))} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
                   <Input id="password" type={showPassword ? "text" : "password"} placeholder="Min 6 characters"
-                    className="bg-white/5 border-white/10 pr-10"
+                    className="pr-10"
                     value={form.password} onChange={e => setForm(f => ({ ...f, password: e.target.value }))} required />
                   <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     onClick={() => setShowPassword(!showPassword)}>
@@ -88,7 +88,7 @@ export default function Register() {
                   </button>
                 </div>
               </div>
-              <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 border-0 gap-2 mt-2"
+              <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 border-0 text-white gap-2 mt-2"
                 disabled={mutation.isPending}>
                 <UserPlus className="h-4 w-4" />
                 {mutation.isPending ? "Creating account..." : "Create Account"}
@@ -97,7 +97,7 @@ export default function Register() {
 
             <p className="text-center text-sm text-muted-foreground mt-6">
               Already have an account?{" "}
-              <Link href="/auth/login" className="text-blue-400 hover:text-blue-300 font-medium">Sign in</Link>
+              <Link href="/auth/login" className="text-blue-500 hover:text-blue-600 font-medium">Sign in</Link>
             </p>
           </div>
         </motion.div>

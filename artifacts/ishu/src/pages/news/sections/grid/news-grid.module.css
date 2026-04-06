@@ -26,8 +26,8 @@
 
 .card {
   border-radius: 1rem;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.3);
   text-decoration: none;
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@
 
 .card:hover {
   border-color: rgba(168,85,247,0.25);
-  background: rgba(255,255,255,0.05);
+  background: hsl(var(--muted)/0.5);
   transform: translateY(-2px);
 }
 
@@ -46,7 +46,7 @@
   height: 10rem;
   object-fit: cover;
   display: block;
-  background: rgba(255,255,255,0.05);
+  background: hsl(var(--muted)/0.5);
 }
 
 .imgPlaceholder {
@@ -91,7 +91,7 @@
   align-items: center;
   gap: 0.3rem;
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.35);
+  color: hsl(var(--muted-foreground)/0.55);
 }
 
 .title {
@@ -111,7 +111,7 @@
 
 .excerpt {
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.4);
+  color: hsl(var(--muted-foreground));
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -140,7 +140,7 @@
   align-items: center;
   gap: 0.25rem;
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.35);
+  color: hsl(var(--muted-foreground)/0.55);
   transition: color 0.15s;
 }
 
@@ -171,7 +171,7 @@
 .empty {
   text-align: center;
   padding: 5rem 1.5rem;
-  color: rgba(255,255,255,0.35);
+  color: hsl(var(--muted-foreground)/0.55);
 }
 
 .emptyIcon { margin: 0 auto 1rem; opacity: 0.4; }
@@ -189,8 +189,8 @@
 .pageBtn {
   padding: 0.55rem 1.125rem;
   border-radius: 0.5rem;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.04);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.4);
   color: rgba(255,255,255,0.65);
   font-size: 0.85rem;
   cursor: pointer;
@@ -206,5 +206,5 @@
 
 .pageInfo {
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.4);
+  color: hsl(var(--muted-foreground));
 }

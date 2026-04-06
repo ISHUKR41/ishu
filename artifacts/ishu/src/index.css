@@ -169,17 +169,17 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
+    background: hsl(var(--border));
     border-radius: 999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: hsl(var(--muted-foreground) / 0.4);
   }
 
   ::selection {
-    background: rgba(59, 130, 246, 0.3);
-    color: white;
+    background: rgba(59, 130, 246, 0.25);
+    color: hsl(var(--foreground));
   }
 }
 

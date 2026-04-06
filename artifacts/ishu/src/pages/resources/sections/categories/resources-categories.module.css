@@ -15,8 +15,8 @@
   gap: 0.4rem;
   padding: 0.5rem 1rem;
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.04);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.4);
   color: rgba(255,255,255,0.6);
   font-size: 0.875rem;
   font-weight: 500;
@@ -27,8 +27,8 @@
 
 .tab:hover {
   border-color: rgba(255,255,255,0.2);
-  color: white;
-  background: rgba(255,255,255,0.08);
+  color: hsl(var(--foreground));
+  background: hsl(var(--muted)/0.8);
 }
 
 .tabActive {

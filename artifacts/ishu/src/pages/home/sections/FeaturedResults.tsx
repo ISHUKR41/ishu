@@ -28,7 +28,7 @@ export function FeaturedResults() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {isLoading ? (
             Array(6).fill(0).map((_, i) => (
-              <div key={i} className="rounded-xl border border-white/10 bg-white/5 p-6 space-y-4">
+              <div key={i} className="rounded-xl border border-border bg-card p-6 space-y-4">
                 <Skeleton className="h-6 w-3/4" />
                 <Skeleton className="h-4 w-full" />
                 <Skeleton className="h-4 w-5/6" />
@@ -48,40 +48,40 @@ export function FeaturedResults() {
                 transition={{ duration: 0.4, delay: index * 0.1 }}
               >
                 <Link href={`/results/${result.id}`}>
-                  <div className="group rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 p-6 flex flex-col h-full cursor-pointer overflow-hidden relative">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <div className="group rounded-xl border border-border bg-card hover:bg-accent/50 transition-all duration-300 p-6 flex flex-col h-full cursor-pointer overflow-hidden relative">
+                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                       <Briefcase className="h-24 w-24" />
                     </div>
-                    
+
                     <div className="flex items-center gap-2 mb-4 relative z-10">
-                      <Badge variant="secondary" className="bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 border-blue-500/20">
+                      <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 border-blue-500/20">
                         {result.category}
                       </Badge>
                       {result.state && (
-                        <Badge variant="outline" className="border-white/10 text-muted-foreground">
+                        <Badge variant="outline" className="text-muted-foreground">
                           {result.state}
                         </Badge>
                       )}
                     </div>
-                    
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors relative z-10 line-clamp-2">
+
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-blue-500 transition-colors relative z-10 line-clamp-2">
                       {result.title}
                     </h3>
-                    
+
                     <p className="text-sm text-muted-foreground mb-6 flex-grow relative z-10 line-clamp-2">
                       {result.shortDescription}
                     </p>
-                    
-                    <div className="flex flex-wrap items-center gap-4 mt-auto pt-4 border-t border-white/10 text-sm text-muted-foreground relative z-10">
+
+                    <div className="flex flex-wrap items-center gap-4 mt-auto pt-4 border-t border-border text-sm text-muted-foreground relative z-10">
                       {result.lastDate && (
                         <div className="flex items-center gap-1.5">
-                          <Calendar className="h-4 w-4 text-blue-400" />
+                          <Calendar className="h-4 w-4 text-blue-500" />
                           <span>Last Date: {new Date(result.lastDate).toLocaleDateString()}</span>
                         </div>
                       )}
                       {result.totalPosts && (
                         <div className="flex items-center gap-1.5">
-                          <FileText className="h-4 w-4 text-orange-400" />
+                          <FileText className="h-4 w-4 text-orange-500" />
                           <span>{result.totalPosts} Posts</span>
                         </div>
                       )}

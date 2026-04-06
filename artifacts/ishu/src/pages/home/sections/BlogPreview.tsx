@@ -11,7 +11,7 @@ export function BlogPreview() {
   const blogs = data?.posts || [];
 
   return (
-    <section className="py-20 md:py-32 relative bg-white/5 border-t border-white/10">
+    <section className="py-20 md:py-32 relative bg-muted/30 border-t border-border">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
           <div className="max-w-2xl">
@@ -47,22 +47,22 @@ export function BlogPreview() {
               >
                 <Link href={`/blog/${blog.slug}`}>
                   <div className="group cursor-pointer flex flex-col h-full">
-                    <div className="relative h-56 rounded-xl overflow-hidden mb-6 bg-muted border border-white/10">
+                    <div className="relative h-56 rounded-xl overflow-hidden mb-6 bg-muted border border-border">
                       {blog.imageUrl ? (
-                        <img 
-                          src={blog.imageUrl} 
+                        <img
+                          src={blog.imageUrl}
                           alt={blog.title}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-white/5">
-                          <span className="text-4xl font-display font-bold text-white/20">Blog</span>
+                        <div className="w-full h-full flex items-center justify-center bg-muted">
+                          <span className="text-4xl font-display font-bold text-muted-foreground/30">Blog</span>
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="flex items-center gap-3 mb-4 text-xs text-muted-foreground">
-                      <Badge variant="outline" className="text-blue-400 border-blue-400/20 bg-blue-400/10">
+                      <Badge variant="outline" className="text-blue-600 dark:text-blue-400 border-blue-400/30 bg-blue-400/10">
                         {blog.category}
                       </Badge>
                       <div className="flex items-center gap-1">
@@ -74,16 +74,16 @@ export function BlogPreview() {
                         <span>{blog.author}</span>
                       </div>
                     </div>
-                    
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
+
+                    <h3 className="text-xl font-bold mb-3 group-hover:text-blue-500 transition-colors line-clamp-2">
                       {blog.title}
                     </h3>
-                    
+
                     <p className="text-muted-foreground text-sm line-clamp-3 mb-4">
                       {blog.excerpt}
                     </p>
-                    
-                    <div className="mt-auto text-sm font-medium text-blue-400 flex items-center gap-1 group-hover:gap-2 transition-all">
+
+                    <div className="mt-auto text-sm font-medium text-blue-500 flex items-center gap-1 group-hover:gap-2 transition-all">
                       Read Article <ArrowRight className="h-4 w-4" />
                     </div>
                   </div>

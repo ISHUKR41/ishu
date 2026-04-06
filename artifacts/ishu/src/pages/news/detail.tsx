@@ -57,15 +57,15 @@ export default function NewsDetail() {
                 </span>
               )}
               {article.category && (
-                <span className="flex items-center gap-1 text-xs text-muted-foreground border border-white/10 rounded-full px-2.5 py-1 bg-white/5 capitalize">
+                <span className="flex items-center gap-1 text-xs text-muted-foreground border border-border rounded-full px-2.5 py-1 bg-card capitalize">
                   <Tag className="h-3 w-3" /> {article.category.replace(/-/g, " ")}
                 </span>
               )}
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">{article.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">{article.title}</h1>
 
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 pb-8 border-b border-white/10">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 pb-8 border-b border-border">
               <div className="flex items-center gap-1.5">
                 <Clock className="h-4 w-4" />
                 {new Date(article.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
@@ -87,7 +87,7 @@ export default function NewsDetail() {
             </div>
           </motion.article>
 
-          <div className="mt-12 pt-8 border-t border-white/10">
+          <div className="mt-12 pt-8 border-t border-border">
             <Button asChild variant="outline">
               <Link href="/news">← More News</Link>
             </Button>

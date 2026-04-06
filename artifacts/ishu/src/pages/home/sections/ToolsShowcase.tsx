@@ -16,7 +16,7 @@ const tools = [
 
 export function ToolsShowcase() {
   return (
-    <section className="py-20 md:py-32 bg-white/5 relative border-y border-white/10">
+    <section className="py-20 md:py-32 bg-muted/30 relative border-y border-border">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Every Student Tool You Need</h2>
@@ -35,11 +35,11 @@ export function ToolsShowcase() {
               transition={{ duration: 0.4, delay: index * 0.05 }}
             >
               <Link href={`/tools/${tool.title.toLowerCase().replace(/ /g, '-')}`}>
-                <div className="group rounded-xl border border-white/10 bg-background hover:bg-white/5 transition-all p-6 flex flex-col items-center text-center cursor-pointer h-full">
+                <div className="group rounded-xl border border-border bg-card hover:bg-accent/50 transition-all p-6 flex flex-col items-center text-center cursor-pointer h-full">
                   <div className={`w-16 h-16 rounded-2xl ${tool.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                     <tool.icon className={`h-8 w-8 ${tool.color}`} />
                   </div>
-                  <h3 className="text-lg font-bold mb-2 group-hover:text-blue-400 transition-colors">{tool.title}</h3>
+                  <h3 className="text-lg font-bold mb-2 group-hover:text-blue-500 transition-colors">{tool.title}</h3>
                   <p className="text-sm text-muted-foreground">{tool.description}</p>
                 </div>
               </Link>
@@ -48,7 +48,7 @@ export function ToolsShowcase() {
         </div>
 
         <div className="mt-12 text-center">
-          <Button size="lg" className="bg-white text-black hover:bg-gray-200 border-0 rounded-full px-8" asChild>
+          <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90 border-0 rounded-full px-8" asChild>
             <Link href="/tools" className="flex items-center gap-2">
               Explore All 100+ Tools <ArrowRight className="h-4 w-4" />
             </Link>

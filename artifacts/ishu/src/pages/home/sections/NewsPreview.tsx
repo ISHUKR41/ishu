@@ -28,7 +28,7 @@ export function NewsPreview() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {isLoading ? (
             Array(3).fill(0).map((_, i) => (
-              <div key={i} className="rounded-xl border border-white/10 bg-white/5 overflow-hidden flex flex-col h-[400px]">
+              <div key={i} className="rounded-xl border border-border bg-card overflow-hidden flex flex-col h-[400px]">
                 <Skeleton className="h-48 w-full rounded-none" />
                 <div className="p-6 space-y-4 flex-1">
                   <Skeleton className="h-6 w-full" />
@@ -50,17 +50,17 @@ export function NewsPreview() {
                 transition={{ duration: 0.4, delay: index * 0.1 }}
               >
                 <Link href={`/news/${article.id}`}>
-                  <div className="group rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden flex flex-col h-full cursor-pointer">
+                  <div className="group rounded-xl border border-border bg-card hover:bg-accent/50 transition-all duration-300 overflow-hidden flex flex-col h-full cursor-pointer">
                     <div className="relative h-48 overflow-hidden bg-muted">
                       {article.imageUrl ? (
-                        <img 
-                          src={article.imageUrl} 
+                        <img
+                          src={article.imageUrl}
                           alt={article.title}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-white/5">
-                          <span className="text-4xl font-display font-bold text-white/20">Ishu News</span>
+                        <div className="w-full h-full flex items-center justify-center bg-muted">
+                          <span className="text-4xl font-display font-bold text-muted-foreground/30">Ishu News</span>
                         </div>
                       )}
                       <div className="absolute top-4 left-4">
@@ -69,17 +69,17 @@ export function NewsPreview() {
                         </Badge>
                       </div>
                     </div>
-                    
+
                     <div className="p-6 flex flex-col flex-grow">
-                      <h3 className="text-xl font-bold mb-3 group-hover:text-orange-400 transition-colors line-clamp-2">
+                      <h3 className="text-xl font-bold mb-3 group-hover:text-orange-500 transition-colors line-clamp-2">
                         {article.title}
                       </h3>
-                      
+
                       <p className="text-sm text-muted-foreground mb-6 line-clamp-3 flex-grow">
                         {article.shortDescription}
                       </p>
-                      
-                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10 text-xs text-muted-foreground">
+
+                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-border text-xs text-muted-foreground">
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           <span>{new Date(article.createdAt).toLocaleDateString()}</span>

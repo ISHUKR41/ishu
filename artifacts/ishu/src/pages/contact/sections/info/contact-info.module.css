@@ -34,7 +34,7 @@
 
 .label {
   font-size: 0.7rem;
-  color: rgba(255,255,255,0.4);
+  color: hsl(var(--muted-foreground));
   margin-bottom: 0.15rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -42,7 +42,7 @@
 
 .value {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.85);
+  color: hsl(var(--foreground)/0.85);
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s;
@@ -60,7 +60,7 @@
 
 .socialTitle {
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.4);
+  color: hsl(var(--muted-foreground));
   margin-bottom: 0.875rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -77,8 +77,8 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.45rem 0.875rem;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: hsl(var(--muted)/0.5);
+  border: 1px solid hsl(var(--border));
   border-radius: 0.5rem;
   font-size: 0.8rem;
   color: rgba(255,255,255,0.6);
@@ -87,7 +87,7 @@
 }
 
 .socialLink:hover {
-  background: rgba(255,255,255,0.1);
+  background: hsl(var(--muted));
   color: #fff;
   border-color: rgba(255,255,255,0.2);
 }

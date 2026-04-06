@@ -46,7 +46,7 @@ export default function ResultDetail() {
     <>
       <PageMeta title={result.title} description={result.shortDescription ?? ""} />
       <div className="min-h-screen bg-background">
-        <div className="border-b border-white/10 bg-gradient-to-b from-blue-950/30 to-background py-10">
+        <div className="border-b border-border bg-gradient-to-b from-primary/5 to-background py-10">
           <div className="container mx-auto px-4 md:px-6">
             <Link href="/results" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-blue-400 transition-colors mb-6">
               <ArrowLeft className="h-4 w-4" /> Back to Results
@@ -57,7 +57,7 @@ export default function ResultDetail() {
                   {result.status.replace("_", " ")}
                 </span>
                 {result.category && (
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-muted-foreground uppercase">
+                  <span className="rounded-full border border-border bg-card px-3 py-1 text-sm text-muted-foreground uppercase">
                     {result.category}
                   </span>
                 )}
@@ -67,7 +67,7 @@ export default function ResultDetail() {
                   </div>
                 )}
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">{result.title}</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{result.title}</h1>
               <p className="text-muted-foreground text-lg max-w-3xl">{result.shortDescription}</p>
             </motion.div>
           </div>
@@ -77,14 +77,14 @@ export default function ResultDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                className="rounded-xl border border-white/10 bg-white/5 p-6">
+                className="rounded-xl border border-border bg-card p-6">
                 <h2 className="text-xl font-semibold text-foreground mb-4">About This Exam</h2>
                 <p className="text-muted-foreground leading-relaxed">{result.fullDescription}</p>
               </motion.div>
 
               {result.eligibility && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                  className="rounded-xl border border-white/10 bg-white/5 p-6">
+                  className="rounded-xl border border-border bg-card p-6">
                   <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-green-400" /> Eligibility
                   </h2>
@@ -94,7 +94,7 @@ export default function ResultDetail() {
 
               {result.requiredDocuments && (result.requiredDocuments as string[]).length > 0 && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                  className="rounded-xl border border-white/10 bg-white/5 p-6">
+                  className="rounded-xl border border-border bg-card p-6">
                   <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
                     <FileText className="h-5 w-5 text-blue-400" /> Required Documents
                   </h2>
@@ -112,7 +112,7 @@ export default function ResultDetail() {
 
             <div className="space-y-6">
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
-                className="rounded-xl border border-white/10 bg-white/5 p-6">
+                className="rounded-xl border border-border bg-card p-6">
                 <h2 className="text-lg font-semibold text-foreground mb-4">Key Details</h2>
                 <div className="space-y-4">
                   {result.totalPosts && (

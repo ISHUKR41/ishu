@@ -47,18 +47,18 @@ export function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-8 relative"
+              className="bg-card border border-border rounded-2xl p-8 relative"
             >
               <div className="flex gap-1 mb-6 text-orange-400">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-current" />
                 ))}
               </div>
-              
+
               <p className="text-foreground/90 italic mb-8 relative z-10">
                 "{testimonial.content}"
               </p>
-              
+
               <div className="flex items-center gap-4 mt-auto">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-lg">
                   {testimonial.avatar}

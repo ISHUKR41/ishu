@@ -55,14 +55,14 @@ export default function ToolDetail() {
     <>
       <PageMeta title={`${tool.name} - Free Online Tool | Ishu`} description={tool.description ?? ""} />
       <div className="min-h-screen bg-background">
-        <div className="border-b border-white/10 bg-gradient-to-b from-indigo-950/30 to-background py-10">
+        <div className="border-b border-border bg-gradient-to-b from-primary/5 to-background py-10">
           <div className="container mx-auto px-4 md:px-6">
             <Link href="/tools" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-blue-400 transition-colors mb-6">
               <ArrowLeft className="h-4 w-4" /> Back to Tools
             </Link>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <div className="flex items-center gap-3 mb-4">
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-muted-foreground capitalize">
+                <span className="rounded-full border border-border bg-card px-3 py-1 text-sm text-muted-foreground capitalize">
                   {tool.category}
                 </span>
                 <span className="rounded-full border border-green-500/30 bg-green-500/10 px-3 py-1 text-xs text-green-400 flex items-center gap-1">
@@ -74,7 +74,7 @@ export default function ToolDetail() {
                   </span>
                 )}
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">{tool.name}</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">{tool.name}</h1>
               <p className="text-muted-foreground text-lg max-w-2xl">{tool.description}</p>
             </motion.div>
           </div>
@@ -84,7 +84,7 @@ export default function ToolDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                className="rounded-xl border border-white/10 bg-white/5 p-8 text-center">
+                className="rounded-xl border border-border bg-card p-8 text-center">
                 <div className="mb-6">
                   <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600/30 to-indigo-600/30 border border-blue-500/20 mb-4">
                     <Upload className="h-7 w-7 text-blue-400" />
@@ -94,7 +94,7 @@ export default function ToolDetail() {
                 </div>
 
                 <div
-                  className="border-2 border-dashed border-white/20 rounded-xl p-10 mb-6 cursor-pointer hover:border-blue-500/50 hover:bg-blue-500/5 transition-all"
+                  className="border-2 border-dashed border-border rounded-xl p-10 mb-6 cursor-pointer hover:border-blue-500/50 hover:bg-blue-500/5 transition-all"
                   onClick={() => document.getElementById("file-input")?.click()}
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={(e) => {
@@ -146,7 +146,7 @@ export default function ToolDetail() {
 
             <div className="space-y-6">
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
-                className="rounded-xl border border-white/10 bg-white/5 p-6">
+                className="rounded-xl border border-border bg-card p-6">
                 <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                   <Info className="h-5 w-5 text-blue-400" /> How to Use
                 </h2>
@@ -154,7 +154,7 @@ export default function ToolDetail() {
               </motion.div>
 
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 }}
-                className="rounded-xl border border-white/10 bg-white/5 p-6">
+                className="rounded-xl border border-border bg-card p-6">
                 <h2 className="text-lg font-semibold text-foreground mb-4">Features</h2>
                 <ul className="space-y-2">
                   {features.map((f, i) => (
@@ -167,7 +167,7 @@ export default function ToolDetail() {
               </motion.div>
 
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
-                className="rounded-xl border border-white/10 bg-white/5 p-6">
+                className="rounded-xl border border-border bg-card p-6">
                 <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
                   <BarChart2 className="h-5 w-5 text-blue-400" /> Stats
                 </h2>

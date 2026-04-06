@@ -37,7 +37,7 @@
 .title {
   font-size: clamp(2rem, 6vw, 3.5rem);
   font-weight: 800;
-  color: white;
+  color: hsl(var(--foreground));
   margin: 0 0 1.25rem;
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -52,7 +52,7 @@
 
 .desc {
   font-size: 1.125rem;
-  color: rgba(255,255,255,0.55);
+  color: hsl(var(--muted-foreground));
   line-height: 1.7;
   margin: 0 0 2.5rem;
 }
@@ -64,8 +64,8 @@
   max-width: 36rem;
   margin: 0 auto;
   border-radius: 0.875rem;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.05);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.5);
   backdrop-filter: blur(8px);
   overflow: hidden;
   transition: border-color 0.2s ease;
@@ -77,7 +77,7 @@
 
 .searchIcon {
   padding: 0 1rem;
-  color: rgba(255,255,255,0.35);
+  color: hsl(var(--muted-foreground)/0.55);
   flex-shrink: 0;
 }
 
@@ -88,9 +88,9 @@
   outline: none;
   padding: 0.875rem 0;
   font-size: 0.9375rem;
-  color: white;
+  color: hsl(var(--foreground));
 }
 
 .searchInput::placeholder {
-  color: rgba(255,255,255,0.3);
+  color: hsl(var(--muted-foreground)/0.5);
 }

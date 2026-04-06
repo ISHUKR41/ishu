@@ -96,7 +96,7 @@
 
 .subtitle {
   font-size: clamp(0.95rem, 2vw, 1.125rem);
-  color: rgba(255,255,255,0.55);
+  color: hsl(var(--muted-foreground));
   max-width: 36rem;
   margin: 0 auto 2rem;
   line-height: 1.7;
@@ -116,7 +116,7 @@
   align-items: center;
   gap: 0.4rem;
   font-size: 0.8rem;
-  color: rgba(255,255,255,0.5);
+  color: hsl(var(--muted-foreground));
 }
 
 .trustIcon {
