@@ -9,8 +9,8 @@ export default function About() {
   return (
     <>
       <PageMeta
-        title="About Ishu - India's Premier Education & Tools Platform"
-        description="Learn about Ishu - India's #1 Education, Government Results, Tools & News Platform empowering 10M+ students across India with free tools, exam results, and career guidance."
+        title="About Ishu - Education, Results, Tools & News Platform"
+        description="Learn about Ishu, an education platform for Indian students with government exam results, practical tools, learning resources, and career updates."
         keywords="about ishu, ishu education platform, india education platform, government exam results, ishu team, ishu mission"
         canonical="https://ishu.in/about"
         structuredData={{
@@ -20,7 +20,7 @@ export default function About() {
           url: "https://ishu.in",
           logo: "https://ishu.in/favicon.svg",
           description:
-            "India's Premier Education, Government Results, Tools & News Platform empowering millions of students.",
+            "Education platform for Indian students with exam results, tools, resources, and career updates.",
           address: {
             "@type": "PostalAddress",
             addressCountry: "IN",
@@ -31,11 +31,6 @@ export default function About() {
             contactType: "customer service",
             areaServed: "IN",
           },
-          sameAs: [
-            "https://twitter.com/ishu",
-            "https://instagram.com/ishu",
-            "https://youtube.com/ishu",
-          ],
         }}
       />
       <div className={styles.page}>

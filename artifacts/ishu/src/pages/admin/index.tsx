@@ -5,6 +5,7 @@ import { PageMeta } from "@/components/layout/PageMeta";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { Users, FileText, Newspaper, BookOpen, MessageSquare, TrendingUp, Bell, Activity } from "lucide-react";
+import type { ReactElement } from "react";
 
 function StatsCard({ icon: Icon, label, value, color, bg }: { icon: any; label: string; value?: number | string; color: string; bg: string }) {
   return (
@@ -22,6 +23,8 @@ function StatsCard({ icon: Icon, label, value, color, bg }: { icon: any; label: 
 
 function Dashboard() {
   const { data: stats, isLoading } = useGetAdminStats();
+  const recentActivityCount = stats?.recentActivity?.length ?? 0;
+  const totalContent = (stats?.totalResults ?? 0) + (stats?.totalNews ?? 0) + (stats?.totalBlogs ?? 0);
 
   return (
     <div>
@@ -37,9 +40,9 @@ function Dashboard() {
           <StatsCard icon={Newspaper} label="News Articles" value={stats?.totalNews} color="text-purple-400" bg="bg-purple-500/20" />
           <StatsCard icon={BookOpen} label="Blog Posts" value={stats?.totalBlogs} color="text-orange-400" bg="bg-orange-500/20" />
           <StatsCard icon={MessageSquare} label="Contact Messages" value={stats?.totalContacts} color="text-red-400" bg="bg-red-500/20" />
-          <StatsCard icon={Bell} label="Subscribers" value={stats?.totalSubscribers} color="text-yellow-400" bg="bg-yellow-500/20" />
-          <StatsCard icon={Activity} label="Active Results" value={stats?.activeResults} color="text-teal-400" bg="bg-teal-500/20" />
-          <StatsCard icon={TrendingUp} label="Trending News" value={stats?.trendingNews} color="text-pink-400" bg="bg-pink-500/20" />
+          <StatsCard icon={Bell} label="Subscribers" value={stats?.totalNotificationSubscribers} color="text-yellow-400" bg="bg-yellow-500/20" />
+          <StatsCard icon={Activity} label="Recent Activity" value={recentActivityCount} color="text-teal-400" bg="bg-teal-500/20" />
+          <StatsCard icon={TrendingUp} label="Total Content" value={totalContent} color="text-pink-400" bg="bg-pink-500/20" />
         </div>
       )}
     </div>
@@ -86,12 +89,12 @@ function UsersTable() {
 }
 
 function ContactsTable() {
-  const { data, isLoading } = useListAdminContacts({ page: 1, limit: 20 });
-  const contacts = data?.contacts ?? [];
+  const { data, isLoading } = useListAdminContacts();
+  const contacts = data ?? [];
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-foreground mb-6">Contact Messages ({data?.total ?? 0})</h2>
+      <h2 className="text-2xl font-bold text-foreground mb-6">Contact Messages ({contacts.length})</h2>
       {isLoading ? <Skeleton className="h-64 rounded-xl" /> : contacts.length === 0 ? (
         <div className="rounded-xl border border-border bg-card p-8 text-center text-muted-foreground">No messages yet.</div>
       ) : (
@@ -120,7 +123,7 @@ export default function AdminDashboard() {
   const [matchSection, params] = useRoute("/admin/:section");
   const section = matchSection ? params?.section : "dashboard";
 
-  const SECTIONS: Record<string, () => JSX.Element> = {
+  const SECTIONS: Record<string, () => ReactElement> = {
     dashboard: Dashboard,
     users: UsersTable,
     contacts: ContactsTable,

@@ -4,7 +4,7 @@ import { resourcesData, resourceCategories } from "./data";
 const router: IRouter = Router();
 
 router.get("/resources", async (req, res): Promise<void> => {
-  const { category, search, page = "1", limit = "20" } = req.query as Record<string, string>;
+  const { category, search, featured, page = "1", limit = "20" } = req.query as Record<string, string>;
   const pageNum = Math.max(1, parseInt(page, 10) || 1);
   const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10) || 20));
   const offset = (pageNum - 1) * limitNum;
@@ -13,6 +13,10 @@ router.get("/resources", async (req, res): Promise<void> => {
 
   if (category && category !== "all") {
     filtered = filtered.filter((r) => r.type === category);
+  }
+
+  if (featured === "true") {
+    filtered = filtered.filter((r) => Boolean(r.featured));
   }
 
   if (search) {

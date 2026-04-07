@@ -1,11 +1,17 @@
 import { useRoute, Link } from "wouter";
 import { motion } from "framer-motion";
-import { useGetTool as useGetToolBySlug } from "@workspace/api-client-react";
+import {
+  useGetTool as useGetToolBySlug,
+  useMergePdf,
+  useCompressPdf,
+  useSplitPdf,
+} from "@workspace/api-client-react";
 import { PageMeta } from "@/components/layout/PageMeta";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, Upload, Download, Zap, AlertCircle, Info, BarChart2 } from "lucide-react";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const HOW_TO_USE: Record<string, string> = {
   "merge-pdf": "Upload two or more PDF files, arrange them in order, then click Process to combine them into a single PDF.",
@@ -24,11 +30,106 @@ const FEATURES: Record<string, string[]> = {
 export default function ToolDetail() {
   const [, params] = useRoute("/tools/:slug");
   const slug = params?.slug ?? "";
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [pageRanges, setPageRanges] = useState("1-1");
+  const [quality, setQuality] = useState<"low" | "medium" | "high">("medium");
+  const { toast } = useToast();
+
+  const mergePdf = useMergePdf();
+  const compressPdf = useCompressPdf();
+  const splitPdf = useSplitPdf();
 
   const { data: tool, isLoading, error } = useGetToolBySlug(slug, {
     query: { queryKey: ["tool", slug], enabled: !!slug },
   });
+
+  const isMergeTool = slug === "merge-pdf";
+  const isSplitTool = slug === "split-pdf";
+  const isCompressTool = slug === "compress-pdf";
+  const supportsServerProcessing = isMergeTool || isSplitTool || isCompressTool;
+
+  const isPending = mergePdf.isPending || compressPdf.isPending || splitPdf.isPending;
+
+  const canProcess =
+    supportsServerProcessing &&
+    (isMergeTool ? selectedFiles.length >= 2 : selectedFiles.length >= 1) &&
+    (!isSplitTool || Boolean(pageRanges.trim()));
+
+  const fileLabel =
+    selectedFiles.length === 0
+      ? "No file selected"
+      : selectedFiles.length === 1
+      ? selectedFiles[0].name
+      : `${selectedFiles.length} files selected`;
+
+  const pickFiles = (files: File[]) => {
+    if (isMergeTool) {
+      setSelectedFiles(files);
+      return;
+    }
+    setSelectedFiles(files.slice(0, 1));
+  };
+
+  const downloadBlob = (blob: Blob, filename: string) => {
+    const href = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = href;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(href);
+  };
+
+  const processFile = async () => {
+    if (!tool) {
+      return;
+    }
+
+    if (!supportsServerProcessing) {
+      toast({
+        title: "Backend not configured",
+        description: "This tool currently has discovery/details support, but no processing endpoint is mapped yet.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!canProcess) {
+      toast({
+        title: "Missing input",
+        description: isMergeTool
+          ? "Please upload at least 2 PDF files for merge."
+          : isSplitTool
+          ? "Please upload a PDF and provide page ranges."
+          : "Please upload a PDF file to continue.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      let blob: Blob;
+      let filename = `${tool.slug}-${Date.now()}.pdf`;
+
+      if (isMergeTool) {
+        blob = await mergePdf.mutateAsync({ data: { files: selectedFiles } });
+        filename = `merged-${Date.now()}.pdf`;
+      } else if (isSplitTool) {
+        blob = await splitPdf.mutateAsync({ data: { file: selectedFiles[0], pages: pageRanges } });
+        filename = `split-${Date.now()}.pdf`;
+      } else {
+        blob = await compressPdf.mutateAsync({ data: { file: selectedFiles[0], quality } });
+        filename = `compressed-${Date.now()}.pdf`;
+      }
+
+      downloadBlob(blob, filename);
+      toast({ title: "Success", description: "File processed and download started." });
+    } catch (e) {
+      const message = e instanceof Error ? e.message : "Unable to process this file.";
+      toast({ title: "Processing failed", description: message, variant: "destructive" });
+    }
+  };
 
   if (isLoading) {
     return (
@@ -99,18 +200,19 @@ export default function ToolDetail() {
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={(e) => {
                     e.preventDefault();
-                    const file = e.dataTransfer.files[0];
-                    if (file) setSelectedFile(file);
+                    pickFiles(Array.from(e.dataTransfer.files));
                   }}
                 >
-                  {selectedFile ? (
+                  {selectedFiles.length > 0 ? (
                     <div className="flex items-center justify-center gap-3 text-foreground">
                       <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
                         <Upload className="h-5 w-5 text-blue-400" />
                       </div>
                       <div className="text-left">
-                        <p className="font-medium">{selectedFile.name}</p>
-                        <p className="text-xs text-muted-foreground">{(selectedFile.size / 1024).toFixed(1)} KB</p>
+                        <p className="font-medium">{fileLabel}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {(selectedFiles.reduce((sum, file) => sum + file.size, 0) / 1024).toFixed(1)} KB total
+                        </p>
                       </div>
                     </div>
                   ) : (
@@ -123,23 +225,57 @@ export default function ToolDetail() {
                 <input
                   id="file-input"
                   type="file"
+                  accept="application/pdf"
+                  multiple={isMergeTool}
                   className="hidden"
-                  onChange={(e) => e.target.files?.[0] && setSelectedFile(e.target.files[0])}
+                  onChange={(e) => pickFiles(Array.from(e.target.files ?? []))}
                 />
 
-                <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4 mb-6 flex items-start gap-3">
-                  <AlertCircle className="h-5 w-5 text-yellow-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-yellow-300/90 text-left">
-                    Server-side processing is coming soon. This tool UI is ready — full processing will be available after deployment.
-                  </p>
-                </div>
+                {!supportsServerProcessing && (
+                  <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4 mb-6 flex items-start gap-3">
+                    <AlertCircle className="h-5 w-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-yellow-300/90 text-left">
+                      Processing endpoint for this tool is not mapped yet. Live processing is available for Merge PDF, Split PDF, and Compress PDF.
+                    </p>
+                  </div>
+                )}
+
+                {isSplitTool && (
+                  <div className="mb-4 text-left">
+                    <label className="block text-sm text-muted-foreground mb-2" htmlFor="page-ranges">Page ranges</label>
+                    <input
+                      id="page-ranges"
+                      className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                      value={pageRanges}
+                      onChange={(e) => setPageRanges(e.target.value)}
+                      placeholder="e.g. 1-3,5"
+                    />
+                  </div>
+                )}
+
+                {isCompressTool && (
+                  <div className="mb-4 text-left">
+                    <label className="block text-sm text-muted-foreground mb-2" htmlFor="quality">Compression level</label>
+                    <select
+                      id="quality"
+                      className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                      value={quality}
+                      onChange={(e) => setQuality(e.target.value as "low" | "medium" | "high")}
+                    >
+                      <option value="low">Low (smaller file)</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High (better quality)</option>
+                    </select>
+                  </div>
+                )}
 
                 <Button
                   size="lg"
                   className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 border-0 gap-2"
-                  disabled={!selectedFile}
+                  disabled={!canProcess || isPending}
+                  onClick={processFile}
                 >
-                  <Download className="h-4 w-4" /> Process & Download
+                  <Download className="h-4 w-4" /> {isPending ? "Processing..." : "Process & Download"}
                 </Button>
               </motion.div>
             </div>

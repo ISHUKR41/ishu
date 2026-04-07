@@ -1,18 +1,19 @@
 import { PageMeta } from "@/components/layout/PageMeta";
 import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
+import { stateModule } from "../backend";
 
 export default function rajasthanResultsPage() {
   return (
     <>
       <PageMeta
-        title="Rajasthan Exam Results - Latest Updates | Ishu"
-        description="Get the latest Rajasthan government exam results, notifications, and updates. Stay informed about all state-level examinations and vacancies."
-        keywords="Rajasthan results, Rajasthan exam results, Rajasthan government jobs, Rajasthan vacancies, state PSC results"
-        canonical="https://ishu.in/results/states/rajasthan"
+        title={stateModule.title}
+        description={stateModule.description}
+        keywords={stateModule.keywords}
+        canonical={stateModule.canonical}
       />
-      <StateComingSoon 
-        stateName="Rajasthan"
-        stateCode="rajasthan"
+      <StateComingSoon
+        stateName={stateModule.stateName}
+        stateCode={stateModule.stateCode}
       />
     </>
   );

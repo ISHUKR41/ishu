@@ -1,22 +1,12 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Heart, Phone, Mail } from "lucide-react";
+import { useTeamProfile } from "./backend/useTeamProfile";
 import styles from "./about-team.module.css";
 
-const TEAM = [
-  {
-    name: "Ishu Kumar",
-    role: "Founder & CEO",
-    bio: "Passionate about making quality education accessible to every student across India — from government exam results to free PDF tools.",
-    contact: {
-      phone: "+91 8986985813",
-      email: "ishukryk@gmail.com",
-      whatsapp: "918986985813",
-    },
-  },
-];
-
 export function AboutTeam() {
+  const TEAM = useTeamProfile();
+
   return (
     <section className={styles.section}>
       <div className={styles.inner}>

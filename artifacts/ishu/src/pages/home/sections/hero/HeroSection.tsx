@@ -4,6 +4,8 @@ import { ArrowRight, CheckCircle, Wrench, FileText, Zap } from "lucide-react";
 import { useGetResultStats, useListTools } from "@workspace/api-client-react";
 import styles from "./hero.module.css";
 
+const easing: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -17,7 +19,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.7, ease: easing },
   },
 };
 
@@ -29,6 +31,7 @@ export function HeroSection() {
     ? resultStats.totalActive + resultStats.totalUpcoming + resultStats.totalExpired
     : null;
   const totalTools = Array.isArray(toolsData) ? toolsData.length : null;
+  const toolsLine = totalTools ? `${totalTools}+ free PDF & AI tools` : "free PDF & AI tools";
 
   return (
     <section className={styles.heroSection}>
@@ -46,7 +49,7 @@ export function HeroSection() {
         >
           <motion.div variants={itemVariants} className={styles.badge}>
             <span className={styles.pulseDot} />
-            India's #1 Education & Government Jobs Platform
+            Education & Government Jobs Platform
           </motion.div>
 
           <motion.h1 variants={itemVariants} className={styles.headline}>
@@ -55,8 +58,8 @@ export function HeroSection() {
           </motion.h1>
 
           <motion.p variants={itemVariants} className={styles.subheadline}>
-            Government exam results, {totalTools ? `${totalTools}+` : "46+"} free PDF & AI tools,
-            breaking education news, and expert career guidance —
+            Government exam results, {toolsLine},
+            breaking education news, and expert career guidance -
             all in one place for students across India.
           </motion.p>
 

@@ -1,18 +1,19 @@
 import { PageMeta } from "@/components/layout/PageMeta";
 import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
+import { stateModule } from "../backend";
 
 export default function tripuraResultsPage() {
   return (
     <>
       <PageMeta
-        title="Tripura Exam Results - Latest Updates | Ishu"
-        description="Get the latest Tripura government exam results, notifications, and updates. Stay informed about all state-level examinations and vacancies."
-        keywords="Tripura results, Tripura exam results, Tripura government jobs, Tripura vacancies, state PSC results"
-        canonical="https://ishu.in/results/states/tripura"
+        title={stateModule.title}
+        description={stateModule.description}
+        keywords={stateModule.keywords}
+        canonical={stateModule.canonical}
       />
-      <StateComingSoon 
-        stateName="Tripura"
-        stateCode="tripura"
+      <StateComingSoon
+        stateName={stateModule.stateName}
+        stateCode={stateModule.stateCode}
       />
     </>
   );

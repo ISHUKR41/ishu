@@ -1,18 +1,19 @@
 import { PageMeta } from "@/components/layout/PageMeta";
 import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
+import { stateModule } from "../backend";
 
 export default function keralaResultsPage() {
   return (
     <>
       <PageMeta
-        title="Kerala Exam Results - Latest Updates | Ishu"
-        description="Get the latest Kerala government exam results, notifications, and updates. Stay informed about all state-level examinations and vacancies."
-        keywords="Kerala results, Kerala exam results, Kerala government jobs, Kerala vacancies, state PSC results"
-        canonical="https://ishu.in/results/states/kerala"
+        title={stateModule.title}
+        description={stateModule.description}
+        keywords={stateModule.keywords}
+        canonical={stateModule.canonical}
       />
-      <StateComingSoon 
-        stateName="Kerala"
-        stateCode="kerala"
+      <StateComingSoon
+        stateName={stateModule.stateName}
+        stateCode={stateModule.stateCode}
       />
     </>
   );

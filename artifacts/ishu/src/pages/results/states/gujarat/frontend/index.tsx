@@ -1,18 +1,19 @@
 import { PageMeta } from "@/components/layout/PageMeta";
 import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
+import { stateModule } from "../backend";
 
 export default function gujaratResultsPage() {
   return (
     <>
       <PageMeta
-        title="Gujarat Exam Results - Latest Updates | Ishu"
-        description="Get the latest Gujarat government exam results, notifications, and updates. Stay informed about all state-level examinations and vacancies."
-        keywords="Gujarat results, Gujarat exam results, Gujarat government jobs, Gujarat vacancies, state PSC results"
-        canonical="https://ishu.in/results/states/gujarat"
+        title={stateModule.title}
+        description={stateModule.description}
+        keywords={stateModule.keywords}
+        canonical={stateModule.canonical}
       />
-      <StateComingSoon 
-        stateName="Gujarat"
-        stateCode="gujarat"
+      <StateComingSoon
+        stateName={stateModule.stateName}
+        stateCode={stateModule.stateCode}
       />
     </>
   );

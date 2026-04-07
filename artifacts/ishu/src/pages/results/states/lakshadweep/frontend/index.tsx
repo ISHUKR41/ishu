@@ -1,18 +1,19 @@
 import { PageMeta } from "@/components/layout/PageMeta";
 import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
+import { stateModule } from "../backend";
 
 export default function lakshadweepResultsPage() {
   return (
     <>
       <PageMeta
-        title="Lakshadweep Exam Results - Latest Updates | Ishu"
-        description="Get the latest Lakshadweep government exam results, notifications, and updates. Stay informed about all state-level examinations and vacancies."
-        keywords="Lakshadweep results, Lakshadweep exam results, Lakshadweep government jobs, Lakshadweep vacancies, state PSC results"
-        canonical="https://ishu.in/results/states/lakshadweep"
+        title={stateModule.title}
+        description={stateModule.description}
+        keywords={stateModule.keywords}
+        canonical={stateModule.canonical}
       />
-      <StateComingSoon 
-        stateName="Lakshadweep"
-        stateCode="lakshadweep"
+      <StateComingSoon
+        stateName={stateModule.stateName}
+        stateCode={stateModule.stateCode}
       />
     </>
   );

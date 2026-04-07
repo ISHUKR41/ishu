@@ -13,8 +13,8 @@ export default function Home() {
   return (
     <>
       <PageMeta
-        title="Ishu - India's #1 Education & Government Jobs Platform"
-        description="Get instant exam results, 100+ free PDF tools, breaking educational news, and expert career guidance. India's premier education platform for students and job seekers."
+        title="Ishu - Education, Results, Tools & News Platform"
+        description="Get government exam results, practical PDF tools, educational news, and career guidance in one platform for students and job seekers across India."
         keywords="government exam results, upsc results, ssc results, ibps results, rrb results, neet results, jee results, pdf tools, study resources, india education, sarkari result"
         canonical="https://ishu.in/"
         structuredData={{
@@ -22,7 +22,7 @@ export default function Home() {
           "@type": "WebSite",
           name: "Ishu",
           url: "https://ishu.in",
-          description: "India's #1 Education & Government Jobs Platform — exam results, 100+ PDF tools, educational news, and career guidance.",
+          description: "Education and government jobs platform with exam results, tools, educational news, and career guidance.",
           potentialAction: {
             "@type": "SearchAction",
             target: {

@@ -1,18 +1,19 @@
 import { PageMeta } from "@/components/layout/PageMeta";
 import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
+import { stateModule } from "../backend";
 
 export default function sikkimResultsPage() {
   return (
     <>
       <PageMeta
-        title="Sikkim Exam Results - Latest Updates | Ishu"
-        description="Get the latest Sikkim government exam results, notifications, and updates. Stay informed about all state-level examinations and vacancies."
-        keywords="Sikkim results, Sikkim exam results, Sikkim government jobs, Sikkim vacancies, state PSC results"
-        canonical="https://ishu.in/results/states/sikkim"
+        title={stateModule.title}
+        description={stateModule.description}
+        keywords={stateModule.keywords}
+        canonical={stateModule.canonical}
       />
-      <StateComingSoon 
-        stateName="Sikkim"
-        stateCode="sikkim"
+      <StateComingSoon
+        stateName={stateModule.stateName}
+        stateCode={stateModule.stateCode}
       />
     </>
   );

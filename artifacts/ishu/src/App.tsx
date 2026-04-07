@@ -20,6 +20,7 @@ const Blog = lazy(() => import("@/pages/blog/index"));
 const BlogDetail = lazy(() => import("@/pages/blog/detail"));
 const About = lazy(() => import("@/pages/about/index"));
 const Contact = lazy(() => import("@/pages/contact/index"));
+const TestPage = lazy(() => import("@/pages/test/frontend"));
 const Resources = lazy(() => import("@/pages/resources/index"));
 const Privacy = lazy(() => import("@/pages/privacy/index"));
 const Terms = lazy(() => import("@/pages/terms/index"));
@@ -258,6 +259,7 @@ function Router() {
         {/* Other pages */}
         <Route path="/about" component={() => <Layout><About /></Layout>} />
         <Route path="/contact" component={() => <Layout><Contact /></Layout>} />
+        <Route path="/test" component={() => <Layout><TestPage /></Layout>} />
         <Route path="/privacy" component={() => <Layout><Privacy /></Layout>} />
         <Route path="/terms" component={() => <Layout><Terms /></Layout>} />
         <Route path="/auth/login" component={() => <AuthLayout><Login /></AuthLayout>} />

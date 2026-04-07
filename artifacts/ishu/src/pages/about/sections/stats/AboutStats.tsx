@@ -1,26 +1,9 @@
 import { motion } from "framer-motion";
-import { useGetResultStats, useListTools, useListNews, useListBlogs } from "@workspace/api-client-react";
+import { useAboutStatsData } from "./backend/useAboutStatsData";
 import styles from "./about-stats.module.css";
 
 export function AboutStats() {
-  const { data: resultStats } = useGetResultStats();
-  const { data: toolsData } = useListTools();
-  const { data: newsData } = useListNews({ limit: 1 });
-  const { data: blogsData } = useListBlogs({ limit: 1 });
-
-  const totalResults = resultStats
-    ? resultStats.totalActive + resultStats.totalUpcoming + resultStats.totalExpired
-    : null;
-  const toolCount = Array.isArray(toolsData) ? toolsData.length : null;
-  const newsTotal = (newsData as any)?.total ?? null;
-  const blogsTotal = (blogsData as any)?.total ?? null;
-
-  const STATS = [
-    { value: toolCount ? `${toolCount}+` : "46+", label: "Free PDF & AI Tools" },
-    { value: totalResults ? `${totalResults}+` : "20+", label: "Exam Results Tracked" },
-    { value: newsTotal ? `${newsTotal}+` : "12+", label: "News Articles" },
-    { value: blogsTotal ? `${blogsTotal}+` : "6+", label: "Blog Posts" },
-  ];
+  const STATS = useAboutStatsData();
 
   return (
     <section className={styles.section}>

@@ -1,18 +1,19 @@
 import { PageMeta } from "@/components/layout/PageMeta";
 import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
+import { stateModule } from "../backend";
 
 export default function arunachal_pradeshResultsPage() {
   return (
     <>
       <PageMeta
-        title="Arunachal Pradesh Exam Results - Latest Updates | Ishu"
-        description="Get the latest Arunachal Pradesh government exam results, notifications, and updates. Stay informed about all state-level examinations and vacancies."
-        keywords="Arunachal Pradesh results, Arunachal Pradesh exam results, Arunachal Pradesh government jobs, Arunachal Pradesh vacancies, state PSC results"
-        canonical="https://ishu.in/results/states/arunachal-pradesh"
+        title={stateModule.title}
+        description={stateModule.description}
+        keywords={stateModule.keywords}
+        canonical={stateModule.canonical}
       />
-      <StateComingSoon 
-        stateName="Arunachal Pradesh"
-        stateCode="arunachal-pradesh"
+      <StateComingSoon
+        stateName={stateModule.stateName}
+        stateCode={stateModule.stateCode}
       />
     </>
   );

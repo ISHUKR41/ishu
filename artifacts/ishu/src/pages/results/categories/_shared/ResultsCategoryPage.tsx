@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { ArrowLeft, Search, Filter, Calendar, FileText, ExternalLink, TrendingUp } from "lucide-react";
-import { useListResults } from "@workspace/api-client-react";
+import { useListResults, type ListResultsStatus } from "@workspace/api-client-react";
 import { PageMeta } from "@/components/layout/PageMeta";
 
 interface ResultsCategoryPageProps {
@@ -25,6 +25,8 @@ const statusLabels: Record<string, string> = {
   expired: "Expired",
 };
 
+const statusOptions: Array<"" | ListResultsStatus> = ["", "active", "upcoming", "expired"];
+
 export function ResultsCategoryPage({
   categorySlug,
   categoryName,
@@ -34,13 +36,12 @@ export function ResultsCategoryPage({
 }: ResultsCategoryPageProps) {
   const [, navigate] = useLocation();
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState<"" | ListResultsStatus>("");
   const [page, setPage] = useState(1);
 
   const { data, isLoading } = useListResults({
     category: categorySlug,
     status: status || undefined,
-    search: search || undefined,
     page,
     limit: 12,
   });
@@ -142,7 +143,7 @@ export function ResultsCategoryPage({
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <Filter size={14} style={{ color: "hsl(var(--muted-foreground))" }} />
-              {["", "active", "upcoming", "expired"].map((s) => (
+              {statusOptions.map((s) => (
                 <button
                   key={s}
                   onClick={() => { setStatus(s); setPage(1); }}

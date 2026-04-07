@@ -6,6 +6,14 @@ import { requireAdmin } from "../../middlewares/auth";
 
 const router: IRouter = Router();
 
+function toDbDate(value: Date | null | undefined): string | null | undefined {
+  if (value == null) {
+    return value;
+  }
+
+  return value.toISOString().slice(0, 10);
+}
+
 router.get("/results", async (req, res): Promise<void> => {
   const parsed = ListResultsQueryParams.safeParse(req.query);
   if (!parsed.success) {
@@ -137,6 +145,8 @@ router.post("/admin/results", requireAdmin, async (req, res): Promise<void> => {
 
   const [result] = await db.insert(resultsTable).values({
     ...parsed.data,
+    lastDate: toDbDate(parsed.data.lastDate),
+    examDate: toDbDate(parsed.data.examDate),
     requiredDocuments: parsed.data.requiredDocuments ?? [],
   }).returning();
 
@@ -155,6 +165,8 @@ router.put("/admin/results/:id", requireAdmin, async (req, res): Promise<void> =
 
   const [result] = await db.update(resultsTable).set({
     ...parsed.data,
+    lastDate: toDbDate(parsed.data.lastDate),
+    examDate: toDbDate(parsed.data.examDate),
     requiredDocuments: parsed.data.requiredDocuments ?? [],
   }).where(eq(resultsTable.id, id)).returning();
 

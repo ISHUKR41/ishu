@@ -84,7 +84,7 @@ export async function seedDatabase() {
       await db.insert(resultCategoriesTable).values(RESULT_CATEGORIES).onConflictDoNothing();
       await db.insert(newsCategoriesTable).values(NEWS_CATEGORIES).onConflictDoNothing();
       await db.insert(blogCategoriesTable).values(BLOG_CATEGORIES).onConflictDoNothing();
-      await db.insert(toolsTable).values(TOOLS.map(t => ({ ...t, usageCount: Math.floor(Math.random() * 10000) }))).onConflictDoNothing();
+      await db.insert(toolsTable).values(TOOLS.map((t) => ({ ...t, usageCount: 0 }))).onConflictDoNothing();
 
       const adminHash = await bcrypt.hash("admin123", 10);
       await db.insert(usersTable).values({

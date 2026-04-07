@@ -19,7 +19,7 @@ export function AboutHero() {
             About <span className={styles.titleAccent}>Ishu</span>
           </h1>
           <p className={styles.subtitle}>
-            India's Premier Education, Government Results, Tools &amp; News Platform — empowering millions of students to achieve their dreams.
+            Education, government results, tools, and news in one platform for students and aspirants across India.
           </p>
         </motion.div>
       </div>

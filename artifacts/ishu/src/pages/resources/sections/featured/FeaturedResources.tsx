@@ -1,71 +1,32 @@
 import { motion } from "framer-motion";
-import { Star, Download, ExternalLink, Flame } from "lucide-react";
+import { Star, Download, ExternalLink, Flame, Loader2 } from "lucide-react";
+import { useFeaturedResources } from "./backend/useFeaturedResources";
 import styles from "./featured-resources.module.css";
 
-const featuredItems = [
-  {
-    id: 1,
-    title: "UPSC CSE Prelims Papers 2013–2024",
-    exam: "UPSC CSE",
-    downloads: "182K",
-    type: "Previous Papers",
-    url: "https://upsc.gov.in/examinations/previous-question-papers",
-    color: "#3b82f6",
-    bg: "rgba(59,130,246,0.12)",
-  },
-  {
-    id: 11,
-    title: "Current Affairs Monthly – March 2025",
-    exam: "All Exams",
-    downloads: "201K",
-    type: "Current Affairs",
-    url: "https://pib.gov.in/",
-    color: "#10b981",
-    bg: "rgba(16,185,129,0.12)",
-  },
-  {
-    id: 5,
-    title: "NEET UG Biology NCERT Notes",
-    exam: "NEET UG",
-    downloads: "211K",
-    type: "Study Notes",
-    url: "https://ncert.nic.in/textbook.php",
-    color: "#14b8a6",
-    bg: "rgba(20,184,166,0.12)",
-  },
-  {
-    id: 38,
-    title: "Current Affairs 2024 Annual Yearbook",
-    exam: "All Exams",
-    downloads: "198K",
-    type: "Current Affairs",
-    url: "https://pib.gov.in/",
-    color: "#10b981",
-    bg: "rgba(16,185,129,0.12)",
-  },
-  {
-    id: 33,
-    title: "UPSC Prelims GS1 Mock Tests – 40 Sets",
-    exam: "UPSC CSE",
-    downloads: "93K",
-    type: "Mock Tests",
-    url: "https://upsc.gov.in/",
-    color: "#3b82f6",
-    bg: "rgba(59,130,246,0.12)",
-  },
-  {
-    id: 2,
-    title: "SSC CGL Syllabus & Pattern 2024–25",
-    exam: "SSC CGL",
-    downloads: "94K",
-    type: "Syllabus",
-    url: "https://ssc.gov.in/Examination/Syllabus",
-    color: "#8b5cf6",
-    bg: "rgba(139,92,246,0.12)",
-  },
-];
+function formatDownloads(downloads: number): string {
+  if (downloads >= 1000000) {
+    return `${(downloads / 1000000).toFixed(1)}M`;
+  }
+  if (downloads >= 1000) {
+    return `${Math.round(downloads / 1000)}K`;
+  }
+  return String(downloads);
+}
+
+function toTypeLabel(type: string): string {
+  return type
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
 
 export function FeaturedResources() {
+  const {
+    data: featuredItems = [],
+    isLoading,
+    isError,
+  } = useFeaturedResources(6);
+
   return (
     <section className={styles.section}>
       <div className="container mx-auto px-4 md:px-6">
@@ -80,10 +41,23 @@ export function FeaturedResources() {
           </p>
         </div>
         <div className={styles.grid}>
-          {featuredItems.map((item, index) => (
+          {isLoading && (
+            <div style={{ gridColumn: "1 / -1", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", color: "hsl(var(--muted-foreground))", padding: "1.5rem 0" }}>
+              <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
+              Loading featured resources...
+            </div>
+          )}
+
+          {!isLoading && isError && (
+            <div style={{ gridColumn: "1 / -1", textAlign: "center", color: "hsl(var(--muted-foreground))", padding: "1.25rem 0" }}>
+              Unable to load featured resources right now.
+            </div>
+          )}
+
+          {!isLoading && !isError && featuredItems.map((item, index) => (
             <motion.a
               key={item.id}
-              href={item.url}
+              href={item.downloadUrl || item.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.card}
@@ -94,12 +68,12 @@ export function FeaturedResources() {
               aria-label={`Open ${item.title}`}
             >
               <div className={styles.cardInner}>
-                <div className={styles.iconDot} style={{ background: item.bg }}>
-                  <Star size={14} style={{ color: item.color }} />
+                <div className={styles.iconDot} style={{ background: item.iconBg }}>
+                  <Star size={14} style={{ color: item.iconColor }} />
                 </div>
                 <div className={styles.info}>
-                  <span className={styles.typeBadge} style={{ color: item.color, background: item.bg }}>
-                    {item.type}
+                  <span className={styles.typeBadge} style={{ color: item.iconColor, background: item.iconBg }}>
+                    {toTypeLabel(item.type)}
                   </span>
                   <h3 className={styles.cardTitle}>{item.title}</h3>
                   <span className={styles.examTag}>{item.exam}</span>
@@ -107,7 +81,7 @@ export function FeaturedResources() {
                 <div className={styles.actionArea}>
                   <span className={styles.dlCount}>
                     <Download size={11} />
-                    {item.downloads}
+                    {formatDownloads(item.downloads)}
                   </span>
                   <ExternalLink size={14} className={styles.extIcon} />
                 </div>

@@ -24,22 +24,22 @@ export function StatsSection() {
     {
       label: "Active Exams",
       value: activeResults > 0 ? activeResults : 0,
-      suffix: "+",
+      suffix: activeResults > 0 ? "+" : "",
     },
     {
       label: "Upcoming Exams",
       value: upcomingResults > 0 ? upcomingResults : 0,
-      suffix: "+",
+      suffix: upcomingResults > 0 ? "+" : "",
     },
     {
       label: "Free PDF & AI Tools",
-      value: toolCount > 0 ? toolCount : 46,
-      suffix: "+",
+      value: toolCount > 0 ? toolCount : 0,
+      suffix: toolCount > 0 ? "+" : "",
     },
     {
       label: "News Published",
-      value: newsTotal > 0 ? newsTotal : 12,
-      suffix: "+",
+      value: newsTotal > 0 ? newsTotal : 0,
+      suffix: newsTotal > 0 ? "+" : "",
     },
   ];
 
