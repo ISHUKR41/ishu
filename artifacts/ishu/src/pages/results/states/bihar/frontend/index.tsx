@@ -1,11 +1,19 @@
-import { StateComingSoon } from "../../_shared/StateComingSoon";
+import { PageMeta } from "@/components/layout/PageMeta";
+import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
 
-export default function BiharResults() {
+export default function biharResultsPage() {
   return (
-    <StateComingSoon
-      stateName="Bihar"
-      stateCode="BR"
-      description="Get the latest BPSC, Bihar Police, BTET, and other Bihar government exam results, admit cards, and vacancy notifications. Stay updated with all Bihar state-level competitive exams."
-    />
+    <>
+      <PageMeta
+        title="Bihar Exam Results - Latest Updates | Ishu"
+        description="Get the latest Bihar government exam results, notifications, and updates. Stay informed about all state-level examinations and vacancies."
+        keywords="Bihar results, Bihar exam results, Bihar government jobs, Bihar vacancies, state PSC results"
+        canonical="https://ishu.in/results/states/bihar"
+      />
+      <StateComingSoon 
+        stateName="Bihar"
+        stateCode="bihar"
+      />
+    </>
   );
 }
