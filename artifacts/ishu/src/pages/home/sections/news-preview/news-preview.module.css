@@ -128,7 +128,7 @@
   justify-content: center;
   font-size: 1.125rem;
   font-weight: 700;
-  color: rgba(255,255,255,0.08);
+  color: transparent;
   background: linear-gradient(135deg, rgba(249,115,22,0.05), rgba(239,68,68,0.05));
   letter-spacing: 0.1em;
 }

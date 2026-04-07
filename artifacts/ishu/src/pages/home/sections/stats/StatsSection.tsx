@@ -17,10 +17,18 @@ export function StatsSection() {
   const toolCount = Array.isArray(toolsData) ? toolsData.length : (toolsData as any)?.total ?? 0;
   const newsTotal = (newsData as any)?.total ?? 0;
 
+  const activeResults = resultStats?.totalActive ?? 0;
+  const upcomingResults = resultStats?.totalUpcoming ?? 0;
+
   const stats = [
     {
-      label: "Exam Results Covered",
-      value: totalResults > 0 ? totalResults : 20,
+      label: "Active Exams",
+      value: activeResults > 0 ? activeResults : 0,
+      suffix: "+",
+    },
+    {
+      label: "Upcoming Exams",
+      value: upcomingResults > 0 ? upcomingResults : 0,
       suffix: "+",
     },
     {
@@ -29,14 +37,9 @@ export function StatsSection() {
       suffix: "+",
     },
     {
-      label: "News Articles",
+      label: "News Published",
       value: newsTotal > 0 ? newsTotal : 12,
       suffix: "+",
-    },
-    {
-      label: "Students Served",
-      value: 500,
-      suffix: "K+",
     },
   ];
 

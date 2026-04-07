@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, CheckCircle, Users, Star, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle, Wrench, FileText, Zap } from "lucide-react";
+import { useGetResultStats, useListTools } from "@workspace/api-client-react";
 import styles from "./hero.module.css";
 
 const containerVariants = {
@@ -21,6 +22,14 @@ const itemVariants = {
 };
 
 export function HeroSection() {
+  const { data: resultStats } = useGetResultStats();
+  const { data: toolsData } = useListTools();
+
+  const totalResults = resultStats
+    ? resultStats.totalActive + resultStats.totalUpcoming + resultStats.totalExpired
+    : null;
+  const totalTools = Array.isArray(toolsData) ? toolsData.length : null;
+
   return (
     <section className={styles.heroSection}>
       <div className={styles.gridBackground} />
@@ -46,9 +55,9 @@ export function HeroSection() {
           </motion.h1>
 
           <motion.p variants={itemVariants} className={styles.subheadline}>
-            Everything you need in one place — government exam results, 100+ PDF
-            tools, breaking educational news, and expert career guidance for
-            millions of students across India.
+            Government exam results, {totalTools ? `${totalTools}+` : "46+"} free PDF & AI tools,
+            breaking education news, and expert career guidance —
+            all in one place for students across India.
           </motion.p>
 
           <motion.div variants={itemVariants} className={styles.ctaGroup}>
@@ -64,19 +73,23 @@ export function HeroSection() {
           <motion.div variants={itemVariants} className={styles.trustBadges}>
             <span className={styles.trustItem}>
               <CheckCircle className={styles.trustIcon} />
-              Free to use
+              100% Free
             </span>
-            <span className={styles.trustItem}>
-              <Users className={styles.trustIcon} />
-              500K+ students
-            </span>
-            <span className={styles.trustItem}>
-              <Star className={styles.trustIcon} />
-              4.9 rated
-            </span>
+            {totalResults && (
+              <span className={styles.trustItem}>
+                <FileText className={styles.trustIcon} />
+                {totalResults}+ Exams Tracked
+              </span>
+            )}
+            {totalTools && (
+              <span className={styles.trustItem}>
+                <Wrench className={styles.trustIcon} />
+                {totalTools}+ PDF & AI Tools
+              </span>
+            )}
             <span className={styles.trustItem}>
               <Zap className={styles.trustIcon} />
-              Daily updates
+              Updated Daily
             </span>
           </motion.div>
         </motion.div>

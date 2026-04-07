@@ -38,9 +38,8 @@ artifacts/ishu/src/pages/
       news-preview/  → NewsPreview.tsx + news-preview.module.css
       blog-preview/  → BlogPreview.tsx + blog-preview.module.css
       notification-cta/ → NotificationCTA.tsx + notification-cta.module.css
+      faq/             → FAQ.tsx + faq.module.css
       exam-categories/ → ExamCategories.tsx + exam-categories.module.css (16 exam categories)
-      testimonials/  → Testimonials.tsx + testimonials.module.css (6 reviews with location)
-      faq/           → FAQ.tsx + faq.module.css (11 accordion FAQs with JSON-LD schema)
   resources/         → Free study resources hub (54 resources, in-memory)
     index.tsx
     sections/

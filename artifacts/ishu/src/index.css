@@ -87,6 +87,10 @@
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
+
+  --grid-line: rgba(0, 0, 0, 0.05);
+  --shimmer-bg: rgba(0, 0, 0, 0.04);
+  --shimmer-mid: rgba(0, 0, 0, 0.08);
 }
 
 .dark {
@@ -119,6 +123,10 @@
 
   --destructive: 0 62% 30%;
   --destructive-foreground: 210 40% 98%;
+
+  --grid-line: rgba(255, 255, 255, 0.04);
+  --shimmer-bg: rgba(255, 255, 255, 0.04);
+  --shimmer-mid: rgba(255, 255, 255, 0.07);
 }
 
 @layer base {

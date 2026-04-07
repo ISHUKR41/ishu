@@ -138,7 +138,7 @@
 }
 
 .toolCard:hover .toolName {
-  color: rgba(255,255,255,0.9);
+  color: hsl(var(--foreground));
 }
 
 .toolDesc {
@@ -171,7 +171,7 @@
 }
 
 .ctaBtn:hover {
-  background: rgba(255,255,255,0.9);
+  background: hsl(var(--card));
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px -5px rgba(255,255,255,0.2);
+  box-shadow: 0 10px 30px -5px rgba(0,0,0,0.1);
 }

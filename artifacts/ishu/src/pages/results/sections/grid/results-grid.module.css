@@ -85,7 +85,7 @@
 .title {
   font-size: 0.95rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.9);
+  color: hsl(var(--foreground));
   line-height: 1.45;
   margin-bottom: 0.5rem;
   display: -webkit-box;
@@ -151,7 +151,7 @@
 .skeleton {
   height: 14rem;
   border-radius: 1rem;
-  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.04) 75%);
+  background: linear-gradient(90deg, var(--shimmer-bg) 25%, var(--shimmer-mid) 50%, var(--shimmer-bg) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.6s infinite;
 }
@@ -203,7 +203,7 @@
 }
 
 .pageBtn:hover:not(:disabled) {
-  background: rgba(255,255,255,0.09);
+  background: hsl(var(--muted));
   color: hsl(var(--foreground));
 }
 

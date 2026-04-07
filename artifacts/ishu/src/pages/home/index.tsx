@@ -7,7 +7,6 @@ import { ToolsShowcase } from "./sections/tools-showcase/ToolsShowcase";
 import { NewsPreview } from "./sections/news-preview/NewsPreview";
 import { BlogPreview } from "./sections/blog-preview/BlogPreview";
 import { NotificationCTA } from "./sections/notification-cta/NotificationCTA";
-import { Testimonials } from "./sections/testimonials/Testimonials";
 import { FAQ } from "./sections/faq/FAQ";
 
 export default function Home() {
@@ -49,7 +48,6 @@ export default function Home() {
         <NewsPreview />
         <NotificationCTA />
         <BlogPreview />
-        <Testimonials />
         <FAQ />
       </div>
     </>

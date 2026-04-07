@@ -142,6 +142,6 @@
 }
 
 .resetBtn:hover {
-  background: rgba(255,255,255,0.12);
+  background: hsl(var(--muted));
   color: hsl(var(--foreground));
 }
