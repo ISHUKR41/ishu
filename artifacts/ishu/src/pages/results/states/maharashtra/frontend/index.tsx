@@ -1,11 +1,19 @@
-import { StateComingSoon } from "../../_shared/StateComingSoon";
+import { PageMeta } from "@/components/layout/PageMeta";
+import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
 
-export default function MaharashtraResults() {
+export default function maharashtraResultsPage() {
   return (
-    <StateComingSoon
-      stateName="Maharashtra"
-      stateCode="MH"
-      description="Get the latest MPSC, Maharashtra Police, MHTET, and other Maharashtra government exam results, admit cards, and vacancy notifications. Stay updated with all Maharashtra state-level competitive exams."
-    />
+    <>
+      <PageMeta
+        title="Maharashtra Exam Results - Latest Updates | Ishu"
+        description="Get the latest Maharashtra government exam results, notifications, and updates. Stay informed about all state-level examinations and vacancies."
+        keywords="Maharashtra results, Maharashtra exam results, Maharashtra government jobs, Maharashtra vacancies, state PSC results"
+        canonical="https://ishu.in/results/states/maharashtra"
+      />
+      <StateComingSoon 
+        stateName="Maharashtra"
+        stateCode="maharashtra"
+      />
+    </>
   );
 }
