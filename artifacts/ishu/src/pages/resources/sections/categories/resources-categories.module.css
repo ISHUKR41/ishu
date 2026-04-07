@@ -45,7 +45,7 @@
   height: 1.25rem;
   padding: 0 0.3rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: hsl(var(--muted)/0.5);
   font-size: 0.65rem;
   font-weight: 600;
   color: hsl(var(--border));

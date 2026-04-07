@@ -7,17 +7,12 @@ const TEAM = [
   {
     name: "Ishu Kumar",
     role: "Founder & CEO",
-    bio: "Passionate about making education accessible to every student in India.",
-  },
-  {
-    name: "Priya Sharma",
-    role: "Head of Content",
-    bio: "Expert in government exam coaching with 10+ years of experience.",
-  },
-  {
-    name: "Rahul Verma",
-    role: "Lead Developer",
-    bio: "Building tools that empower millions of students across India.",
+    bio: "Passionate about making quality education accessible to every student across India — from government exam results to free PDF tools.",
+    contact: {
+      phone: "+91 8986985813",
+      email: "ishukryk@gmail.com",
+      whatsapp: "918986985813",
+    },
   },
 ];
 

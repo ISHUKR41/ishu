@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Phone, Mail, MessageCircle, MapPin, Twitter, Instagram, Youtube } from "lucide-react";
+import { Phone, Mail, MessageCircle, MapPin } from "lucide-react";
 import styles from "./contact-info.module.css";
 
 const CONTACT_ITEMS = [
@@ -37,11 +37,6 @@ const CONTACT_ITEMS = [
   },
 ];
 
-const SOCIAL_LINKS = [
-  { icon: Twitter, label: "Twitter", href: "https://twitter.com/ishu" },
-  { icon: Instagram, label: "Instagram", href: "https://instagram.com/ishu" },
-  { icon: Youtube, label: "YouTube", href: "https://youtube.com/ishu" },
-];
 
 interface ContactInfoProps {
   className?: string;
@@ -85,23 +80,6 @@ export function ContactInfo({ className }: ContactInfoProps) {
         ))}
       </div>
 
-      <div className={styles.socialRow}>
-        <p className={styles.socialTitle}>Follow Us</p>
-        <div className={styles.socialLinks}>
-          {SOCIAL_LINKS.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              className={styles.socialLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <s.icon size={14} />
-              {s.label}
-            </a>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }

@@ -216,3 +216,8 @@
   .imageWrapper { height: 10rem; }
   .cardBody { padding: 1rem; }
 }
+.skeletonCard {
+  border-radius: 1rem;
+  border: 1px solid hsl(var(--border));
+  overflow: hidden;
+}

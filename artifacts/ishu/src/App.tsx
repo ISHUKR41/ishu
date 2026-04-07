@@ -52,7 +52,7 @@ function PageLoader() {
         style={{
           width: 32,
           height: 32,
-          border: "2px solid rgba(255,255,255,0.1)",
+          border: "2px solid hsl(var(--border))",
           borderTopColor: "#3b82f6",
           borderRadius: "50%",
           animation: "spin 0.7s linear infinite",

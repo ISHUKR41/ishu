@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid hsl(var(--border));
   padding: 5rem 0 4rem;
   background: linear-gradient(180deg, rgba(88, 28, 135, 0.35) 0%, transparent 100%);
   contain: layout style;

@@ -31,7 +31,7 @@ export function NewsPreview() {
         <div className={styles.grid}>
           {isLoading ? (
             Array(3).fill(0).map((_, i) => (
-              <div key={i} style={{ borderRadius: "1rem", border: "1px solid rgba(255,255,255,0.08)", overflow: "hidden" }}>
+              <div key={i} className={styles.skeletonCard}>
                 <Skeleton className="h-48 w-full rounded-none" />
                 <div className="p-5 space-y-3">
                   <Skeleton className="h-5 w-full" />
