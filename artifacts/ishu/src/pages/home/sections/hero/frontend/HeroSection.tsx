@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, CheckCircle, Wrench, FileText, Zap } from "lucide-react";
+import { Icons } from "@/components/icons";
 import { useGetResultStats, useListTools } from "@workspace/api-client-react";
 import styles from "./hero.module.css";
 
@@ -66,7 +66,7 @@ export function HeroSection() {
           <motion.div variants={itemVariants} className={styles.ctaGroup}>
             <Link href="/results" className={styles.ctaPrimary}>
               Browse Latest Results
-              <ArrowRight size={18} />
+              <Icons.ArrowRight className="w-[18px] h-[18px]" />
             </Link>
             <Link href="/tools" className={styles.ctaSecondary}>
               Explore PDF Tools
@@ -75,23 +75,23 @@ export function HeroSection() {
 
           <motion.div variants={itemVariants} className={styles.trustBadges}>
             <span className={styles.trustItem}>
-              <CheckCircle className={styles.trustIcon} />
+              <Icons.Success className={styles.trustIcon} />
               100% Free
             </span>
             {totalResults && (
               <span className={styles.trustItem}>
-                <FileText className={styles.trustIcon} />
+                <Icons.Document className={styles.trustIcon} />
                 {totalResults}+ Exams Tracked
               </span>
             )}
             {totalTools && (
               <span className={styles.trustItem}>
-                <Wrench className={styles.trustIcon} />
+                <Icons.Tools className={styles.trustIcon} />
                 {totalTools}+ PDF & AI Tools
               </span>
             )}
             <span className={styles.trustItem}>
-              <Zap className={styles.trustIcon} />
+              <Icons.Bolt className={styles.trustIcon} />
               Updated Daily
             </span>
           </motion.div>
