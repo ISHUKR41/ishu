@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Calendar, FileText, Users, Trophy } from "lucide-react";
+import { Icons } from "@/components/icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useListResults, categoryColors, getStatusStyle } from "./backend/api";
 import styles from "./featured-results.module.css";
@@ -18,7 +18,7 @@ export function FeaturedResults() {
         <div className={styles.sectionHeader}>
           <div>
             <div className={styles.sectionLabel}>
-              <Trophy size={14} />
+              <Icons.Trophy className="w-[14px] h-[14px]" />
               Latest Updates
             </div>
             <h2 className={styles.sectionTitle}>Government Results & Vacancies</h2>
@@ -27,7 +27,7 @@ export function FeaturedResults() {
             </p>
           </div>
           <Link href="/results" className={styles.viewAll}>
-            View All Results <ArrowRight size={14} />
+            View All Results <Icons.ArrowRight className="w-[14px] h-[14px]" />
           </Link>
         </div>
 
@@ -72,13 +72,13 @@ export function FeaturedResults() {
                     <div className={styles.cardMeta}>
                       {result.lastDate && (
                         <span className={styles.metaItem}>
-                          <Calendar size={11} className={styles.metaIconBlue} />
+                          <Icons.Calendar className={`w-[11px] h-[11px] ${styles.metaIconBlue}`} />
                           {new Date(result.lastDate).toLocaleDateString("en-IN")}
                         </span>
                       )}
                       {result.totalPosts && (
                         <span className={styles.metaItem}>
-                          <Users size={11} className={styles.metaIconOrange} />
+                          <Icons.Users className={`w-[11px] h-[11px] ${styles.metaIconOrange}`} />
                           {Number(result.totalPosts).toLocaleString("en-IN")} Posts
                         </span>
                       )}

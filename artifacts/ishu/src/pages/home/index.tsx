@@ -1,13 +1,13 @@
 import { PageMeta } from "@/components/layout/PageMeta";
-import { HeroSection } from "./sections/hero/HeroSection";
-import { StatsSection } from "./sections/stats/StatsSection";
-import { ExamCategories } from "./sections/exam-categories/ExamCategories";
-import { FeaturedResults } from "./sections/featured-results/FeaturedResults";
-import { ToolsShowcase } from "./sections/tools-showcase/ToolsShowcase";
-import { NewsPreview } from "./sections/news-preview/NewsPreview";
-import { BlogPreview } from "./sections/blog-preview/BlogPreview";
-import { NotificationCTA } from "./sections/notification-cta/NotificationCTA";
-import { FAQ } from "./sections/faq/FAQ";
+import { HeroSection } from "./sections/hero/frontend";
+import { StatsSection } from "./sections/stats/frontend";
+import { ExamCategories } from "./sections/exam-categories/frontend";
+import { FeaturedResults } from "./sections/featured-results/frontend";
+import { ToolsShowcase } from "./sections/tools-showcase/frontend";
+import { NewsPreview } from "./sections/news-preview/frontend";
+import { BlogPreview } from "./sections/blog-preview/frontend";
+import { NotificationCTA } from "./sections/notification-cta/frontend";
+import { FAQ } from "./sections/faq/frontend";
 
 export default function Home() {
   return (

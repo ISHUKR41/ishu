@@ -1,26 +1,27 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { type LucideIcon, Award, Landmark, Train, Shield, BookOpen, GraduationCap, Building2, Scale, Layers, Briefcase, FlaskConical, Users } from "lucide-react";
+import { type ComponentType } from "react";
+import { Icons } from "@/components/icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useListResultCategories } from "@workspace/api-client-react";
 import styles from "./exam-categories.module.css";
 
-const CATEGORY_META: Record<string, { icon: LucideIcon; color: string; bg: string }> = {
-  "upsc-civil-services": { icon: Landmark, color: "#3b82f6", bg: "rgba(59,130,246,0.12)" },
-  "ssc-cgl": { icon: Award, color: "#8b5cf6", bg: "rgba(139,92,246,0.12)" },
-  "ssc-chsl": { icon: Award, color: "#7c3aed", bg: "rgba(124,58,237,0.12)" },
-  "banking-ibps": { icon: Building2, color: "#10b981", bg: "rgba(16,185,129,0.12)" },
-  "railway-rrb": { icon: Train, color: "#f97316", bg: "rgba(249,115,22,0.12)" },
-  "army-defence": { icon: Shield, color: "#ef4444", bg: "rgba(239,68,68,0.12)" },
-  "jee-mains": { icon: GraduationCap, color: "#eab308", bg: "rgba(234,179,8,0.12)" },
-  "neet-ug": { icon: FlaskConical, color: "#14b8a6", bg: "rgba(20,184,166,0.12)" },
-  "state-psc": { icon: Scale, color: "#6366f1", bg: "rgba(99,102,241,0.12)" },
-  "police": { icon: Shield, color: "#dc2626", bg: "rgba(220,38,38,0.12)" },
-  "teaching-tet": { icon: Users, color: "#06b6d4", bg: "rgba(6,182,212,0.12)" },
-  "engineering-jobs": { icon: Briefcase, color: "#84cc16", bg: "rgba(132,204,22,0.12)" },
+const CATEGORY_META: Record<string, { icon: ComponentType<{ className?: string; style?: any }>; color: string; bg: string }> = {
+  "upsc-civil-services": { icon: Icons.Building, color: "#3b82f6", bg: "rgba(59,130,246,0.12)" },
+  "ssc-cgl": { icon: Icons.Trophy, color: "#8b5cf6", bg: "rgba(139,92,246,0.12)" },
+  "ssc-chsl": { icon: Icons.Trophy, color: "#7c3aed", bg: "rgba(124,58,237,0.12)" },
+  "banking-ibps": { icon: Icons.Building, color: "#10b981", bg: "rgba(16,185,129,0.12)" },
+  "railway-rrb": { icon: Icons.Rocket, color: "#f97316", bg: "rgba(249,115,22,0.12)" },
+  "army-defence": { icon: Icons.Shield, color: "#ef4444", bg: "rgba(239,68,68,0.12)" },
+  "jee-mains": { icon: Icons.Graduation, color: "#eab308", bg: "rgba(234,179,8,0.12)" },
+  "neet-ug": { icon: Icons.Academic, color: "#14b8a6", bg: "rgba(20,184,166,0.12)" },
+  "state-psc": { icon: Icons.Building, color: "#6366f1", bg: "rgba(99,102,241,0.12)" },
+  "police": { icon: Icons.Shield, color: "#dc2626", bg: "rgba(220,38,38,0.12)" },
+  "teaching-tet": { icon: Icons.Users, color: "#06b6d4", bg: "rgba(6,182,212,0.12)" },
+  "engineering-jobs": { icon: Icons.Building, color: "#84cc16", bg: "rgba(132,204,22,0.12)" },
 };
 
-const DEFAULT_META = { icon: Layers, color: "#6366f1", bg: "rgba(99,102,241,0.12)" };
+const DEFAULT_META = { icon: Icons.Layers, color: "#6366f1", bg: "rgba(99,102,241,0.12)" };
 
 export function ExamCategories() {
   const { data, isLoading } = useListResultCategories();
@@ -31,7 +32,7 @@ export function ExamCategories() {
       <div className="container mx-auto px-4 md:px-6">
         <div className={styles.header}>
           <div className={styles.sectionLabel}>
-            <BookOpen size={13} />
+            <Icons.BookOpen className="w-[13px] h-[13px]" />
             Browse by Category
           </div>
           <h2 className={styles.sectionTitle}>Popular Exam Categories</h2>
@@ -59,7 +60,7 @@ export function ExamCategories() {
                 >
                   <Link href={`/results?category=${cat.slug}`} className={styles.card}>
                     <div className={styles.iconWrap} style={{ background: meta.bg }}>
-                      <IconCmp size={22} style={{ color: meta.color }} />
+                      <IconCmp className="w-[22px] h-[22px]" style={{ color: meta.color }} />
                     </div>
                     <div className={styles.cardText}>
                       <h3 className={styles.cardLabel}>{cat.name}</h3>
