@@ -28,6 +28,48 @@ const Register = lazy(() => import("@/pages/auth/register"));
 const AdminDashboard = lazy(() => import("@/pages/admin/index"));
 const NotFound = lazy(() => import("@/pages/not-found/index"));
 
+// Results category pages
+const ResultsUPSC = lazy(() => import("@/pages/results/categories/upsc"));
+const ResultsSSC = lazy(() => import("@/pages/results/categories/ssc"));
+const ResultsBanking = lazy(() => import("@/pages/results/categories/banking"));
+const ResultsRailway = lazy(() => import("@/pages/results/categories/railway"));
+const ResultsDefence = lazy(() => import("@/pages/results/categories/defence"));
+const ResultsJEE = lazy(() => import("@/pages/results/categories/jee"));
+const ResultsNEET = lazy(() => import("@/pages/results/categories/neet"));
+const ResultsStatePSC = lazy(() => import("@/pages/results/categories/state-psc"));
+const ResultsTeaching = lazy(() => import("@/pages/results/categories/teaching"));
+const ResultsPolice = lazy(() => import("@/pages/results/categories/police"));
+const ResultsEngineering = lazy(() => import("@/pages/results/categories/engineering"));
+const ResultsJudiciary = lazy(() => import("@/pages/results/categories/judiciary"));
+
+// Tools category pages
+const ToolsPDF = lazy(() => import("@/pages/tools/categories/pdf"));
+const ToolsAI = lazy(() => import("@/pages/tools/categories/ai"));
+const ToolsImage = lazy(() => import("@/pages/tools/categories/image"));
+const ToolsText = lazy(() => import("@/pages/tools/categories/text"));
+const ToolsConversion = lazy(() => import("@/pages/tools/categories/conversion"));
+
+// News category pages
+const NewsUPSC = lazy(() => import("@/pages/news/categories/upsc"));
+const NewsSSC = lazy(() => import("@/pages/news/categories/ssc"));
+const NewsBanking = lazy(() => import("@/pages/news/categories/banking"));
+const NewsRailway = lazy(() => import("@/pages/news/categories/railway"));
+const NewsScholarships = lazy(() => import("@/pages/news/categories/scholarships"));
+const NewsAdmitCards = lazy(() => import("@/pages/news/categories/admit-cards"));
+
+// Blog category pages
+const BlogExamTips = lazy(() => import("@/pages/blogs/categories/exam-tips"));
+const BlogCareerGuidance = lazy(() => import("@/pages/blogs/categories/career-guidance"));
+const BlogSuccessStories = lazy(() => import("@/pages/blogs/categories/success-stories"));
+const BlogStudyStrategies = lazy(() => import("@/pages/blogs/categories/study-strategies"));
+
+// Resources category pages
+const ResourcesPreviousPapers = lazy(() => import("@/pages/resources/categories/previous-papers"));
+const ResourcesSyllabus = lazy(() => import("@/pages/resources/categories/syllabus"));
+const ResourcesMockTests = lazy(() => import("@/pages/resources/categories/mock-tests"));
+const ResourcesStudyNotes = lazy(() => import("@/pages/resources/categories/study-notes"));
+const ResourcesFormulaSheets = lazy(() => import("@/pages/resources/categories/formula-sheets"));
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -85,17 +127,61 @@ function Router() {
     <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path="/" component={() => <Layout><Home /></Layout>} />
+
+        {/* Results — main + subcategories */}
         <Route path="/results" component={() => <Layout><Results /></Layout>} />
+        <Route path="/results/category/upsc" component={() => <Layout><ResultsUPSC /></Layout>} />
+        <Route path="/results/category/ssc" component={() => <Layout><ResultsSSC /></Layout>} />
+        <Route path="/results/category/banking" component={() => <Layout><ResultsBanking /></Layout>} />
+        <Route path="/results/category/railway" component={() => <Layout><ResultsRailway /></Layout>} />
+        <Route path="/results/category/defence" component={() => <Layout><ResultsDefence /></Layout>} />
+        <Route path="/results/category/jee" component={() => <Layout><ResultsJEE /></Layout>} />
+        <Route path="/results/category/neet" component={() => <Layout><ResultsNEET /></Layout>} />
+        <Route path="/results/category/state-psc" component={() => <Layout><ResultsStatePSC /></Layout>} />
+        <Route path="/results/category/teaching" component={() => <Layout><ResultsTeaching /></Layout>} />
+        <Route path="/results/category/police" component={() => <Layout><ResultsPolice /></Layout>} />
+        <Route path="/results/category/engineering" component={() => <Layout><ResultsEngineering /></Layout>} />
+        <Route path="/results/category/judiciary" component={() => <Layout><ResultsJudiciary /></Layout>} />
         <Route path="/results/:id" component={() => <Layout><ResultDetail /></Layout>} />
+
+        {/* Tools — main + subcategories */}
         <Route path="/tools" component={() => <Layout><Tools /></Layout>} />
+        <Route path="/tools/category/pdf" component={() => <Layout><ToolsPDF /></Layout>} />
+        <Route path="/tools/category/ai" component={() => <Layout><ToolsAI /></Layout>} />
+        <Route path="/tools/category/image" component={() => <Layout><ToolsImage /></Layout>} />
+        <Route path="/tools/category/text" component={() => <Layout><ToolsText /></Layout>} />
+        <Route path="/tools/category/conversion" component={() => <Layout><ToolsConversion /></Layout>} />
         <Route path="/tools/:slug" component={() => <Layout><ToolDetail /></Layout>} />
+
+        {/* News — main + subcategories */}
         <Route path="/news" component={() => <Layout><News /></Layout>} />
+        <Route path="/news/category/upsc" component={() => <Layout><NewsUPSC /></Layout>} />
+        <Route path="/news/category/ssc" component={() => <Layout><NewsSSC /></Layout>} />
+        <Route path="/news/category/banking" component={() => <Layout><NewsBanking /></Layout>} />
+        <Route path="/news/category/railway" component={() => <Layout><NewsRailway /></Layout>} />
+        <Route path="/news/category/scholarships" component={() => <Layout><NewsScholarships /></Layout>} />
+        <Route path="/news/category/admit-cards" component={() => <Layout><NewsAdmitCards /></Layout>} />
         <Route path="/news/:id" component={() => <Layout><NewsDetail /></Layout>} />
+
+        {/* Blog — main + subcategories */}
         <Route path="/blog" component={() => <Layout><Blog /></Layout>} />
+        <Route path="/blog/category/exam-tips" component={() => <Layout><BlogExamTips /></Layout>} />
+        <Route path="/blog/category/career-guidance" component={() => <Layout><BlogCareerGuidance /></Layout>} />
+        <Route path="/blog/category/success-stories" component={() => <Layout><BlogSuccessStories /></Layout>} />
+        <Route path="/blog/category/study-strategies" component={() => <Layout><BlogStudyStrategies /></Layout>} />
         <Route path="/blog/:slug" component={() => <Layout><BlogDetail /></Layout>} />
+
+        {/* Resources — main + subcategories */}
+        <Route path="/resources" component={() => <Layout><Resources /></Layout>} />
+        <Route path="/resources/category/previous-papers" component={() => <Layout><ResourcesPreviousPapers /></Layout>} />
+        <Route path="/resources/category/syllabus" component={() => <Layout><ResourcesSyllabus /></Layout>} />
+        <Route path="/resources/category/mock-tests" component={() => <Layout><ResourcesMockTests /></Layout>} />
+        <Route path="/resources/category/study-notes" component={() => <Layout><ResourcesStudyNotes /></Layout>} />
+        <Route path="/resources/category/formula-sheets" component={() => <Layout><ResourcesFormulaSheets /></Layout>} />
+
+        {/* Other pages */}
         <Route path="/about" component={() => <Layout><About /></Layout>} />
         <Route path="/contact" component={() => <Layout><Contact /></Layout>} />
-        <Route path="/resources" component={() => <Layout><Resources /></Layout>} />
         <Route path="/privacy" component={() => <Layout><Privacy /></Layout>} />
         <Route path="/terms" component={() => <Layout><Terms /></Layout>} />
         <Route path="/auth/login" component={() => <AuthLayout><Login /></AuthLayout>} />

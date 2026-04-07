@@ -136,11 +136,23 @@ The auto-seed checks each table independently before inserting:
 ## Pages & Routes
 
 - `/` — Home (hero → stats → exam-categories → featured-results → tools-showcase → news-preview → notification-cta → blog-preview → testimonials → faq)
-- `/results` + `/results/:id` — Government exam results & vacancies (12 real seeded)
-- `/tools` + `/tools/:slug` — 100+ PDF utility tools (28 seeded)
-- `/news` + `/news/:id` — Educational news (15 articles seeded)
-- `/blog` + `/blog/:slug` — Blog posts (7 expert posts seeded)
+- `/results` + `/results/:id` — Government exam results & vacancies
+  - `/results/category/upsc` `/results/category/ssc` `/results/category/banking`
+  - `/results/category/railway` `/results/category/defence` `/results/category/jee`
+  - `/results/category/neet` `/results/category/state-psc` `/results/category/teaching`
+  - `/results/category/police` `/results/category/engineering` `/results/category/judiciary`
+- `/tools` + `/tools/:slug` — 100+ PDF & AI utility tools
+  - `/tools/category/pdf` `/tools/category/ai` `/tools/category/image`
+  - `/tools/category/text` `/tools/category/conversion`
+- `/news` + `/news/:id` — Educational news
+  - `/news/category/upsc` `/news/category/ssc` `/news/category/banking`
+  - `/news/category/railway` `/news/category/scholarships` `/news/category/admit-cards`
+- `/blog` + `/blog/:slug` — Blog posts
+  - `/blog/category/exam-tips` `/blog/category/career-guidance`
+  - `/blog/category/success-stories` `/blog/category/study-strategies`
 - `/resources` — Free study materials hub (54 real resources, in-memory data)
+  - `/resources/category/previous-papers` `/resources/category/syllabus`
+  - `/resources/category/mock-tests` `/resources/category/study-notes` `/resources/category/formula-sheets`
 - `/about` — About page
 - `/contact` — Contact form
 - `/privacy` — Privacy Policy
@@ -148,6 +160,17 @@ The auto-seed checks each table independently before inserting:
 - `/auth/login` + `/auth/register` — Auth
 - `/admin` — Admin dashboard
 - `*` — Custom 404 page
+
+## Navbar Dropdown System
+
+The Navbar uses hover-activated mega-menu dropdowns for the 5 main sections:
+- **Results**: 12 subcategory links (UPSC, SSC, Banking, Railway, Defence, JEE, NEET, State PSC, Teaching, Police, Engineering, Judiciary)
+- **Tools**: 5 subcategory links (PDF, AI, Image, Text, Conversion)
+- **News**: 6 subcategory links (UPSC, SSC, Banking, Railway, Scholarships, Admit Cards)
+- **Blog**: 4 subcategory links (Exam Tips, Career Guidance, Success Stories, Study Strategies)
+- **Resources**: 5 subcategory links (Previous Papers, Syllabus, Mock Tests, Study Notes, Formula Sheets)
+
+Mobile menu is fully responsive with expandable category sections.
 
 ## Backend Routes (Isolated per domain)
 
