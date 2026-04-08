@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
-import { testimonials } from "./backend/api";
+import { testimonials } from "../backend/api";
 import styles from "./testimonials.module.css";
 
 export function Testimonials() {

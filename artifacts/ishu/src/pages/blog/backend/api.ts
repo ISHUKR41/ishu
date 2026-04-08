@@ -1,17 +1,19 @@
 /**
  * Blog Page - Backend API Layer
+ * Shared backend utilities for the blog page and its sections.
  * Changes here do NOT affect any other page.
  */
-export { useListBlogs } from "@workspace/api-client-react";
+export { useListBlogs, useListBlogCategories } from "@workspace/api-client-react";
 
+/**
+ * Blog category filter options used across the blog page sections.
+ * Each category has a slug for URL routing, a human-readable label,
+ * and an icon name referencing the centralized icon system.
+ */
 export const blogCategories = [
-  { slug: "all", label: "All Posts", icon: "BookOpen" },
-  { slug: "exam-tips", label: "Exam Tips", icon: "Lightbulb" },
-  { slug: "career-guidance", label: "Career Guidance", icon: "Compass" },
+  { slug: "all", label: "All Posts", icon: "List" },
+  { slug: "career-guidance", label: "Career Guidance", icon: "Briefcase" },
+  { slug: "exam-tips", label: "Exam Tips", icon: "Academic" },
+  { slug: "study-strategies", label: "Study Strategies", icon: "BookOpen" },
   { slug: "success-stories", label: "Success Stories", icon: "Trophy" },
-  { slug: "study-strategies", label: "Study Strategies", icon: "Brain" },
-  { slug: "current-affairs", label: "Current Affairs", icon: "Globe" },
-  { slug: "preparation-plans", label: "Preparation Plans", icon: "Calendar" },
-  { slug: "book-reviews", label: "Book Reviews", icon: "Book" },
-  { slug: "motivation", label: "Motivation", icon: "Flame" },
 ] as const;

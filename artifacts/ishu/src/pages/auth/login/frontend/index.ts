@@ -3,4 +3,4 @@
  * Re-exports login component for modular access.
  * Changes here do NOT affect any other section.
  */
-export { default } from "../login";
+export { default } from "../../login";

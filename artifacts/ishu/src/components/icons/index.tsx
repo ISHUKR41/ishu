@@ -42,8 +42,8 @@ import {
   HeartIcon,
   ShareIcon,
   BookmarkIcon,
-  DownloadIcon,
-  UploadIcon,
+  ArrowDownTrayIcon,
+  ArrowUpTrayIcon,
   DocumentTextIcon,
   PhotoIcon,
   FilmIcon,
@@ -231,7 +231,7 @@ import {
   BsLightning,
   BsFire,
   BsEmojiSmile,
-  BsEmojiHeart,
+  BsEmojiHeartEyes,
   BsEmojiFrown,
 } from 'react-icons/bs';
 
@@ -245,7 +245,7 @@ export const Icons = {
   News: NewspaperIcon,
   Tools: WrenchScrewdriverIcon,
   Results: AcademicCapIcon,
-  Blog: BookOpenLine,
+  Blog: RiBookOpenLine,
   Resources: RiBookOpenLine,
   Contact: PhoneIcon,
   About: InformationCircleIcon,
@@ -269,8 +269,8 @@ export const Icons = {
   Minus: MinusIcon,
   Edit: PencilIcon,
   Delete: TrashIcon,
-  Download: DownloadIcon,
-  Upload: UploadIcon,
+  Download: ArrowDownTrayIcon,
+  Upload: ArrowUpTrayIcon,
   Share: ShareIcon,
   Bookmark: BookmarkIcon,
   Heart: HeartIcon,
@@ -392,7 +392,7 @@ export const Icons = {
 
   // Emojis & Reactions
   Smile: BsEmojiSmile,
-  HeartEmoji: BsEmojiHeart,
+  HeartEmoji: BsEmojiHeartEyes,
   Stars: BsStars,
   Lightning: BsLightning,
 

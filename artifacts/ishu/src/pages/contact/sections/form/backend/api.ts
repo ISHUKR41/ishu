@@ -3,4 +3,4 @@
  * API hooks for the contact form submission.
  * Changes here do NOT affect any other section.
  */
-export { useSubmitContactForm } from "@workspace/api-client-react";
+export { useSubmitContact } from "@workspace/api-client-react";
