@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Icons } from "@/components/icons";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useListResults, categoryColors, getStatusStyle } from "./backend/api";
+import { useListResults, categoryColors, getStatusStyle } from "../backend/api";
 import styles from "./featured-results.module.css";
 
 

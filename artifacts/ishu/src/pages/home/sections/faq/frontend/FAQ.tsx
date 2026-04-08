@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, HelpCircle } from "lucide-react";
-import { useFaqItems } from "./backend/useFaqItems";
+import { useFaqItems } from "../backend/useFaqItems";
 import styles from "./faq.module.css";
 
 export function FAQ() {

@@ -3,4 +3,4 @@
  * Isolated API hooks for registration.
  * Changes here do NOT affect any other section.
  */
-export { useRegister } from "@workspace/api-client-react";
+export { useRegisterUser } from "@workspace/api-client-react";
