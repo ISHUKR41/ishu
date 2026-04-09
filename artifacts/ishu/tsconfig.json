@@ -1,18 +1,72 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build", "dist", "**/*.test.ts"],
+  "include": [
+    "src/**/*",
+    "../modules/**/frontend/**/*",
+    "../modules/**/types/**/*",
+    "../modules/**/_shared/**/*",
+    "../modules/**/index.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "**/*.test.ts"
+  ],
   "compilerOptions": {
     "noEmit": true,
-    "jsx": "preserve",
-    "lib": ["esnext", "dom", "dom.iterable"],
+    "jsx": "react-jsx",
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "moduleResolution": "bundler",
-    "types": ["node", "vite/client"],
+    "types": [
+      "node",
+      "vite/client",
+      "react",
+      "react-dom"
+    ],
+
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "react": [
+        "./node_modules/@types/react"
+      ],
+      "react/jsx-runtime": [
+        "./node_modules/@types/react/jsx-runtime"
+      ],
+      "react-dom": [
+        "./node_modules/@types/react-dom"
+      ],
+      "@/*": [
+        "./src/*"
+      ],
+      "@modules/*": [
+        "../modules/*"
+      ],
+      "zod": [
+        "node_modules/zod"
+      ],
+      "gsap": [
+        "node_modules/gsap"
+      ],
+      "gsap/*": [
+        "node_modules/gsap/*"
+      ],
+      "lucide-react": [
+        "node_modules/lucide-react"
+      ],
+      "wouter": [
+        "node_modules/wouter"
+      ],
+      "@tanstack/react-query": [
+        "node_modules/@tanstack/react-query"
+      ]
+    },
+    "baseUrl": "."
   },
   "references": [
     {

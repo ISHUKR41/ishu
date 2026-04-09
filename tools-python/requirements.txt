@@ -1,0 +1,40 @@
+# =============================================================================
+# ISHU Platform — Python Tools Microservice Dependencies
+# =============================================================================
+# This file lists all Python packages required by the FastAPI-based
+# PDF/document processing microservice. Each tool operates in isolation
+# with its own dedicated module file.
+# =============================================================================
+
+# --- Core Web Framework ---
+fastapi==0.115.12          # High-performance async REST API framework
+uvicorn[standard]==0.34.3  # ASGI server for running FastAPI in production
+python-multipart==0.0.20   # Required for file upload parsing in FastAPI
+
+# --- PDF Processing Libraries ---
+PyPDF2==3.0.1              # Core PDF manipulation (merge, split, rotate, watermark)
+pypdf==5.5.0               # Modern fork of PyPDF2 with enhanced features
+pikepdf==9.7.0             # Advanced PDF operations (unlock, protect, repair)
+PyMuPDF==1.25.5            # High-performance PDF editing, annotations, page numbers
+reportlab==4.4.0           # PDF generation from scratch (used for conversions)
+pdfkit==1.0.0              # HTML to PDF conversion (requires wkhtmltopdf)
+pdf2image==1.17.0          # PDF pages to high-quality images (requires poppler)
+
+# --- Document Conversion Libraries ---
+python-docx==1.1.2         # Word document (.docx) reading and creation
+python-pptx==1.0.2         # PowerPoint (.pptx) reading and creation
+openpyxl==3.1.5            # Excel (.xlsx) reading and creation
+pdf2docx==0.5.8            # Direct PDF to Word conversion with layout preservation
+
+# --- Image Processing ---
+Pillow==11.2.1             # Advanced image processing (resize, format conversion)
+
+# --- OCR (Optical Character Recognition) ---
+pytesseract==0.3.13        # OCR engine wrapper (requires Tesseract installed)
+
+# --- Translation ---
+googletrans==4.0.0rc1      # Free Google Translate API wrapper for PDF translation
+
+# --- Utilities ---
+aiofiles==24.1.0           # Async file I/O for non-blocking operations
+pydantic==2.11.3           # Data validation and settings management

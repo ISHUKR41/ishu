@@ -2,10 +2,34 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
-    "types": ["node"]
+    "rootDir": "..",
+    "baseUrl": ".",
+    "paths": {
+      "bcryptjs": [
+        "node_modules/bcryptjs"
+      ],
+      "drizzle-orm": [
+        "node_modules/drizzle-orm"
+      ],
+      "@workspace/db": [
+        "../../lib/db"
+      ],
+      "@workspace/api-zod": [
+        "../../lib/api-zod"
+      ],
+      "zod": [
+        "node_modules/zod"
+      ]
+    },
+    "types": [
+      "node",
+      "express"
+    ]
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "../modules/**/backend"
+  ],
   "references": [
     {
       "path": "../../lib/db"

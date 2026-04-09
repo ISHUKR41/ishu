@@ -1,0 +1,23 @@
+[
+    {
+        "title": "UPSC Civil Services Prelims 2026",
+        "category": "upsc",
+        "status": "upcoming",
+        "exam_date": "2026-05-28",
+        "apply_link": "https://upsconline.nic.in"
+    },
+    {
+        "title": "SSC CGL Tier 1",
+        "category": "ssc",
+        "status": "active",
+        "exam_date": "2026-04-15",
+        "apply_link": "https://ssc.nic.in"
+    },
+    {
+        "title": "IBPS PO Prelims",
+        "category": "banking",
+        "status": "upcoming",
+        "exam_date": "2026-08-10",
+        "apply_link": "https://ibps.in"
+    }
+]

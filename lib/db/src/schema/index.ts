@@ -5,3 +5,4 @@ export * from "./tools";
 export * from "./blogs";
 export * from "./contacts";
 export * from "./notifications";
+export * from "./faq";

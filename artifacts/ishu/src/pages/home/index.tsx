@@ -1,13 +1,13 @@
 import { PageMeta } from "@/components/layout/PageMeta";
-import { HeroSection } from "./sections/hero/frontend";
-import { StatsSection } from "./sections/stats/frontend";
-import { ExamCategories } from "./sections/exam-categories/frontend";
-import { FeaturedResults } from "./sections/featured-results/frontend";
-import { ToolsShowcase } from "./sections/tools-showcase/frontend";
-import { NewsPreview } from "./sections/news-preview/frontend";
-import { BlogPreview } from "./sections/blog-preview/frontend";
-import { NotificationCTA } from "./sections/notification-cta/frontend";
-import { FAQ } from "./sections/faq/frontend";
+import HomeHero from "@modules/Home/HeroSection/frontend";
+import HomeStats from "@modules/Home/StatsSection/frontend";
+import ExamCategories from "@modules/Home/ExamCategories/frontend";
+import FeaturedResults from "@modules/Home/FeaturedResults/List/frontend";
+import ToolsShowcase from "@modules/Home/ToolsShowcase/frontend";
+import NewsPreview from "@modules/Home/NewsPreview/frontend";
+import BlogPreview from "@modules/Home/BlogPreview/frontend";
+import NotificationCTA from "@modules/Home/NotificationCTA/frontend";
+import FAQ from "@modules/Home/FAQ/frontend";
 
 export default function Home() {
   return (
@@ -40,8 +40,8 @@ export default function Home() {
         }}
       />
       <div className="flex flex-col min-h-screen">
-        <HeroSection />
-        <StatsSection />
+        <HomeHero />
+        <HomeStats />
         <ExamCategories />
         <FeaturedResults />
         <ToolsShowcase />

@@ -1,0 +1,182 @@
+/* ============================================================================
+   FILE: Contact/HeroSection/frontend/styles.module.css
+   PURPOSE: CSS Module for the Contact page hero section.
+            CSS Modules are used for STRICT ISOLATION — class names are
+            automatically scoped (e.g., .container becomes .styles_container_a1b2c)
+            so they CANNOT leak into any other component on the page.
+            This is the KEY technique ensuring zero cross-impact between sections.
+   TECH: CSS Modules (built into Vite), CSS Custom Properties, CSS Grid
+   ISOLATION: 100% scoped. No global styles. No leakage.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   Hero Container — Full-viewport hero area with dark gradient background
+   Inspired by Apple's product pages: large, immersive, minimal.
+   --------------------------------------------------------------------------- */
+.container {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 3rem;
+  padding: 6rem 4rem 4rem;
+  overflow: hidden;
+
+  /* Dark gradient background — luxury feel */
+  background: linear-gradient(
+    135deg,
+    hsl(240 30% 6%) 0%,
+    hsl(240 25% 10%) 40%,
+    hsl(250 30% 14%) 100%
+  );
+}
+
+/* Subtle noise texture overlay for depth (like Stripe's backgrounds) */
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Left Column — Text content (headline, subheadline, stats)
+   --------------------------------------------------------------------------- */
+.textContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Main headline — Large, bold, with gradient text effect */
+.headline {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+
+  /* Gradient text effect (like Apple's "Pro" headlines) */
+  background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Supporting subheadline — Lighter, softer */
+.subheadline {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: hsl(230 20% 70%);
+  max-width: 540px;
+}
+
+/* ---------------------------------------------------------------------------
+   Stats Row — Horizontal strip of key metrics
+   --------------------------------------------------------------------------- */
+.statsRow {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Individual stat card — Glassmorphism effect */
+.statCard {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: hsla(240, 30%, 15%, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid hsla(240, 30%, 30%, 0.3);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  border-color: hsla(240, 60%, 60%, 0.5);
+}
+
+.statValue {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #818cf8;
+}
+
+.statLabel {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: hsl(230 20% 60%);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Right Column — 3D Globe container
+   --------------------------------------------------------------------------- */
+.globeContainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive Breakpoints — Mobile-first adjustments
+   --------------------------------------------------------------------------- */
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    padding: 5rem 2rem 3rem;
+    min-height: auto;
+    gap: 2rem;
+  }
+
+  .globeContainer {
+    height: 350px;
+    order: -1; /* Globe appears above text on mobile */
+  }
+
+  .statsRow {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .statCard {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+/* Small phones (480px and below) */
+@media (max-width: 480px) {
+  .container {
+    padding: 4rem 1.25rem 2rem;
+  }
+
+  .globeContainer {
+    height: 280px;
+  }
+
+  .statsRow {
+    flex-direction: column;
+  }
+
+  .statCard {
+    min-width: unset;
+  }
+}

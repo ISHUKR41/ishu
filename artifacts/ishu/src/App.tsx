@@ -1,3 +1,21 @@
+// ============================================================================
+// FILE: App.tsx — The Master Application Router
+// PURPOSE: Central routing hub for the entire ISHU platform. Every single
+//          page, category, state, and detail view is lazy-loaded from its
+//          isolated @modules/ directory (Feature-Sliced Design).
+//
+// ARCHITECTURE: 100% modular. Every import points to @modules/ — NO legacy
+//               @/pages/ imports remain. Each module can be independently
+//               developed, tested, and deployed by separate teams.
+//
+// TECH STACK:
+//   - React 18+ (Suspense, lazy for code-splitting)
+//   - Wouter (lightweight SPA routing)
+//   - TanStack React Query (server-state management)
+//   - next-themes (dark/light mode)
+//   - GSAP, Three.js, Framer Motion (animations — loaded per-module)
+// ============================================================================
+
 import { Suspense, lazy } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -9,105 +27,120 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScrollProvider } from "@/providers/SmoothScrollProvider";
 
+// ============================================================================
+// MAIN PAGES — Top-level route modules
+// ============================================================================
 const Home = lazy(() => import("@/pages/home/index"));
-const Results = lazy(() => import("@/pages/results/index"));
+const Results = lazy(() => import("@modules/Results/index"));
 const ResultDetail = lazy(() => import("@/pages/results/detail"));
-const Tools = lazy(() => import("@/pages/tools/index"));
+const Tools = lazy(() => import("@modules/Tools/index"));
 const ToolDetail = lazy(() => import("@/pages/tools/detail"));
-const News = lazy(() => import("@/pages/news/index"));
+const News = lazy(() => import("@modules/News/index"));
 const NewsDetail = lazy(() => import("@/pages/news/detail"));
-const Blog = lazy(() => import("@/pages/blog/index"));
+const Blog = lazy(() => import("@modules/Blog/index"));
 const BlogDetail = lazy(() => import("@/pages/blog/detail"));
-const About = lazy(() => import("@/pages/about/index"));
-const Contact = lazy(() => import("@/pages/contact/index"));
+const About = lazy(() => import("@modules/About/index"));
+const Contact = lazy(() => import("@modules/Contact/index"));
 const TestPage = lazy(() => import("@/pages/test/frontend"));
-const Resources = lazy(() => import("@/pages/resources/index"));
-const Privacy = lazy(() => import("@/pages/privacy/index"));
-const Terms = lazy(() => import("@/pages/terms/index"));
-const Login = lazy(() => import("@/pages/auth/login"));
-const Register = lazy(() => import("@/pages/auth/register"));
+const Resources = lazy(() => import("@modules/Resources/index"));
+const Privacy = lazy(() => import("@modules/Privacy/index"));
+const Terms = lazy(() => import("@modules/Terms/index"));
+const Login = lazy(() => import("@modules/Auth/Login/frontend"));
+const Register = lazy(() => import("@modules/Auth/Register/frontend"));
 const AdminDashboard = lazy(() => import("@/pages/admin/index"));
-const NotFound = lazy(() => import("@/pages/not-found/index"));
+const NotFound = lazy(() => import("@modules/NotFound/frontend/index"));
 
-// Results category pages
-const ResultsUPSC = lazy(() => import("@/pages/results/categories/upsc"));
-const ResultsSSC = lazy(() => import("@/pages/results/categories/ssc"));
-const ResultsBanking = lazy(() => import("@/pages/results/categories/banking"));
-const ResultsRailway = lazy(() => import("@/pages/results/categories/railway"));
-const ResultsDefence = lazy(() => import("@/pages/results/categories/defence"));
-const ResultsJEE = lazy(() => import("@/pages/results/categories/jee"));
-const ResultsNEET = lazy(() => import("@/pages/results/categories/neet"));
-const ResultsStatePSC = lazy(() => import("@/pages/results/categories/state-psc"));
-const ResultsTeaching = lazy(() => import("@/pages/results/categories/teaching"));
-const ResultsPolice = lazy(() => import("@/pages/results/categories/police"));
-const ResultsEngineering = lazy(() => import("@/pages/results/categories/engineering"));
-const ResultsJudiciary = lazy(() => import("@/pages/results/categories/judiciary"));
+// ============================================================================
+// RESULTS CATEGORY PAGES — 12 isolated sub-modules
+// ============================================================================
+const ResultsUPSC = lazy(() => import("@modules/Results/Categories/UPSC/frontend"));
+const ResultsSSC = lazy(() => import("@modules/Results/Categories/SSC/frontend"));
+const ResultsBanking = lazy(() => import("@modules/Results/Categories/Banking/frontend"));
+const ResultsRailway = lazy(() => import("@modules/Results/Categories/Railway/frontend"));
+const ResultsDefence = lazy(() => import("@modules/Results/Categories/Defence/frontend"));
+const ResultsJEE = lazy(() => import("@modules/Results/Categories/JEE/frontend"));
+const ResultsNEET = lazy(() => import("@modules/Results/Categories/NEET/frontend"));
+const ResultsStatePSC = lazy(() => import("@modules/Results/Categories/StatePSC/frontend"));
+const ResultsTeaching = lazy(() => import("@modules/Results/Categories/Teaching/frontend"));
+const ResultsPolice = lazy(() => import("@modules/Results/Categories/Police/frontend"));
+const ResultsEngineering = lazy(() => import("@modules/Results/Categories/Engineering/frontend"));
+const ResultsJudiciary = lazy(() => import("@modules/Results/Categories/Judiciary/frontend"));
 
-// Tools category pages
-const ToolsPDF = lazy(() => import("@/pages/tools/categories/pdf"));
-const ToolsAI = lazy(() => import("@/pages/tools/categories/ai"));
-const ToolsImage = lazy(() => import("@/pages/tools/categories/image"));
-const ToolsText = lazy(() => import("@/pages/tools/categories/text"));
-const ToolsConversion = lazy(() => import("@/pages/tools/categories/conversion"));
+// ============================================================================
+// TOOLS CATEGORY PAGES — 5 isolated sub-modules (migrated from @/pages/)
+// ============================================================================
+const ToolsPDF = lazy(() => import("@modules/Tools/Categories/pdf/frontend"));
+const ToolsAI = lazy(() => import("@modules/Tools/Categories/ai/frontend"));
+const ToolsImage = lazy(() => import("@modules/Tools/Categories/image/frontend"));
+const ToolsText = lazy(() => import("@modules/Tools/Categories/text/frontend"));
+const ToolsConversion = lazy(() => import("@modules/Tools/Categories/conversion/frontend"));
 
-// News category pages
-const NewsUPSC = lazy(() => import("@/pages/news/categories/upsc"));
-const NewsSSC = lazy(() => import("@/pages/news/categories/ssc"));
-const NewsBanking = lazy(() => import("@/pages/news/categories/banking"));
-const NewsRailway = lazy(() => import("@/pages/news/categories/railway"));
-const NewsScholarships = lazy(() => import("@/pages/news/categories/scholarships"));
-const NewsAdmitCards = lazy(() => import("@/pages/news/categories/admit-cards"));
+// ============================================================================
+// NEWS CATEGORY PAGES — 30 isolated sub-modules (migrated from @/pages/)
+// ============================================================================
+const NewsUPSC = lazy(() => import("@modules/News/Categories/upsc/frontend"));
+const NewsSSC = lazy(() => import("@modules/News/Categories/ssc/frontend"));
+const NewsBanking = lazy(() => import("@modules/News/Categories/banking/frontend"));
+const NewsRailway = lazy(() => import("@modules/News/Categories/railway/frontend"));
+const NewsScholarships = lazy(() => import("@modules/News/Categories/scholarships/frontend"));
+const NewsAdmitCards = lazy(() => import("@modules/News/Categories/admit-cards/frontend"));
 
-// Blog category pages
-const BlogExamTips = lazy(() => import("@/pages/blogs/categories/exam-tips"));
-const BlogCareerGuidance = lazy(() => import("@/pages/blogs/categories/career-guidance"));
-const BlogSuccessStories = lazy(() => import("@/pages/blogs/categories/success-stories"));
-const BlogStudyStrategies = lazy(() => import("@/pages/blogs/categories/study-strategies"));
+// ============================================================================
+// BLOG CATEGORY PAGES — 4 isolated sub-modules (migrated from @/pages/)
+// ============================================================================
+const BlogExamTips = lazy(() => import("@modules/Blog/Categories/exam-tips/frontend"));
+const BlogCareerGuidance = lazy(() => import("@modules/Blog/Categories/career-guidance/frontend"));
+const BlogSuccessStories = lazy(() => import("@modules/Blog/Categories/success-stories/frontend"));
+const BlogStudyStrategies = lazy(() => import("@modules/Blog/Categories/study-strategies/frontend"));
 
-// Resources category pages
-const ResourcesPreviousPapers = lazy(() => import("@/pages/resources/categories/previous-papers"));
-const ResourcesSyllabus = lazy(() => import("@/pages/resources/categories/syllabus"));
-const ResourcesMockTests = lazy(() => import("@/pages/resources/categories/mock-tests"));
-const ResourcesStudyNotes = lazy(() => import("@/pages/resources/categories/study-notes"));
-const ResourcesFormulaSheets = lazy(() => import("@/pages/resources/categories/formula-sheets"));
+// ============================================================================
+// RESOURCES CATEGORY PAGES — 5 isolated sub-modules (migrated from @/pages/)
+// ============================================================================
+const ResourcesPreviousPapers = lazy(() => import("@modules/Resources/Categories/previous-papers/frontend"));
+const ResourcesSyllabus = lazy(() => import("@modules/Resources/Categories/syllabus/frontend"));
+const ResourcesMockTests = lazy(() => import("@modules/Resources/Categories/mock-tests/frontend"));
+const ResourcesStudyNotes = lazy(() => import("@modules/Resources/Categories/study-notes/frontend"));
+const ResourcesFormulaSheets = lazy(() => import("@modules/Resources/Categories/formula-sheets/frontend"));
 
-// State Results Pages - All Indian States and UTs
-const AndhraPradeshResults = lazy(() => import("@/pages/results/states/andhra-pradesh/frontend"));
-const ArunachalPradeshResults = lazy(() => import("@/pages/results/states/arunachal-pradesh/frontend"));
-const AssamResults = lazy(() => import("@/pages/results/states/assam/frontend"));
-const BiharResults = lazy(() => import("@/pages/results/states/bihar/frontend"));
-const ChhattisgarhResults = lazy(() => import("@/pages/results/states/chhattisgarh/frontend"));
-const GoaResults = lazy(() => import("@/pages/results/states/goa/frontend"));
-const GujaratResults = lazy(() => import("@/pages/results/states/gujarat/frontend"));
-const HaryanaResults = lazy(() => import("@/pages/results/states/haryana/frontend"));
-const HimachalPradeshResults = lazy(() => import("@/pages/results/states/himachal-pradesh/frontend"));
-const JharkhandResults = lazy(() => import("@/pages/results/states/jharkhand/frontend"));
-const KarnatakaResults = lazy(() => import("@/pages/results/states/karnataka/frontend"));
-const KeralaResults = lazy(() => import("@/pages/results/states/kerala/frontend"));
-const MadhyaPradeshResults = lazy(() => import("@/pages/results/states/madhya-pradesh/frontend"));
-const MaharashtraResults = lazy(() => import("@/pages/results/states/maharashtra/frontend"));
-const ManipurResults = lazy(() => import("@/pages/results/states/manipur/frontend"));
-const MeghalayaResults = lazy(() => import("@/pages/results/states/meghalaya/frontend"));
-const MizoramResults = lazy(() => import("@/pages/results/states/mizoram/frontend"));
-const NagalandResults = lazy(() => import("@/pages/results/states/nagaland/frontend"));
-const OdishaResults = lazy(() => import("@/pages/results/states/odisha/frontend"));
-const PunjabResults = lazy(() => import("@/pages/results/states/punjab/frontend"));
-const RajasthanResults = lazy(() => import("@/pages/results/states/rajasthan/frontend"));
-const SikkimResults = lazy(() => import("@/pages/results/states/sikkim/frontend"));
-const TamilNaduResults = lazy(() => import("@/pages/results/states/tamil-nadu/frontend"));
-const TelanganaResults = lazy(() => import("@/pages/results/states/telangana/frontend"));
-const TripuraResults = lazy(() => import("@/pages/results/states/tripura/frontend"));
-const UttarPradeshResults = lazy(() => import("@/pages/results/states/uttar-pradesh/frontend"));
-const UttarakhandResults = lazy(() => import("@/pages/results/states/uttarakhand/frontend"));
-const WestBengalResults = lazy(() => import("@/pages/results/states/west-bengal/frontend"));
-const AndamanNicobarResults = lazy(() => import("@/pages/results/states/andaman-nicobar/frontend"));
-const ChandigarhResults = lazy(() => import("@/pages/results/states/chandigarh/frontend"));
-const DadraNagarHaveliDamanDiuResults = lazy(() => import("@/pages/results/states/dadra-nagar-haveli-daman-diu/frontend"));
-const DelhiResults = lazy(() => import("@/pages/results/states/delhi/frontend"));
-const JammuKashmirResults = lazy(() => import("@/pages/results/states/jammu-kashmir/frontend"));
-const LadakhResults = lazy(() => import("@/pages/results/states/ladakh/frontend"));
-const LakshadweepResults = lazy(() => import("@/pages/results/states/lakshadweep/frontend"));
-const PuducherryResults = lazy(() => import("@/pages/results/states/puducherry/frontend"));
+// ============================================================================
+// STATE RESULTS PAGES — All 28 States + 8 UTs = 36 (migrated to @modules/)
+// ============================================================================
+const AndhraPradeshResults = lazy(() => import("@modules/Results/States/andhra-pradesh/frontend"));
+const ArunachalPradeshResults = lazy(() => import("@modules/Results/States/arunachal-pradesh/frontend"));
+const AssamResults = lazy(() => import("@modules/Results/States/assam/frontend"));
+const BiharResults = lazy(() => import("@modules/Results/States/bihar/frontend"));
+const ChhattisgarhResults = lazy(() => import("@modules/Results/States/chhattisgarh/frontend"));
+const GoaResults = lazy(() => import("@modules/Results/States/goa/frontend"));
+const GujaratResults = lazy(() => import("@modules/Results/States/gujarat/frontend"));
+const HaryanaResults = lazy(() => import("@modules/Results/States/haryana/frontend"));
+const HimachalPradeshResults = lazy(() => import("@modules/Results/States/himachal-pradesh/frontend"));
+const JharkhandResults = lazy(() => import("@modules/Results/States/jharkhand/frontend"));
+const KarnatakaResults = lazy(() => import("@modules/Results/States/karnataka/frontend"));
+const KeralaResults = lazy(() => import("@modules/Results/States/kerala/frontend"));
+const MadhyaPradeshResults = lazy(() => import("@modules/Results/States/madhya-pradesh/frontend"));
+const MaharashtraResults = lazy(() => import("@modules/Results/States/maharashtra/frontend"));
+const ManipurResults = lazy(() => import("@modules/Results/States/manipur/frontend"));
+const MeghalayaResults = lazy(() => import("@modules/Results/States/meghalaya/frontend"));
+const MizoramResults = lazy(() => import("@modules/Results/States/mizoram/frontend"));
+const NagalandResults = lazy(() => import("@modules/Results/States/nagaland/frontend"));
+const OdishaResults = lazy(() => import("@modules/Results/States/odisha/frontend"));
+const PunjabResults = lazy(() => import("@modules/Results/States/punjab/frontend"));
+const RajasthanResults = lazy(() => import("@modules/Results/States/rajasthan/frontend"));
+const SikkimResults = lazy(() => import("@modules/Results/States/sikkim/frontend"));
+const TamilNaduResults = lazy(() => import("@modules/Results/States/tamil-nadu/frontend"));
+const TelanganaResults = lazy(() => import("@modules/Results/States/telangana/frontend"));
+const TripuraResults = lazy(() => import("@modules/Results/States/tripura/frontend"));
+const UttarPradeshResults = lazy(() => import("@modules/Results/States/uttar-pradesh/frontend"));
+const UttarakhandResults = lazy(() => import("@modules/Results/States/uttarakhand/frontend"));
+const WestBengalResults = lazy(() => import("@modules/Results/States/west-bengal/frontend"));
+const AndamanNicobarResults = lazy(() => import("@modules/Results/States/andaman-nicobar/frontend"));
+const ChandigarhResults = lazy(() => import("@modules/Results/States/chandigarh/frontend"));
+const DadraNagarHaveliDamanDiuResults = lazy(() => import("@modules/Results/States/dadra-nagar-haveli-daman-diu/frontend"));
+const DelhiResults = lazy(() => import("@modules/Results/States/delhi/frontend"));
+const JammuKashmirResults = lazy(() => import("@modules/Results/States/jammu-kashmir/frontend"));
+const LadakhResults = lazy(() => import("@modules/Results/States/ladakh/frontend"));
+const LakshadweepResults = lazy(() => import("@modules/Results/States/lakshadweep/frontend"));
+const PuducherryResults = lazy(() => import("@modules/Results/States/puducherry/frontend"));
 
 const queryClient = new QueryClient({
   defaultOptions: {

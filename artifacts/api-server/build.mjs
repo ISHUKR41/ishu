@@ -22,6 +22,21 @@ async function buildAll() {
     outdir: distDir,
     outExtension: { ".js": ".mjs" },
     logLevel: "info",
+    alias: {
+      "express": path.resolve(artifactDir, "node_modules/express"),
+      "bcryptjs": path.resolve(artifactDir, "node_modules/bcryptjs"),
+      "drizzle-orm": path.resolve(artifactDir, "node_modules/drizzle-orm"),
+      "cookie-parser": path.resolve(artifactDir, "node_modules/cookie-parser"),
+      "express-session": path.resolve(artifactDir, "node_modules/express-session"),
+      "multer": path.resolve(artifactDir, "node_modules/multer"),
+      "cors": path.resolve(artifactDir, "node_modules/cors"),
+      "pino": path.resolve(artifactDir, "node_modules/pino"),
+      "pino-http": path.resolve(artifactDir, "node_modules/pino-http"),
+      "pdf-lib": path.resolve(artifactDir, "node_modules/pdf-lib"),
+      "zod": path.resolve(artifactDir, "node_modules/zod"),
+      "@workspace/db": path.resolve(artifactDir, "../../lib/db/src/index.ts"),
+      "@workspace/api-zod": path.resolve(artifactDir, "../../lib/api-zod/src/index.ts"),
+    },
     // Some packages may not be bundleable, so we externalize them, we can add more here as needed.
     // Some of the packages below may not be imported or installed, but we're adding them in case they are in the future.
     // Examples of unbundleable packages:

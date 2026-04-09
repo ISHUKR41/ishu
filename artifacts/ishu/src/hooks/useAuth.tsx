@@ -47,9 +47,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
-    await logoutMutation.mutateAsync(undefined);
-    setUser(null);
-    setLocation("/");
+    try {
+      await logoutMutation.mutateAsync(undefined);
+    } catch (e) {
+      console.warn("API logout failed, clearing local state.");
+    } finally {
+      setUser(null);
+      setLocation("/");
+    }
   };
 
   const isAdmin = user?.role === "admin";

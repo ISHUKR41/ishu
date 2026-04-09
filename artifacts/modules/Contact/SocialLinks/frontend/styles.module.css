@@ -1,0 +1,48 @@
+/* ============================================================================
+   FILE: Contact/SocialLinks/frontend/styles.module.css
+   ISOLATION: 100% scoped. Zero leakage.
+   ============================================================================ */
+.section { padding: 5rem 4rem; background: hsl(240 25% 10%); }
+.sectionInner { max-width: 1100px; margin: 0 auto; }
+.sectionTitle {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700; color: #ffffff; text-align: center;
+  margin-bottom: 2.5rem; letter-spacing: -0.02em;
+}
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+.card {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 2rem 1.5rem; border-radius: 14px;
+  background: hsla(240, 25%, 12%, 0.7);
+  border: 1px solid hsla(240, 20%, 22%, 0.5);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  text-decoration: none; gap: 0.75rem;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand-color, hsla(239, 84%, 67%, 0.4));
+}
+.iconCircle {
+  width: 56px; height: 56px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--brand-bg, hsla(239, 84%, 67%, 0.1));
+  color: var(--brand-color, #818cf8);
+  transition: transform 0.3s ease;
+}
+.card:hover .iconCircle { transform: scale(1.1); }
+.platformName {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.9rem; font-weight: 600; color: #ffffff;
+}
+.followers {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.78rem; color: hsl(230 20% 50%);
+}
+@media (max-width: 768px) {
+  .section { padding: 3rem 1.5rem; }
+  .grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
+}

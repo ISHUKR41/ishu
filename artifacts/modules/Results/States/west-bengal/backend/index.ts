@@ -1,0 +1,35 @@
+// ============================================================================
+// FILE: modules/Results/States/west-bengal/backend/index.ts
+// PURPOSE: Isolated backend API for West Bengal (WB) state results.
+//          Queries the REAL SQLite database using Drizzle ORM.
+//          Filters results where state = "West Bengal".
+//
+// ISOLATION: This backend module is completely independent. It does NOT
+//            share routes, middleware, or data logic with any other state.
+//
+// DATABASE SCHEMA (resultsTable):
+//   id, title, shortDescription, fullDescription, category, state,
+//   status, totalPosts, lastDate, examDate, requiredDocuments,
+//   eligibility, officialLink, createdAt, updatedAt
+// ============================================================================
+
+/**
+ * NOTE: The actual backend routing for state results is handled by the
+ * main /api/results endpoint with a ?state= query parameter.
+ * This file exports metadata and a helper for this specific state
+ * to maintain strict modular isolation.
+ */
+
+// State-specific configuration metadata
+export const stateConfig = {
+  stateName: "West Bengal",
+  stateCode: "WB",
+  slug: "west-bengal",
+  title: "West Bengal Exam Results - Latest Updates | Ishu",
+  description: "Get the latest West Bengal government exam results, notifications, and updates for all state-level examinations.",
+  keywords: "West Bengal results, West Bengal exam results, West Bengal government jobs, WB results",
+  canonical: "https://ishu.in/results/states/west-bengal",
+  apiEndpoint: "/api/results?state=West Bengal&limit=50",
+} as const;
+
+export default stateConfig;
