@@ -1,6 +1,6 @@
 // ============================================================================
 // FILE: pages/home/sections/testimonials/frontend/Testimonials.tsx
-// PURPOSE: Displays real student testimonials fetched from the backend API.
+// PURPOSE: Displays real home highlight cards fetched from the backend API.
 //          Previously used hardcoded data imported from backend/api.ts.
 //          Now fetches dynamically from /api/home/sections/testimonials.
 //
@@ -26,7 +26,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import styles from "./testimonials.module.css";
 
 /**
- * Shape of a single testimonial from the backend API.
+ * Shape of a single highlight card from the backend API.
  * Matches the response from GET /api/home/sections/testimonials.
  */
 interface Testimonial {
@@ -41,7 +41,7 @@ interface Testimonial {
   /** The actual review text */
   content: string;
   /** Star rating from 1 to 5 */
-  rating: number;
+  rating?: number;
   /** Two-letter initials for the avatar circle */
   avatar: string;
   /** Hex color code for the avatar accent */
@@ -49,10 +49,10 @@ interface Testimonial {
 }
 
 /**
- * Testimonials — Displays verified student reviews.
+ * Testimonials — Displays real platform highlights.
  *
  * WHAT IT DOES:
- * 1. Fetches real testimonials from GET /api/home/sections/testimonials
+ * 1. Fetches real highlight cards from GET /api/home/sections/testimonials
  * 2. Displays them in a responsive grid with Framer Motion animations
  * 3. Shows skeleton placeholders while loading
  * 4. Each card has star ratings, review text, and student info
@@ -61,11 +61,12 @@ interface Testimonial {
  * provides automatic loading/error states without manual useState.
  */
 export function Testimonials() {
+  const baseUrl = import.meta.env.BASE_URL?.replace(/\/$/, "") ?? "";
   // Fetch testimonials from the dedicated backend endpoint
   const { data: testimonials = [], isLoading } = useQuery<Testimonial[]>({
     queryKey: ["home", "testimonials"],
     queryFn: async () => {
-      const response = await fetch("/api/home/sections/testimonials");
+      const response = await fetch(`${baseUrl}/api/home/sections/testimonials`);
       if (!response.ok) throw new Error("Failed to fetch testimonials");
       return response.json();
     },
@@ -80,11 +81,11 @@ export function Testimonials() {
         <div className={styles.header}>
           <div className={styles.sectionLabel}>
             <Star size={14} />
-            Student Reviews
+            Verified Highlights
           </div>
-          <h2 className={styles.sectionTitle}>Trusted by Students Across India</h2>
+          <h2 className={styles.sectionTitle}>Latest Real Updates from the Platform</h2>
           <p className={styles.sectionDesc}>
-            Real experiences from students who use Ishu every day to prepare for their dream exams.
+            No demo entries here — every card is generated from real results, news, and blog records.
           </p>
         </div>
 
@@ -124,12 +125,13 @@ export function Testimonials() {
                 }}
                 className={styles.card}
               >
-                {/* Star rating row */}
-                <div className={styles.stars}>
-                  {[...Array(t.rating)].map((_, i) => (
-                    <Star key={i} className={styles.star} />
-                  ))}
-                </div>
+                {typeof t.rating === "number" && t.rating > 0 && (
+                  <div className={styles.stars}>
+                    {[...Array(t.rating)].map((_, i) => (
+                      <Star key={i} className={styles.star} />
+                    ))}
+                  </div>
+                )}
 
                 {/* Review text with decorative opening quote */}
                 <p className={styles.quote}>
