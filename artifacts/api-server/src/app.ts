@@ -1,3 +1,31 @@
+// ============================================================================
+// FILE: app.ts — Express Application Configuration
+// PURPOSE: Creates and configures the Express server with all middleware.
+//          This is the central setup file for the ISHU API server.
+//
+// MIDDLEWARE STACK (in order of execution):
+//   1. pino-http — Structured JSON logging for every request/response
+//   2. CORS — Allows cross-origin requests from the frontend (Vite dev server)
+//   3. JSON body parser — Parses JSON request bodies (50MB limit for file uploads)
+//   4. URL-encoded parser — Parses form submissions
+//   5. Cookie parser — Parses cookies for session management
+//   6. Express session — Server-side session storage for authentication
+//   7. API router — All routes mounted under /api prefix
+//
+// TECH STACK:
+//   - Express.js 5 (Node.js HTTP framework)
+//   - pino-http (high-performance structured logging)
+//   - CORS (Cross-Origin Resource Sharing)
+//   - express-session (session management)
+//   - cookie-parser (cookie handling)
+//
+// SECURITY:
+//   - Session secret from environment variable (falls back to default in dev)
+//   - Secure cookies in production (HTTPS only)
+//   - 50MB request size limit (for PDF file uploads)
+//   - 1-week session expiry
+// ============================================================================
+
 // @ts-nocheck
 import express, { type Express } from "express";
 import cors from "cors";

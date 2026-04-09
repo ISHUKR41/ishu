@@ -17,6 +17,7 @@ import resourcesRouter from "./resources";
  */
 import homeHeroRouter from "./home/sections/hero";
 import homeStatsRouter from "./home/sections/stats";
+import homeTestimonialsRouter from "./home/sections/testimonials";
 import homeExamCategoriesRouter from "../../../modules/Home/ExamCategories/backend";
 import homeFeaturedResultsRouter from "../../../modules/Home/FeaturedResults/List/backend";
 import homeToolsShowcaseRouter from "../../../modules/Home/ToolsShowcase/backend";
@@ -120,6 +121,7 @@ router.use("/home/sections/news-preview", homeNewsPreviewRouter);
 router.use("/home/sections/blog-preview", homeBlogPreviewRouter);
 router.use("/home/sections/faq", homeFaqRouter);
 router.use("/home/sections/notification-cta", homeNotificationCtaRouter);
+router.use("/home/sections/testimonials", homeTestimonialsRouter);
 
 // Auth Modular Feature-Sliced Routes -> /api/auth/:action
 router.use("/auth", authLoginBackend);
