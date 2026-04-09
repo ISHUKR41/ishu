@@ -41,7 +41,7 @@ interface Testimonial {
   /** The actual review text */
   content: string;
   /** Star rating from 1 to 5 */
-  rating: number;
+  rating?: number;
   /** Two-letter initials for the avatar circle */
   avatar: string;
   /** Hex color code for the avatar accent */
@@ -125,7 +125,7 @@ export function Testimonials() {
                 }}
                 className={styles.card}
               >
-                {t.rating > 0 && (
+                {typeof t.rating === "number" && t.rating > 0 && (
                   <div className={styles.stars}>
                     {[...Array(t.rating)].map((_, i) => (
                       <Star key={i} className={styles.star} />

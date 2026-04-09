@@ -47,7 +47,7 @@ router.get("/", async (_req, res) => {
         .filter(Boolean)
         .slice(0, 2)
         .map((part) => part[0]?.toUpperCase() ?? "")
-        .join("") || "UP";
+        .join("") || "HL";
 
     return {
       id: index + 1,
@@ -55,7 +55,6 @@ router.get("/", async (_req, res) => {
       role: item.type,
       location: item.category,
       content: item.summary,
-      rating: 0,
       avatar: initials,
       color: palette[index % palette.length],
     };
