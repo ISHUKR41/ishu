@@ -3,6 +3,7 @@ import { db, blogsTable, newsTable, resultsTable } from "@workspace/db";
 import { desc } from "drizzle-orm";
 
 const router: IRouter = Router();
+const HIGHLIGHT_COLORS = ["#3b82f6", "#8b5cf6", "#10b981", "#f97316", "#14b8a6", "#ec4899"];
 
 router.get("/", async (_req, res) => {
   const [latestResults, latestNews, latestBlogs] = await Promise.all([
@@ -35,19 +36,18 @@ router.get("/", async (_req, res) => {
       .limit(2),
   ]);
 
-  const palette = ["#3b82f6", "#8b5cf6", "#10b981", "#f97316", "#14b8a6", "#ec4899"];
   const cards = [
     ...latestResults.map((item) => ({ ...item, type: "Result Update" })),
     ...latestNews.map((item) => ({ ...item, type: "News Update" })),
     ...latestBlogs.map((item) => ({ ...item, type: "Blog Update" })),
   ].map((item, index) => {
-    const initials =
-      item.title
-        .split(/\s+/)
-        .filter(Boolean)
-        .slice(0, 2)
-        .map((part) => part[0]?.toUpperCase() ?? "")
-        .join("") || "HL";
+    const rawInitials = item.title
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase() ?? "")
+      .join("");
+    const initials = rawInitials.length >= 2 ? rawInitials.slice(0, 2) : `${rawInitials || "H"}L`;
 
     return {
       id: index + 1,
@@ -56,7 +56,7 @@ router.get("/", async (_req, res) => {
       location: item.category,
       content: item.summary,
       avatar: initials,
-      color: palette[index % palette.length],
+      color: HIGHLIGHT_COLORS[index % HIGHLIGHT_COLORS.length],
     };
   });
 

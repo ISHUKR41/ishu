@@ -13,7 +13,7 @@ export interface Testimonial {
   role: string;
   location: string;
   content: string;
-  rating: number;
+  rating?: number;
   avatar: string;
   color: string;
 }
