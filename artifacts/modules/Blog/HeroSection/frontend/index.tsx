@@ -67,7 +67,7 @@ export default function BlogHeroSection() {
 
         {/* Category cards */}
         <div ref={catsRef} className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 max-w-4xl mx-auto">
-          {BLOG_CATEGORIES.map((cat) => (
+          {BLOG_CATEGORIES.map((cat: any) => (
             <Link
               key={cat.id}
               href={`/blog/category/${cat.slug}`}

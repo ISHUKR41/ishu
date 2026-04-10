@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/about/sections/team/AboutTeam.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Heart, Phone, Mail } from "lucide-react";
@@ -5,7 +8,9 @@ import { useTeamProfile } from "./backend/useTeamProfile";
 import styles from "./about-team.module.css";
 
 export function AboutTeam() {
-  const TEAM = useTeamProfile();
+  const { team: TEAM, isLoading, isError } = useTeamProfile();
+
+  const showStatusState = isLoading || isError || TEAM.length === 0;
 
   return (
     <section className={styles.section}>
@@ -23,21 +28,37 @@ export function AboutTeam() {
         </motion.div>
 
         <div className={styles.grid}>
-          {TEAM.map((member, i) => (
+          {showStatusState ? (
             <motion.div
-              key={member.name}
-              className={styles.card}
+              className={styles.statusCard}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className={styles.avatar}>{member.name.charAt(0)}</div>
-              <h3 className={styles.name}>{member.name}</h3>
-              <p className={styles.role}>{member.role}</p>
-              <p className={styles.bio}>{member.bio}</p>
+              {isLoading
+                ? "Loading real team data..."
+                : isError
+                ? "Team data is temporarily unavailable. Please try again shortly."
+                : "No team members are available yet."}
             </motion.div>
-          ))}
+          ) : (
+            TEAM.map((member, i) => (
+              <motion.div
+                key={member.name}
+                className={styles.card}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className={styles.avatar}>{member.name.charAt(0)}</div>
+                <h3 className={styles.name}>{member.name}</h3>
+                <p className={styles.role}>{member.role}</p>
+                <p className={styles.bio}>{member.bio}</p>
+              </motion.div>
+            ))
+          )}
         </div>
 
         <motion.div

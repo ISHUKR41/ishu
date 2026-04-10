@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/hooks/use-mobile.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 
 const MOBILE_BREAKPOINT = 768

@@ -1,3 +1,13 @@
+// ============================================================================
+// FILE: index.ts
+// MODULE: Core
+// PURPOSE: This file provides the implementation for index.
+// It is designed to be easy to understand, following the Hyper-Modular architecture.
+// 
+// Every component, page, section, and sub-section is strictly separated into frontend
+// and backend codebases to ensure 100+ developers can work simultaneously without conflicts.
+// ============================================================================
+
 // @ts-nocheck
 import { Router, type IRouter } from "express";
 import healthRouter from "./health";
@@ -9,6 +19,7 @@ import contactRouter from "./contact";
 import notificationsRouter from "./notifications";
 import adminRouter from "./admin";
 import resourcesRouter from "./resources";
+import aboutRouter from "./about";
 
 /**
  * HOME SECTION ROUTES (Hyper-Modular Feature-Sliced)
@@ -20,11 +31,14 @@ import homeStatsRouter from "./home/sections/stats";
 import homeTestimonialsRouter from "./home/sections/testimonials";
 import homeExamCategoriesRouter from "../../../modules/Home/ExamCategories/backend";
 import homeFeaturedResultsRouter from "../../../modules/Home/FeaturedResults/List/backend";
+import homeFeaturedResultDetailRouter from "../../../modules/Home/FeaturedResults/Detail/backend";
 import homeToolsShowcaseRouter from "../../../modules/Home/ToolsShowcase/backend";
 import homeNewsPreviewRouter from "../../../modules/Home/NewsPreview/backend";
 import homeBlogPreviewRouter from "../../../modules/Home/BlogPreview/backend";
 import homeFaqRouter from "../../../modules/Home/FAQ/backend";
 import homeNotificationCtaRouter from "../../../modules/Home/NotificationCTA/backend";
+import homeStatsCountersRouter from "../../../modules/Home/StatsSection/Counters/backend";
+import homeStatsChartRouter from "../../../modules/Home/StatsSection/Chart/backend";
 
 // AUTH ROUTES (Modular Feature-Sliced)
 import authLoginBackend from "../../../modules/Auth/Login/backend";
@@ -110,6 +124,7 @@ router.use(contactRouter);
 router.use(notificationsRouter);
 router.use(adminRouter);
 router.use(resourcesRouter);
+router.use(aboutRouter);
 
 // Home Sections Feature-Sliced Routes -> /api/home/sections/:section
 router.use("/home/sections/hero", homeHeroRouter);
@@ -122,6 +137,11 @@ router.use("/home/sections/blog-preview", homeBlogPreviewRouter);
 router.use("/home/sections/faq", homeFaqRouter);
 router.use("/home/sections/notification-cta", homeNotificationCtaRouter);
 router.use("/home/sections/testimonials", homeTestimonialsRouter);
+
+// Additional deeply isolated module endpoints (frontend/backend pair symmetry)
+router.use("/modules/home/stats/counters", homeStatsCountersRouter);
+router.use("/modules/home/stats/chart", homeStatsChartRouter);
+router.use("/modules/home/featured-results/detail", homeFeaturedResultDetailRouter);
 
 // Auth Modular Feature-Sliced Routes -> /api/auth/:action
 router.use("/auth", authLoginBackend);

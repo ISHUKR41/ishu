@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/layout/PageMeta.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useEffect } from "react";
 
 interface PageMetaProps {

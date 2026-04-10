@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/blog/sections/grid/BlogGrid.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { useListBlogs } from "@workspace/api-client-react";

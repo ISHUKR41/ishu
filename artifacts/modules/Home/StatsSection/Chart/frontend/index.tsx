@@ -1,32 +1,60 @@
 // ============================================================================
 // FILE: Home/StatsSection/Chart/frontend/index.tsx
-// PURPOSE: This is the dedicated frontend module for the Chart section.
-//          It handles all the rendering, UI logic, and user interactions.
-//          This file strictly adheres to the principle of isolating frontend and backend code.
-//
-// HOW TO USE: Import this default export into its parent component. Do not mix
-//             backend logic (like direct database access) in this file. Always use
-//             API calls to fetch data from the corresponding backend module.
+// PURPOSE: Status distribution bar chart powered by live backend aggregates.
 // ============================================================================
 
-import React from "react";
+import { useEffect, useMemo, useState } from "react";
 
-/**
- * Chart Frontend Component
- * 
- * This component is responsible for displaying the content to the user.
- * It is completely separated from its backend counterpart.
- */
+type ChartPoint = {
+  label: string;
+  value: number;
+};
+
 export default function ChartFrontend() {
+  const [points, setPoints] = useState<ChartPoint[]>([]);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const response = await fetch("/api/modules/home/stats/chart");
+        const json = await response.json();
+        setPoints(json?.data ?? []);
+      } catch (error) {
+        console.error("Failed to load chart data:", error);
+      }
+    }
+
+    void load();
+  }, []);
+
+  const maxValue = useMemo(
+    () => Math.max(1, ...points.map((point) => point.value)),
+    [points],
+  );
+
+  if (!points.length) {
+    return <div className="text-sm text-zinc-400">No chart data available.</div>;
+  }
+
   return (
-    <div className="relative w-full border border-white/5 p-4 rounded-xl">
-      {/* 
-        This is a placeholder for your actual UI. 
-        Please replace this with your intricate design using GSAP, Three.js, etc.
-        Ensure you fetch data from the backend using standard web requests to its paired backend module.
-      */}
-      <h2 className="text-xl text-white font-bold">Chart Component</h2>
-      <p className="text-zinc-400">Frontend module loaded successfully!</p>
+    <div className="space-y-3 rounded-xl border border-white/10 bg-white/5 p-4">
+      {points.map((point) => {
+        const width = Math.max(6, Math.round((point.value / maxValue) * 100));
+        return (
+          <div key={point.label} className="space-y-1">
+            <div className="flex items-center justify-between text-xs text-zinc-300">
+              <span className="uppercase tracking-wide">{point.label}</span>
+              <span>{point.value.toLocaleString()}</span>
+            </div>
+            <div className="h-2 rounded bg-zinc-800/80">
+              <div
+                className="h-2 rounded bg-gradient-to-r from-blue-500 to-cyan-400"
+                style={{ width: `${width}%` }}
+              />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

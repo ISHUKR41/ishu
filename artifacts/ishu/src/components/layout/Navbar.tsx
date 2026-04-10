@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/layout/Navbar.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -12,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
+import { ProfessionalIcon } from "@/components/icons/ProfessionalIcon";
 
 const RESULTS_CATEGORIES = [
   { href: "/results/category/upsc", label: "UPSC Civil Services", icon: "🏛️" },
@@ -108,7 +112,7 @@ function MegaMenuDropdown({ items, viewAllHref, onClose }: MegaMenuProps) {
             onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "hsl(var(--accent))"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent"; }}
           >
-            <span style={{ fontSize: "0.9rem", lineHeight: 1 }}>{item.icon}</span>
+            <ProfessionalIcon icon={item.icon} size={14} style={{ color: "currentColor" }} />
             {item.label}
           </Link>
         ))}
@@ -304,9 +308,15 @@ export function Navbar() {
 
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <p style={{ fontSize: "0.7rem", fontWeight: 700, color: "hsl(var(--muted-foreground))", textTransform: "uppercase", letterSpacing: "0.05em", padding: "0 0.75rem" }}>Main</p>
-                <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location === "/" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" : "text-foreground/70 hover:bg-accent"}`}>🏠 Home</Link>
-                <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location === "/about" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" : "text-foreground/70 hover:bg-accent"}`}>ℹ️ About</Link>
-                <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location === "/contact" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" : "text-foreground/70 hover:bg-accent"}`}>📩 Contact</Link>
+                <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location === "/" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" : "text-foreground/70 hover:bg-accent"}`}>
+                  <span className="inline-flex items-center gap-2"><ProfessionalIcon icon="Home" size={14} /> Home</span>
+                </Link>
+                <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location === "/about" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" : "text-foreground/70 hover:bg-accent"}`}>
+                  <span className="inline-flex items-center gap-2"><ProfessionalIcon icon="Info" size={14} /> About</span>
+                </Link>
+                <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${location === "/contact" ? "bg-blue-500/10 text-blue-600 dark:text-blue-400" : "text-foreground/70 hover:bg-accent"}`}>
+                  <span className="inline-flex items-center gap-2"><ProfessionalIcon icon="Mail" size={14} /> Contact</span>
+                </Link>
               </div>
 
               {Object.entries(megaMenus).map(([label, { href, items }]) => (
@@ -316,7 +326,7 @@ export function Navbar() {
                     <Link href={href} onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2 text-sm font-semibold rounded-md text-blue-600 dark:text-blue-400 hover:bg-accent transition-colors">All {label} →</Link>
                     {items.slice(0, 5).map((item) => (
                       <Link key={item.href} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="px-3 py-2 text-sm rounded-md text-foreground/70 hover:bg-accent hover:text-foreground transition-colors">
-                        {item.icon} {item.label}
+                        <span className="inline-flex items-center gap-2"><ProfessionalIcon icon={item.icon} size={14} /> {item.label}</span>
                       </Link>
                     ))}
                   </div>

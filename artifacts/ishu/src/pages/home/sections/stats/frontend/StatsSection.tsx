@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/home/sections/stats/frontend/StatsSection.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";

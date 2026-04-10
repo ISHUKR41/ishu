@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/about/sections/team/about-team.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .section {
   padding: 4rem 0;
   contain: layout style;
@@ -44,6 +49,17 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin-bottom: 4rem;
+}
+
+.statusCard {
+  grid-column: 1 / -1;
+  border-radius: 1rem;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.3);
+  padding: 1rem 1.25rem;
+  text-align: center;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {

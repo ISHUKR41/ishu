@@ -1,8 +1,19 @@
-import { useState } from "react";
+// FILE: artifacts/ishu/src/pages/tools/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
+import { lazy, useState } from "react";
 import { PageMeta } from "@/components/layout/PageMeta";
-import { ToolsHero } from "./sections/hero/ToolsHero";
-import { ToolsFilters } from "./sections/filters/ToolsFilters";
-import { ToolsGrid } from "./sections/grid/ToolsGrid";
+import { LazySection } from "@/components/performance/LazySection";
+
+const ToolsHero = lazy(() =>
+  import("./sections/hero/ToolsHero").then((module) => ({ default: module.ToolsHero })),
+);
+const ToolsFilters = lazy(() =>
+  import("./sections/filters/ToolsFilters").then((module) => ({ default: module.ToolsFilters })),
+);
+const ToolsGrid = lazy(() =>
+  import("./sections/grid/ToolsGrid").then((module) => ({ default: module.ToolsGrid })),
+);
 
 export default function Tools() {
   const [search, setSearch] = useState("");
@@ -26,19 +37,31 @@ export default function Tools() {
         }}
       />
       <div>
-        <ToolsHero />
-        <ToolsFilters
-          search={search}
-          category={category}
-          onSearch={(v) => { setSearch(v); setPage(1); }}
-          onCategory={(v) => { setCategory(v); setPage(1); }}
-        />
-        <ToolsGrid
-          search={search}
-          category={category}
-          page={page}
-          onPageChange={setPage}
-        />
+        <LazySection minHeight={320} eager>
+          <ToolsHero />
+        </LazySection>
+        <LazySection minHeight={130}>
+          <ToolsFilters
+            search={search}
+            category={category}
+            onSearch={(v) => {
+              setSearch(v);
+              setPage(1);
+            }}
+            onCategory={(v) => {
+              setCategory(v);
+              setPage(1);
+            }}
+          />
+        </LazySection>
+        <LazySection minHeight={560}>
+          <ToolsGrid
+            search={search}
+            category={category}
+            page={page}
+            onPageChange={setPage}
+          />
+        </LazySection>
       </div>
     </>
   );

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/sonner.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 "use client"
 
 import { useTheme } from "next-themes"

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/states/_shared/frontend/StateComingSoon.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowLeft, Bell, Calendar, ExternalLink, MapPin } from "lucide-react";

@@ -1,8 +1,19 @@
-import { useState } from "react";
+// FILE: artifacts/ishu/src/pages/results/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
+import { lazy, useState } from "react";
 import { PageMeta } from "@/components/layout/PageMeta";
-import { ResultsHero } from "./sections/hero/ResultsHero";
-import { ResultsFilters } from "./sections/filters/ResultsFilters";
-import { ResultsGrid } from "./sections/grid/ResultsGrid";
+import { LazySection } from "@/components/performance/LazySection";
+
+const ResultsHero = lazy(() =>
+  import("./sections/hero/ResultsHero").then((module) => ({ default: module.ResultsHero })),
+);
+const ResultsFilters = lazy(() =>
+  import("./sections/filters/ResultsFilters").then((module) => ({ default: module.ResultsFilters })),
+);
+const ResultsGrid = lazy(() =>
+  import("./sections/grid/ResultsGrid").then((module) => ({ default: module.ResultsGrid })),
+);
 
 export default function Results() {
   const [search, setSearch] = useState("");
@@ -34,23 +45,38 @@ export default function Results() {
         }}
       />
       <div>
-        <ResultsHero />
-        <ResultsFilters
-          search={search}
-          category={category}
-          status={status}
-          onSearch={(v) => { setSearch(v); setPage(1); }}
-          onCategory={(v) => { setCategory(v); setPage(1); }}
-          onStatus={(v) => { setStatus(v); setPage(1); }}
-          onReset={handleReset}
-        />
-        <ResultsGrid
-          search={search}
-          category={category}
-          status={status}
-          page={page}
-          onPageChange={setPage}
-        />
+        <LazySection minHeight={320} eager>
+          <ResultsHero />
+        </LazySection>
+        <LazySection minHeight={130}>
+          <ResultsFilters
+            search={search}
+            category={category}
+            status={status}
+            onSearch={(v) => {
+              setSearch(v);
+              setPage(1);
+            }}
+            onCategory={(v) => {
+              setCategory(v);
+              setPage(1);
+            }}
+            onStatus={(v) => {
+              setStatus(v);
+              setPage(1);
+            }}
+            onReset={handleReset}
+          />
+        </LazySection>
+        <LazySection minHeight={560}>
+          <ResultsGrid
+            search={search}
+            category={category}
+            status={status}
+            page={page}
+            onPageChange={setPage}
+          />
+        </LazySection>
       </div>
     </>
   );

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/sections/grid/ResultsGrid.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { useListResults } from "@workspace/api-client-react";

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/dialog.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"

@@ -1,9 +1,13 @@
+// FILE: artifacts/ishu/src/pages/news/categories/_shared/NewsCategoryPage.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowLeft, Search, Clock, TrendingUp, Newspaper } from "lucide-react";
 import { useListNews } from "@workspace/api-client-react";
 import { PageMeta } from "@/components/layout/PageMeta";
+import { ProfessionalIcon } from "@/components/icons/ProfessionalIcon";
 
 interface NewsCategoryPageProps {
   categorySlug: string;
@@ -41,7 +45,9 @@ export function NewsCategoryPage({ categorySlug, categoryName, description, icon
             </Link>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                <div style={{ width: 56, height: 56, borderRadius: "0.75rem", background: `${accentColor}20`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.75rem" }}>{icon}</div>
+                <div style={{ width: 56, height: 56, borderRadius: "0.75rem", background: `${accentColor}20`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <ProfessionalIcon icon={icon} size={28} style={{ color: accentColor }} />
+                </div>
                 <div>
                   <h1 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 700, color: "hsl(var(--foreground))", margin: 0 }}>{categoryName} News</h1>
                   <p style={{ color: "hsl(var(--muted-foreground))", margin: "0.25rem 0 0", fontSize: "0.95rem" }}>{description}</p>

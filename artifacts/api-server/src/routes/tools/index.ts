@@ -1,3 +1,13 @@
+// ============================================================================
+// FILE: index.ts
+// MODULE: Core
+// PURPOSE: This file provides the implementation for index.
+// It is designed to be easy to understand, following the Hyper-Modular architecture.
+// 
+// Every component, page, section, and sub-section is strictly separated into frontend
+// and backend codebases to ensure 100+ developers can work simultaneously without conflicts.
+// ============================================================================
+
 // @ts-nocheck
 import { Router, type IRouter } from "express";
 import { db, toolsTable } from "@workspace/db";
@@ -15,12 +25,125 @@ const upload = multer({
   },
 });
 
+const pythonToolsBaseUrl = (
+  process.env.TOOLS_PROCESSOR_URL
+  || process.env.PYTHON_TOOLS_BASE_URL
+  || "http://127.0.0.1:8000"
+).replace(/\/+$/, "");
+const toolsProcessorMode = (process.env.TOOLS_PROCESSOR_MODE || "auto").toLowerCase();
+const pythonHealthCacheTtlMs = 30_000;
+
+let pythonHealthCache: { ok: boolean; checkedAt: number } | null = null;
+
 type CompressionLevel = "low" | "medium" | "high";
 
 function sendPdf(res: any, bytes: Uint8Array, filename: string): void {
   res.setHeader("Content-Type", "application/pdf");
   res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
   res.status(200).send(Buffer.from(bytes));
+}
+
+function shouldUsePythonProcessor(): boolean {
+  return toolsProcessorMode === "python" || toolsProcessorMode === "auto";
+}
+
+async function isPythonProcessorAvailable(): Promise<boolean> {
+  if (!shouldUsePythonProcessor()) {
+    return false;
+  }
+
+  if (toolsProcessorMode === "python") {
+    return true;
+  }
+
+  const now = Date.now();
+  if (pythonHealthCache && now - pythonHealthCache.checkedAt < pythonHealthCacheTtlMs) {
+    return pythonHealthCache.ok;
+  }
+
+  const controller = new AbortController();
+  const timeoutHandle = setTimeout(() => controller.abort(), 1500);
+
+  try {
+    const healthResponse = await fetch(`${pythonToolsBaseUrl}/health`, {
+      method: "GET",
+      signal: controller.signal,
+    });
+    const ok = healthResponse.ok;
+    pythonHealthCache = { ok, checkedAt: now };
+    return ok;
+  } catch {
+    pythonHealthCache = { ok: false, checkedAt: now };
+    return false;
+  } finally {
+    clearTimeout(timeoutHandle);
+  }
+}
+
+function appendUploadedFiles(formData: FormData, fieldName: string, files: Express.Multer.File[]): void {
+  for (const file of files) {
+    const blob = new globalThis.Blob([file.buffer], {
+      type: file.mimetype || "application/pdf",
+    });
+    formData.append(
+      fieldName,
+      blob,
+      file.originalname || "document.pdf",
+    );
+  }
+}
+
+async function callPythonProcessor(
+  endpoint: string,
+  buildFormData: (formData: FormData) => void,
+): Promise<Response | null> {
+  if (!shouldUsePythonProcessor()) {
+    return null;
+  }
+
+  if (toolsProcessorMode === "auto") {
+    const available = await isPythonProcessorAvailable();
+    if (!available) {
+      return null;
+    }
+  }
+
+  const formData = new globalThis.FormData();
+  buildFormData(formData);
+
+  try {
+    const response = await fetch(`${pythonToolsBaseUrl}/api/tools/process/${endpoint}`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.ok) {
+      return response;
+    }
+
+    if (toolsProcessorMode === "python") {
+      const bodyText = await response.text();
+      throw new Error(`Python processor returned ${response.status}: ${bodyText.slice(0, 200)}`);
+    }
+
+    return null;
+  } catch (error) {
+    if (toolsProcessorMode === "python") {
+      throw error;
+    }
+    return null;
+  }
+}
+
+async function relayProcessorResponse(res: any, response: Response, fallbackFilename: string): Promise<void> {
+  const bytes = Buffer.from(await response.arrayBuffer());
+  const contentType = response.headers.get("content-type") || "application/octet-stream";
+  const contentDisposition =
+    response.headers.get("content-disposition") || `attachment; filename="${fallbackFilename}"`;
+
+  res.setHeader("Content-Type", contentType);
+  res.setHeader("Content-Disposition", contentDisposition);
+  res.status(200).send(bytes);
 }
 
 function parsePageRanges(raw: string, totalPages: number): number[] {
@@ -114,6 +237,15 @@ router.post("/tools/pdf/merge", upload.array("files", 20), async (req, res): Pro
   }
 
   try {
+    const pythonResponse = await callPythonProcessor("merge-pdf", (formData) => {
+      appendUploadedFiles(formData, "files", files);
+    });
+
+    if (pythonResponse) {
+      await relayProcessorResponse(res, pythonResponse, `merged-${Date.now()}.pdf`);
+      return;
+    }
+
     const mergedPdf = await PDFDocument.create();
 
     for (const file of files) {
@@ -124,7 +256,12 @@ router.post("/tools/pdf/merge", upload.array("files", 20), async (req, res): Pro
 
     const bytes = await mergedPdf.save({ useObjectStreams: true, updateFieldAppearances: false });
     sendPdf(res, bytes, `merged-${Date.now()}.pdf`);
-  } catch (_error) {
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unable to merge provided files.";
+    if (toolsProcessorMode === "python") {
+      res.status(502).json({ error: `Python merge service failed: ${message}` });
+      return;
+    }
     res.status(400).json({ error: "Unable to merge provided files. Please upload valid PDF documents." });
   }
 });
@@ -139,6 +276,16 @@ router.post("/tools/pdf/compress", upload.single("file"), async (req, res): Prom
   const quality = (req.body?.quality as CompressionLevel | undefined) ?? "medium";
 
   try {
+    const pythonResponse = await callPythonProcessor("compress-pdf", (formData) => {
+      appendUploadedFiles(formData, "file", [file]);
+      formData.append("quality", quality);
+    });
+
+    if (pythonResponse) {
+      await relayProcessorResponse(res, pythonResponse, `compressed-${Date.now()}.pdf`);
+      return;
+    }
+
     const source = await PDFDocument.load(file.buffer, { ignoreEncryption: true });
     const optimized = await PDFDocument.create();
 
@@ -153,7 +300,12 @@ router.post("/tools/pdf/compress", upload.single("file"), async (req, res): Prom
 
     const bytes = await optimized.save(saveOptions);
     sendPdf(res, bytes, `compressed-${Date.now()}.pdf`);
-  } catch (_error) {
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unable to compress this file.";
+    if (toolsProcessorMode === "python") {
+      res.status(502).json({ error: `Python compression service failed: ${message}` });
+      return;
+    }
     res.status(400).json({ error: "Unable to compress this file. Please upload a valid PDF." });
   }
 });
@@ -172,6 +324,17 @@ router.post("/tools/pdf/split", upload.single("file"), async (req, res): Promise
   }
 
   try {
+    const pythonResponse = await callPythonProcessor("split-pdf", (formData) => {
+      appendUploadedFiles(formData, "file", [file]);
+      formData.append("pages", pageRanges);
+      formData.append("split_all", "false");
+    });
+
+    if (pythonResponse) {
+      await relayProcessorResponse(res, pythonResponse, `split-${Date.now()}.pdf`);
+      return;
+    }
+
     const source = await PDFDocument.load(file.buffer, { ignoreEncryption: true });
     const selectedPageIndexes = parsePageRanges(pageRanges, source.getPageCount());
 
@@ -188,6 +351,10 @@ router.post("/tools/pdf/split", upload.single("file"), async (req, res): Promise
     sendPdf(res, bytes, `split-${Date.now()}.pdf`);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to split this file.";
+    if (toolsProcessorMode === "python") {
+      res.status(502).json({ error: `Python split service failed: ${message}` });
+      return;
+    }
     res.status(400).json({ error: message });
   }
 });

@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "audit:platform": "node scripts/audit-platform-quality.cjs",
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
+    "comment:headers": "node scripts/add-header-comments.cjs",
+    "sync:isolation": "pnpm run sync:modules && pnpm run sync:pages",
+    "sync:modules": "node scripts/sync-module-isolation.cjs",
+    "sync:pages": "node scripts/sync-page-isolation.cjs",
+    "tools:catalog:python": "python scripts/tools-python/generate_tools_catalog.py",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
   },

@@ -1,17 +1,29 @@
+// FILE: artifacts/ishu/src/pages/tools/sections/grid/ToolsGrid.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { useListTools } from "@workspace/api-client-react";
 import { Star, Search } from "lucide-react";
+import ProfessionalIcon from "@/components/icons/ProfessionalIcon";
 import styles from "./tools-grid.module.css";
 
-const ICON_MAP: Record<string, string> = {
-  "PDF Tools": "📄",
-  "PDF Convert": "🔄",
-  "PDF Edit": "✏️",
-  "PDF Security": "🔒",
-  "Image Convert": "🖼️",
-  "PDF AI": "🤖",
+const CATEGORY_ICON_MAP: Record<string, string> = {
+  pdf: "filetext",
+  conversion: "rotatecw",
+  image: "image",
+  ai: "bot",
+  text: "type",
 };
+
+function resolveToolIcon(tool: any): string {
+  if (typeof tool?.icon === "string" && tool.icon.trim()) {
+    return tool.icon;
+  }
+
+  const category = String(tool?.category ?? "").toLowerCase().trim();
+  return CATEGORY_ICON_MAP[category] ?? "wrench";
+}
 
 interface ToolsGridProps {
   search: string;
@@ -83,7 +95,9 @@ export function ToolsGrid({ search, category, page, onPageChange }: ToolsGridPro
               transition={{ duration: 0.3, delay: i * 0.025, ease: [0.22, 1, 0.36, 1] }}
             >
               <Link href={`/tools/${tool.slug}`} className={styles.card}>
-                <div className={styles.icon}>{ICON_MAP[tool.category] ?? "🔧"}</div>
+                <div className={styles.icon}>
+                  <ProfessionalIcon icon={resolveToolIcon(tool)} size={28} />
+                </div>
                 <h2 className={styles.title}>{tool.name}</h2>
                 <p className={styles.desc}>{tool.description}</p>
                 <div className={styles.footer}>

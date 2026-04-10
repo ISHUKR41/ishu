@@ -7,7 +7,7 @@
 # ARCHITECTURE:
 # - Express.js (Node.js) handles all main API routes
 # - This FastAPI service handles heavy-duty file processing (PDF, images, docs)
-# - Express proxies tool requests to this service on port 8001
+# - Express proxies tool requests to this service on port 8000
 #
 # TECH STACK:
 # - FastAPI (Python ASGI framework) — for high-performance async API
@@ -28,36 +28,64 @@ import os
 import shutil
 import tempfile
 import uuid
+from importlib import import_module
 from pathlib import Path
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+
 
 # =============================================================================
-# Import all individual tool modules — each tool is completely isolated
+# Tool Router Registry
+# Each tuple: (module path, feature tag)
+# Missing modules are skipped automatically instead of crashing startup.
 # =============================================================================
-from tools.merge_pdf import router as merge_pdf_router
-from tools.split_pdf import router as split_pdf_router
-from tools.compress_pdf import router as compress_pdf_router
-from tools.pdf_to_word import router as pdf_to_word_router
-from tools.word_to_pdf import router as word_to_pdf_router
-from tools.pdf_to_jpg import router as pdf_to_jpg_router
-from tools.jpg_to_pdf import router as jpg_to_pdf_router
-from tools.rotate_pdf import router as rotate_pdf_router
-from tools.watermark import router as watermark_router
-from tools.unlock_pdf import router as unlock_pdf_router
-from tools.protect_pdf import router as protect_pdf_router
-from tools.page_numbers import router as page_numbers_router
-from tools.ocr_pdf import router as ocr_pdf_router
-from tools.repair_pdf import router as repair_pdf_router
-from tools.pdf_to_excel import router as pdf_to_excel_router
-from tools.excel_to_pdf import router as excel_to_pdf_router
-from tools.pdf_to_ppt import router as pdf_to_ppt_router
-from tools.ppt_to_pdf import router as ppt_to_pdf_router
-from tools.edit_pdf import router as edit_pdf_router
-from tools.sign_pdf import router as sign_pdf_router
+TOOL_ROUTER_SPECS = [
+    ("tools.merge_pdf", "PDF Core"),
+    ("tools.split_pdf", "PDF Core"),
+    ("tools.compress_pdf", "PDF Core"),
+    ("tools.rotate_pdf", "PDF Core"),
+    ("tools.watermark", "PDF Core"),
+    ("tools.page_numbers", "PDF Core"),
+    ("tools.repair_pdf", "PDF Core"),
+    ("tools.edit_pdf", "PDF Core"),
+    ("tools.sign_pdf", "PDF Core"),
+    ("tools.unlock_pdf", "PDF Security"),
+    ("tools.protect_pdf", "PDF Security"),
+    ("tools.ocr_pdf", "PDF OCR"),
+    ("tools.pdf_to_word", "Conversion"),
+    ("tools.word_to_pdf", "Conversion"),
+    ("tools.pdf_to_jpg", "Conversion"),
+    ("tools.jpg_to_pdf", "Conversion"),
+    ("tools.pdf_to_excel", "Conversion"),
+    ("tools.excel_to_pdf", "Conversion"),
+    ("tools.pdf_to_ppt", "Conversion"),
+    ("tools.ppt_to_pdf", "Conversion"),
+]
+
+enabled_tools_count = 0
+
+
+def include_optional_tool_router(app_instance: FastAPI, module_path: str, tag: str) -> bool:
+    """
+    Tries to import and register one tool router.
+    Returns True if registered, False if skipped.
+    """
+    try:
+        module = import_module(module_path)
+        router = getattr(module, "router", None)
+
+        if router is None:
+            print(f"[ISHU Tools] Skipped {module_path}: router not found")
+            return False
+
+        app_instance.include_router(router, prefix="/api/tools/process", tags=[tag])
+        print(f"[ISHU Tools] Loaded {module_path}")
+        return True
+    except Exception as exc:
+        print(f"[ISHU Tools] Skipped {module_path}: {exc}")
+        return False
 
 
 # =============================================================================
@@ -121,40 +149,16 @@ async def health_check():
         "status": "healthy",
         "service": "ishu-tools-python",
         "version": "1.0.0",
-        "tools_available": 20,
+        "tools_available": enabled_tools_count,
     }
 
 
 # =============================================================================
 # Register All Tool Routers — Each tool gets its own URL prefix
 # =============================================================================
-# PDF Core Tools
-app.include_router(merge_pdf_router, prefix="/api/tools/process", tags=["PDF Core"])
-app.include_router(split_pdf_router, prefix="/api/tools/process", tags=["PDF Core"])
-app.include_router(compress_pdf_router, prefix="/api/tools/process", tags=["PDF Core"])
-app.include_router(rotate_pdf_router, prefix="/api/tools/process", tags=["PDF Core"])
-app.include_router(watermark_router, prefix="/api/tools/process", tags=["PDF Core"])
-app.include_router(page_numbers_router, prefix="/api/tools/process", tags=["PDF Core"])
-app.include_router(repair_pdf_router, prefix="/api/tools/process", tags=["PDF Core"])
-app.include_router(edit_pdf_router, prefix="/api/tools/process", tags=["PDF Core"])
-app.include_router(sign_pdf_router, prefix="/api/tools/process", tags=["PDF Core"])
-
-# PDF Security Tools
-app.include_router(unlock_pdf_router, prefix="/api/tools/process", tags=["PDF Security"])
-app.include_router(protect_pdf_router, prefix="/api/tools/process", tags=["PDF Security"])
-
-# PDF OCR Tools
-app.include_router(ocr_pdf_router, prefix="/api/tools/process", tags=["PDF OCR"])
-
-# Conversion Tools — PDF to other formats and vice versa
-app.include_router(pdf_to_word_router, prefix="/api/tools/process", tags=["Conversion"])
-app.include_router(word_to_pdf_router, prefix="/api/tools/process", tags=["Conversion"])
-app.include_router(pdf_to_jpg_router, prefix="/api/tools/process", tags=["Conversion"])
-app.include_router(jpg_to_pdf_router, prefix="/api/tools/process", tags=["Conversion"])
-app.include_router(pdf_to_excel_router, prefix="/api/tools/process", tags=["Conversion"])
-app.include_router(excel_to_pdf_router, prefix="/api/tools/process", tags=["Conversion"])
-app.include_router(pdf_to_ppt_router, prefix="/api/tools/process", tags=["Conversion"])
-app.include_router(ppt_to_pdf_router, prefix="/api/tools/process", tags=["Conversion"])
+for module_path, tag in TOOL_ROUTER_SPECS:
+    if include_optional_tool_router(app, module_path, tag):
+        enabled_tools_count += 1
 
 
 # =============================================================================
@@ -163,11 +167,11 @@ app.include_router(ppt_to_pdf_router, prefix="/api/tools/process", tags=["Conver
 if __name__ == "__main__":
     import uvicorn
 
-    # Run on port 8001 so it doesn't conflict with Express on port 5000
+    # Run on port 8000 so it doesn't conflict with Express on port 5000
     uvicorn.run(
         "app:app",
         host="0.0.0.0",
-        port=8001,
+        port=8000,
         reload=True,  # Auto-reload during development
         log_level="info",
     )

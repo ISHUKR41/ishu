@@ -1,3 +1,13 @@
+// ============================================================================
+// FILE: index.tsx
+// MODULE: Auth
+// PURPOSE: This file provides the implementation for index.
+// It is designed to be easy to understand, following the Hyper-Modular architecture.
+// 
+// Every component, page, section, and sub-section is strictly separated into frontend
+// and backend codebases to ensure 100+ developers can work simultaneously without conflicts.
+// ============================================================================
+
 // @ts-nocheck
 /**
  * Login Frontend Module
@@ -41,12 +51,13 @@ export default function AuthLogin() {
     try {
       // Call the strict modular Auth Login backend -> /api/auth/login
       const result = await mutation.mutateAsync({ data: { email, password } });
+      const authResponse = result as any;
       
       // Update global context with session data
-      login(result as any);
+      login(authResponse.user as any);
       
       // Show success notification to the user
-      toast({ title: "Welcome back!", description: `Logged in as ${(result as any).name}` });
+      toast({ title: "Welcome back!", description: `Logged in as ${authResponse.user?.name ?? "your account"}` });
       
       // Redirect to the home page
       setLocation("/");

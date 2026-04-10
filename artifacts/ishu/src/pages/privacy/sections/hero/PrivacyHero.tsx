@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/privacy/sections/hero/PrivacyHero.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Shield, Clock } from "lucide-react";
 import styles from "./privacy-hero.module.css";

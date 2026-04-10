@@ -1,3 +1,13 @@
+// ============================================================================
+// FILE: index.tsx
+// MODULE: Home
+// PURPOSE: This file provides the implementation for index.
+// It is designed to be easy to understand, following the Hyper-Modular architecture.
+// 
+// Every component, page, section, and sub-section is strictly separated into frontend
+// and backend codebases to ensure 100+ developers can work simultaneously without conflicts.
+// ============================================================================
+
 // @ts-nocheck
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
@@ -10,7 +20,7 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * NEWS PREVIEW SECTION (Frontend Module)
  * 
- * GSAP animated news showcase with image placeholders and strictly modular data fetching.
+ * GSAP animated news showcase with strictly modular data fetching.
  */
 export default function NewsPreview() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -106,7 +116,7 @@ export default function NewsPreview() {
                   className="group flex flex-col h-full rounded-2xl bg-zinc-900 border border-white/5 overflow-hidden hover:border-white/20 transition-all duration-500 cursor-pointer"
                 >
                   <div className="relative h-48 w-full bg-zinc-800 overflow-hidden flex-shrink-0">
-                    {/* Placeholder for real image */}
+                    {/* Safe visual fallback when an article image URL is not provided. */}
                     {item.imageUrl ? (
                       <img 
                         src={item.imageUrl} 

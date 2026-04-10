@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/home/sections/hero/frontend/hero.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .heroSection {
   position: relative;
   min-height: 100svh;

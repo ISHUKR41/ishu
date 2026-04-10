@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/not-found/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Home, ArrowLeft } from "lucide-react";

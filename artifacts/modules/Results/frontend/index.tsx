@@ -18,12 +18,14 @@
 //      optimization, targeting "sarkari result" and related keywords.
 // ============================================================================
 
-import React from "react";
+import { lazy } from "react";
 import { PageMeta } from "@/components/layout/PageMeta";
-import ResultsHeroSection from "./HeroSection/frontend";
-import ResultsCategoryGrid from "./CategoryGrid/frontend";
-import ResultsList from "./ResultsList/frontend";
-import ResultsStateSelector from "./StateSelector/frontend";
+import { LazySection } from "@/components/performance/LazySection";
+
+const ResultsHeroSection = lazy(() => import("../HeroSection/frontend"));
+const ResultsCategoryGrid = lazy(() => import("../CategoryGrid/frontend"));
+const ResultsList = lazy(() => import("../ResultsList/frontend"));
+const ResultsStateSelector = lazy(() => import("../StateSelector/frontend"));
 
 /**
  * ResultsPage — The complete Results page assembled from isolated modules.
@@ -80,10 +82,18 @@ export default function ResultsPage() {
 
       {/* ── Page sections in order ── */}
       <div className="flex flex-col min-h-screen">
-        <ResultsHeroSection />
-        <ResultsCategoryGrid />
-        <ResultsList />
-        <ResultsStateSelector />
+        <LazySection minHeight={360} eager>
+          <ResultsHeroSection />
+        </LazySection>
+        <LazySection minHeight={360}>
+          <ResultsCategoryGrid />
+        </LazySection>
+        <LazySection minHeight={560}>
+          <ResultsList />
+        </LazySection>
+        <LazySection minHeight={420}>
+          <ResultsStateSelector />
+        </LazySection>
       </div>
     </>
   );

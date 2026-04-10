@@ -1,3 +1,6 @@
+// FILE: artifacts/api-server/src/lib/logger.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import pino from "pino";
 
 const isProduction = process.env.NODE_ENV === "production";

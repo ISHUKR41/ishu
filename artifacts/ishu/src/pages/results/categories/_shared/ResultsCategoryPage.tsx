@@ -1,9 +1,13 @@
+// FILE: artifacts/ishu/src/pages/results/categories/_shared/ResultsCategoryPage.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { ArrowLeft, Search, Filter, Calendar, FileText, ExternalLink, TrendingUp } from "lucide-react";
 import { useListResults, type ListResultsStatus } from "@workspace/api-client-react";
 import { PageMeta } from "@/components/layout/PageMeta";
+import { ProfessionalIcon } from "@/components/icons/ProfessionalIcon";
 
 interface ResultsCategoryPageProps {
   categorySlug: string;
@@ -86,9 +90,8 @@ export function ResultsCategoryPage({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: "1.75rem",
                 }}>
-                  {icon}
+                  <ProfessionalIcon icon={icon} size={28} style={{ color: accentColor }} />
                 </div>
                 <div>
                   <h1 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 700, color: "hsl(var(--foreground))", margin: 0 }}>

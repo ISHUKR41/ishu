@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/context-menu.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
 import { Check, ChevronRight, Circle } from "lucide-react"

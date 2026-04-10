@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/resources/sections/featured/backend/useFeaturedResources.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useQuery } from "@tanstack/react-query";
 
 export interface FeaturedResource {

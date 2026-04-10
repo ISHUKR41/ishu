@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/home/sections/faq/frontend/faq.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .section {
   padding: 5rem 0;
   contain: layout style;
@@ -46,6 +51,26 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.loadingItem {
+  height: 4.5rem;
+  border-radius: 0.875rem;
+  border: 1px solid hsl(var(--border));
+  background: linear-gradient(90deg, hsl(var(--muted)/0.2), hsl(var(--muted)/0.4), hsl(var(--muted)/0.2));
+  background-size: 200% 100%;
+  animation: faqShimmer 1.4s ease-in-out infinite;
+}
+
+.emptyState {
+  margin: 0;
+  padding: 1.25rem;
+  border-radius: 0.875rem;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.2);
+  color: hsl(var(--muted-foreground));
+  font-size: 0.95rem;
+  text-align: center;
 }
 
 .item {
@@ -110,5 +135,14 @@
   .answer {
     padding: 0 1.125rem 1rem;
     font-size: 0.875rem;
+  }
+}
+
+@keyframes faqShimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
   }
 }

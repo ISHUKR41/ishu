@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/navigation-menu.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import { cva } from "class-variance-authority"

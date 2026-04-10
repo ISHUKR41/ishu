@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/drawer.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 

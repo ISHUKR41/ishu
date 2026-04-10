@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/home/sections/blog-preview/frontend/BlogPreview.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, Calendar, User, BookOpen } from "lucide-react";

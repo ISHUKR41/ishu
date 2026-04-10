@@ -1,36 +1,64 @@
 // ============================================================================
 // FILE: Home/StatsSection/Counters/backend/index.ts
-// PURPOSE: This is the dedicated backend module for the Counters section.
-//          It handles all database queries, business logic, and API route definitions.
-//          This file strictly adheres to the principle of isolating frontend and backend code.
-//
-// HOW TO USE: Register this router in the main Express application. The frontend
-//             module corresponding to this section will make HTTP requests here.
-//             Ensure it returns REAL data from the database, not fake placeholders.
+// PURPOSE: Dedicated backend endpoint for stats counters using REAL DB data.
 // ============================================================================
 
 import { Router, type IRouter, Request, Response } from "express";
+import { count } from "drizzle-orm";
+import { db } from "../../../../../../lib/db/src";
+import {
+  blogsTable,
+  newsTable,
+  resultsTable,
+  toolsTable,
+} from "../../../../../../lib/db/src/schema";
 
 const router: IRouter = Router();
 
 /**
- * GET route for Counters data
- * 
- * Replace this endpoint with logic that queries real data from @workspace/db.
- * Do not return hardcoded or fake details.
+ * GET /api/modules/home/stats/counters
+ * Returns real aggregate counts for homepage counters.
  */
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (_req: Request, res: Response) => {
   try {
-    // TODO: Implement actual database query using drizzle-orm here
-    // Example: const realData = await db.select().from(someTable);
-    
-    res.json({
-      message: "This is the backend API for Counters.",
-      status: "success",
-      realDataPlaceholder: true
-    });
+    const [resultsCountRow, newsCountRow, toolsCountRow, blogsCountRow] =
+      await Promise.all([
+        db.select({ value: count() }).from(resultsTable),
+        db.select({ value: count() }).from(newsTable),
+        db.select({ value: count() }).from(toolsTable),
+        db.select({ value: count() }).from(blogsTable),
+      ]);
+
+    const counters = [
+      {
+        id: "results",
+        label: "Results Published",
+        value: resultsCountRow[0]?.value ?? 0,
+        suffix: "+",
+      },
+      {
+        id: "news",
+        label: "News Articles",
+        value: newsCountRow[0]?.value ?? 0,
+        suffix: "+",
+      },
+      {
+        id: "tools",
+        label: "Live Tools",
+        value: toolsCountRow[0]?.value ?? 0,
+        suffix: "+",
+      },
+      {
+        id: "blogs",
+        label: "Guides & Blogs",
+        value: blogsCountRow[0]?.value ?? 0,
+        suffix: "+",
+      },
+    ];
+
+    res.json({ success: true, data: counters });
   } catch (err) {
-    console.error("Error fetching data for Counters:", err);
+    console.error("Error fetching counters data:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

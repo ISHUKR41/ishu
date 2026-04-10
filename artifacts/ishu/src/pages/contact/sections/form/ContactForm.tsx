@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/contact/sections/form/ContactForm.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, CheckCircle } from "lucide-react";

@@ -1,3 +1,6 @@
+// FILE: artifacts/api-server/src/seed.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { db, resultsTable, resultCategoriesTable, newsTable, newsCategoriesTable, blogsTable, blogCategoriesTable, toolsTable } from "@workspace/db";
 
 async function seed() {

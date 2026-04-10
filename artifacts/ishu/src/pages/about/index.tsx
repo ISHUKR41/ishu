@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/about/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { PageMeta } from "@/components/layout/PageMeta";
 import { AboutHero } from "./sections/hero/AboutHero";
 import { AboutStats } from "./sections/stats/AboutStats";

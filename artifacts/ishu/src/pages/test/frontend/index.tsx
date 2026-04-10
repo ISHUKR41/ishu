@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/test/frontend/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { PageMeta } from "@/components/layout/PageMeta";
 import { useSystemHealth } from "../backend/useSystemHealth";
 

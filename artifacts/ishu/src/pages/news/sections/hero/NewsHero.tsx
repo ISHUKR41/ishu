@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/news/sections/hero/NewsHero.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Newspaper } from "lucide-react";
 import styles from "./NewsHero.module.css";

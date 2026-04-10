@@ -59,8 +59,8 @@ export default function ResultsStateSelector() {
   }, []);
 
   // Separate states and UTs for clear visual grouping
-  const states = INDIAN_STATES.filter((s) => !["AN", "CH", "DN", "DL", "JK", "LA", "LD", "PY"].includes(s.code));
-  const unionTerritories = INDIAN_STATES.filter((s) => ["AN", "CH", "DN", "DL", "JK", "LA", "LD", "PY"].includes(s.code));
+  const states = INDIAN_STATES.filter((s: any) => !["AN", "CH", "DN", "DL", "JK", "LA", "LD", "PY"].includes(s.code));
+  const unionTerritories = INDIAN_STATES.filter((s: any) => ["AN", "CH", "DN", "DL", "JK", "LA", "LD", "PY"].includes(s.code));
 
   return (
     <section
@@ -93,7 +93,7 @@ export default function ResultsStateSelector() {
           ref={gridRef}
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-12"
         >
-          {states.map((state) => (
+          {states.map((state: any) => (
             <Link
               key={state.id}
               href={`/results/states/${state.slug}`}
@@ -119,7 +119,7 @@ export default function ResultsStateSelector() {
 
         {/* ── UTs grid ── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-          {unionTerritories.map((ut) => (
+          {unionTerritories.map((ut: any) => (
             <Link
               key={ut.id}
               href={`/results/states/${ut.slug}`}

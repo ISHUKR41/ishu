@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/blog/detail.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useRoute, Link } from "wouter";
 import { motion } from "framer-motion";
 import { useGetBlog } from "@workspace/api-client-react";

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/home/sections/featured-results/frontend/FeaturedResults.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Icons } from "@/components/icons";

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/resources/sections/grid/ResourcesGrid.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FileText, Download, BookOpen, Video, PenTool, Globe, FileCheck, Brain, ExternalLink, Loader2, ArrowUpDown } from "lucide-react";

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/detail.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useRoute, Link } from "wouter";
 import { motion } from "framer-motion";
 import { useGetResult } from "@workspace/api-client-react";

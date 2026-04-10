@@ -1,32 +1,18 @@
 // ============================================================================
 // FILE: Home/HeroSection/3DBackground/frontend/index.tsx
-// PURPOSE: This is the dedicated frontend module for the 3DBackground section.
-//          It handles all the rendering, UI logic, and user interactions.
-//          This file strictly adheres to the principle of isolating frontend and backend code.
-//
-// HOW TO USE: Import this default export into its parent component. Do not mix
-//             backend logic (like direct database access) in this file. Always use
-//             API calls to fetch data from the corresponding backend module.
+// PURPOSE: Lightweight animated background layer for the hero section.
 // ============================================================================
 
-import React from "react";
-
-/**
- * 3DBackground Frontend Component
- * 
- * This component is responsible for displaying the content to the user.
- * It is completely separated from its backend counterpart.
- */
 export default function Background3DFrontend() {
   return (
-    <div className="relative w-full border border-white/5 p-4 rounded-xl">
-      {/* 
-        This is a placeholder for your actual UI. 
-        Please replace this with your intricate design using GSAP, Three.js, etc.
-        Ensure you fetch data from the backend using standard web requests to its paired backend module.
-      */}
-      <h2 className="text-xl text-white font-bold">3DBackground Component</h2>
-      <p className="text-zinc-400">Frontend module loaded successfully!</p>
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
+    >
+      <div className="absolute -left-24 top-16 h-64 w-64 rounded-full bg-cyan-500/20 blur-3xl" />
+      <div className="absolute -right-12 top-1/3 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
+      <div className="absolute bottom-0 left-1/4 h-56 w-56 rounded-full bg-emerald-500/15 blur-3xl" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.08),transparent_40%)]" />
     </div>
   );
 }

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/contact/sections/form/api.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 export interface ContactFormData {
   name: string;
   email: string;

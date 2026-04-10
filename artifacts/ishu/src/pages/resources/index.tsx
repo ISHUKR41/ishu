@@ -1,9 +1,22 @@
-import { useState } from "react";
+// FILE: artifacts/ishu/src/pages/resources/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
+import { lazy, useState } from "react";
 import { PageMeta } from "@/components/layout/PageMeta";
-import { ResourcesHero } from "./sections/hero/ResourcesHero";
-import { ResourcesCategories } from "./sections/categories/ResourcesCategories";
-import { FeaturedResources } from "./sections/featured/FeaturedResources";
-import { ResourcesGrid } from "./sections/grid/ResourcesGrid";
+import { LazySection } from "@/components/performance/LazySection";
+
+const ResourcesHero = lazy(() =>
+  import("./sections/hero/ResourcesHero").then((module) => ({ default: module.ResourcesHero })),
+);
+const ResourcesCategories = lazy(() =>
+  import("./sections/categories/ResourcesCategories").then((module) => ({ default: module.ResourcesCategories })),
+);
+const FeaturedResources = lazy(() =>
+  import("./sections/featured/FeaturedResources").then((module) => ({ default: module.FeaturedResources })),
+);
+const ResourcesGrid = lazy(() =>
+  import("./sections/grid/ResourcesGrid").then((module) => ({ default: module.ResourcesGrid })),
+);
 
 export default function Resources() {
   const [search, setSearch] = useState("");
@@ -30,10 +43,20 @@ export default function Resources() {
         }}
       />
       <div>
-        <ResourcesHero search={search} onSearch={setSearch} />
-        <ResourcesCategories active={category} onSelect={setCategory} />
-        {!search && category === "all" && <FeaturedResources />}
-        <ResourcesGrid category={category} search={search} />
+        <LazySection minHeight={330} eager>
+          <ResourcesHero search={search} onSearch={setSearch} />
+        </LazySection>
+        <LazySection minHeight={130}>
+          <ResourcesCategories active={category} onSelect={setCategory} />
+        </LazySection>
+        {!search && category === "all" && (
+          <LazySection minHeight={300}>
+            <FeaturedResources />
+          </LazySection>
+        )}
+        <LazySection minHeight={560}>
+          <ResourcesGrid category={category} search={search} />
+        </LazySection>
       </div>
     </>
   );

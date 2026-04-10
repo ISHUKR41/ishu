@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/admin/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useRoute } from "wouter";
 import AdminRoute from "./AdminRoute";
 import { useGetAdminStats, useListAdminContacts, useListAdminUsers } from "@workspace/api-client-react";

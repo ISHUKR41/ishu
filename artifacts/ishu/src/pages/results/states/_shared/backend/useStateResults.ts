@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/states/_shared/backend/useStateResults.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useListResults, type ListResultsQueryResult } from "@workspace/api-client-react";
 
 export type StateResultItem = ListResultsQueryResult["results"][number];

@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/about/sections/stats/about-stats.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .section {
   padding: 4rem 0;
   contain: layout style;

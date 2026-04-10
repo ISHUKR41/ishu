@@ -55,7 +55,7 @@ export default function NewsCategoryFilter() {
           ref={scrollRef}
           className="flex flex-wrap gap-2"
         >
-          {NEWS_CATEGORIES.map((cat) => (
+          {NEWS_CATEGORIES.map((cat: any) => (
             <Link
               key={cat.id}
               href={`/news/category/${cat.slug}`}

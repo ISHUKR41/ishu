@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/terms/sections/hero/TermsHero.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { FileText, Clock } from "lucide-react";
 import styles from "./terms-hero.module.css";

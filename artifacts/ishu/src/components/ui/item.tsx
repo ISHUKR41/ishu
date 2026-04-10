@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/item.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"

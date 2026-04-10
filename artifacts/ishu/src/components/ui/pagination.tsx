@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/pagination.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 

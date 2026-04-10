@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/news/detail.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useRoute, Link } from "wouter";
 import { motion } from "framer-motion";
 import { useGetNews as useGetNewsArticle } from "@workspace/api-client-react";

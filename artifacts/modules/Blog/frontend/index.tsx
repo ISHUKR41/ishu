@@ -3,10 +3,12 @@
 // PURPOSE: Blog page orchestrator — assembles HeroSection and ArticleGrid.
 // ============================================================================
 
-import React from "react";
+import { lazy } from "react";
 import { PageMeta } from "@/components/layout/PageMeta";
-import BlogHeroSection from "./HeroSection/frontend";
-import ArticleGrid from "./ArticleGrid/frontend";
+import { LazySection } from "@/components/performance/LazySection";
+
+const BlogHeroSection = lazy(() => import("../HeroSection/frontend"));
+const ArticleGrid = lazy(() => import("../ArticleGrid/frontend"));
 
 export default function BlogPage() {
   return (
@@ -25,8 +27,12 @@ export default function BlogPage() {
         }}
       />
       <div className="flex flex-col min-h-screen">
-        <BlogHeroSection />
-        <ArticleGrid />
+        <LazySection minHeight={320} eager>
+          <BlogHeroSection />
+        </LazySection>
+        <LazySection minHeight={560}>
+          <ArticleGrid />
+        </LazySection>
       </div>
     </>
   );

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/hooks/use-toast.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 
 import type {

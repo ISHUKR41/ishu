@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/states/_shared/StateComingSoon.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowLeft, Bell, Calendar, MapPin } from "lucide-react";
@@ -17,7 +20,7 @@ export function StateComingSoon({ stateName, stateCode, description }: StateComi
   return (
     <>
       <PageMeta
-        title={`${stateName} Government Exam Results & Notifications - Coming Soon | Ishu`}
+        title={`${stateName} Government Exam Results & Notifications - Coverage In Progress | Ishu`}
         description={description || defaultDescription}
         keywords={`${stateName} results, ${stateName} PSC, ${stateName} government jobs, ${stateName} exam notifications, ${stateCode} results`}
         canonical={`https://ishu.in/results/states/${stateCode.toLowerCase()}`}
@@ -56,7 +59,7 @@ export function StateComingSoon({ stateName, stateCode, description }: StateComi
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               {stateName}
-              <span className={styles.badge}>Coming Soon</span>
+              <span className={styles.badge}>Coverage In Progress</span>
             </motion.h1>
 
             <motion.p

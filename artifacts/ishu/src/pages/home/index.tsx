@@ -24,17 +24,40 @@
 // TECH STACK: React 18, Framer Motion, React Query, Tailwind CSS
 // ============================================================================
 
+import { lazy } from "react";
 import { PageMeta } from "@/components/layout/PageMeta";
-import { HeroSection } from "./sections/hero/frontend";
-import { StatsSection } from "./sections/stats/frontend";
-import { ExamCategories } from "./sections/exam-categories/frontend";
-import { FeaturedResults } from "./sections/featured-results/frontend";
-import { ToolsShowcase } from "./sections/tools-showcase/frontend";
-import { NewsPreview } from "./sections/news-preview/frontend";
-import { NotificationCTA } from "./sections/notification-cta/frontend";
-import { Testimonials } from "./sections/testimonials/frontend";
-import { BlogPreview } from "./sections/blog-preview/frontend";
-import { FAQ } from "./sections/faq/frontend";
+import { LazySection } from "@/components/performance/LazySection";
+
+const HeroSection = lazy(() =>
+  import("./sections/hero/frontend").then((module) => ({ default: module.HeroSection })),
+);
+const StatsSection = lazy(() =>
+  import("./sections/stats/frontend").then((module) => ({ default: module.StatsSection })),
+);
+const ExamCategories = lazy(() =>
+  import("./sections/exam-categories/frontend").then((module) => ({ default: module.ExamCategories })),
+);
+const FeaturedResults = lazy(() =>
+  import("./sections/featured-results/frontend").then((module) => ({ default: module.FeaturedResults })),
+);
+const ToolsShowcase = lazy(() =>
+  import("./sections/tools-showcase/frontend").then((module) => ({ default: module.ToolsShowcase })),
+);
+const NewsPreview = lazy(() =>
+  import("./sections/news-preview/frontend").then((module) => ({ default: module.NewsPreview })),
+);
+const NotificationCTA = lazy(() =>
+  import("./sections/notification-cta/frontend").then((module) => ({ default: module.NotificationCTA })),
+);
+const Testimonials = lazy(() =>
+  import("./sections/testimonials/frontend").then((module) => ({ default: module.Testimonials })),
+);
+const BlogPreview = lazy(() =>
+  import("./sections/blog-preview/frontend").then((module) => ({ default: module.BlogPreview })),
+);
+const FAQ = lazy(() =>
+  import("./sections/faq/frontend").then((module) => ({ default: module.FAQ })),
+);
 
 /**
  * Home — The landing page assembled from isolated section modules.
@@ -75,18 +98,38 @@ export default function Home() {
         }}
       />
 
-      {/* All sections rendered in order — each is self-contained */}
+      {/* All sections rendered in order — each chunk loads only when needed */}
       <div className="flex flex-col min-h-screen">
-        <HeroSection />
-        <StatsSection />
-        <ExamCategories />
-        <FeaturedResults />
-        <ToolsShowcase />
-        <NewsPreview />
-        <NotificationCTA />
-        <Testimonials />
-        <BlogPreview />
-        <FAQ />
+        <LazySection minHeight={620} eager>
+          <HeroSection />
+        </LazySection>
+        <LazySection minHeight={210}>
+          <StatsSection />
+        </LazySection>
+        <LazySection minHeight={420}>
+          <ExamCategories />
+        </LazySection>
+        <LazySection minHeight={420}>
+          <FeaturedResults />
+        </LazySection>
+        <LazySection minHeight={420}>
+          <ToolsShowcase />
+        </LazySection>
+        <LazySection minHeight={420}>
+          <NewsPreview />
+        </LazySection>
+        <LazySection minHeight={250}>
+          <NotificationCTA />
+        </LazySection>
+        <LazySection minHeight={420}>
+          <Testimonials />
+        </LazySection>
+        <LazySection minHeight={360}>
+          <BlogPreview />
+        </LazySection>
+        <LazySection minHeight={400}>
+          <FAQ />
+        </LazySection>
       </div>
     </>
   );

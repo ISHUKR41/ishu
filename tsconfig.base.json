@@ -19,6 +19,7 @@
     "useUnknownInCatchVariables": true,
     "alwaysStrict": true,
     "skipLibCheck": true,
+    "ignoreDeprecations": "5.0",
     "target": "es2022",
     "types": [],
     "customConditions": ["workspace"]

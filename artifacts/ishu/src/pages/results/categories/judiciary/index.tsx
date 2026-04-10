@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/categories/judiciary/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { ResultsCategoryPage } from "../_shared/ResultsCategoryPage";
 
 export default function JudiciaryResults() {

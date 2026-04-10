@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/home/sections/faq/frontend/FAQ.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, HelpCircle } from "lucide-react";
@@ -5,8 +8,8 @@ import { useFaqItems } from "../backend/useFaqItems";
 import styles from "./faq.module.css";
 
 export function FAQ() {
-  const faqs = useFaqItems();
-  const [openId, setOpenId] = useState<number | null>(1);
+  const { items: faqs, isLoading, isError } = useFaqItems();
+  const [openId, setOpenId] = useState<number | null>(null);
 
   return (
     <section className={styles.section}>
@@ -23,38 +26,48 @@ export function FAQ() {
         </div>
 
         <div className={styles.list}>
-          {faqs.map((faq) => (
-            <div key={faq.id} className={styles.item}>
-              <button
-                className={styles.question}
-                onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-                aria-expanded={openId === faq.id}
-              >
-                <span>{faq.question}</span>
-                <motion.div
-                  animate={{ rotate: openId === faq.id ? 45 : 0 }}
-                  transition={{ duration: 0.2 }}
-                  className={styles.plusIcon}
+          {isLoading ? (
+            Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className={styles.loadingItem} />
+            ))
+          ) : faqs.length > 0 ? (
+            faqs.map((faq) => (
+              <div key={faq.id} className={styles.item}>
+                <button
+                  className={styles.question}
+                  onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
+                  aria-expanded={openId === faq.id}
                 >
-                  <Plus size={18} />
-                </motion.div>
-              </button>
-              <AnimatePresence initial={false}>
-                {openId === faq.id && (
+                  <span>{faq.question}</span>
                   <motion.div
-                    key="answer"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    className={styles.answerWrapper}
+                    animate={{ rotate: openId === faq.id ? 45 : 0 }}
+                    transition={{ duration: 0.2 }}
+                    className={styles.plusIcon}
                   >
-                    <p className={styles.answer}>{faq.answer}</p>
+                    <Plus size={18} />
                   </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+                </button>
+                <AnimatePresence initial={false}>
+                  {openId === faq.id && (
+                    <motion.div
+                      key="answer"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+                      className={styles.answerWrapper}
+                    >
+                      <p className={styles.answer}>{faq.answer}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))
+          ) : (
+            <p className={styles.emptyState}>
+              {isError ? "FAQ data is temporarily unavailable." : "No FAQ entries available right now."}
+            </p>
+          )}
         </div>
       </div>
     </section>

@@ -19,7 +19,7 @@
 // TECH STACK: Drizzle ORM, bcryptjs (password hashing), PostgreSQL
 // ============================================================================
 
-import { db, resultCategoriesTable, newsCategoriesTable, toolsTable, blogCategoriesTable, usersTable, resultsTable, newsTable, blogsTable } from "@workspace/db";
+import { db, resultCategoriesTable, newsCategoriesTable, toolsTable, blogCategoriesTable, usersTable, resultsTable, newsTable, blogsTable, faqTable } from "@workspace/db";
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 
@@ -118,6 +118,57 @@ const TOOLS = [
   // --- Text tools ---
   { name: "Word Counter", slug: "word-counter", description: "Count words, characters, sentences, and paragraphs in text", category: "Text Tools", isNew: false },
   { name: "Case Converter", slug: "case-converter", description: "Convert text to uppercase, lowercase, title case, or sentence case", category: "Text Tools", isNew: false },
+];
+
+const FAQ_SEED = [
+  {
+    question: "Is Ishu completely free to use?",
+    answer:
+      "Yes, core sections of Ishu are free for students. You can access exam results, use available PDF tools, download study resources, and read the latest news without subscription fees.",
+    category: "General",
+    order: 1,
+    isActive: true,
+  },
+  {
+    question: "How quickly are government exam results updated?",
+    answer:
+      "Result updates are published as soon as verified data is available in our system. We prioritize official board updates including UPSC, SSC, IBPS, RRB, NTA, and state-level recruitment boards.",
+    category: "Results",
+    order: 2,
+    isActive: true,
+  },
+  {
+    question: "Are the PDF tools safe for my documents?",
+    answer:
+      "Your files are processed securely and are not stored permanently after processing. Uploads are deleted after processing is complete.",
+    category: "Tools",
+    order: 3,
+    isActive: true,
+  },
+  {
+    question: "Which exams does Ishu cover?",
+    answer:
+      "Ishu covers major central and state-level exams including UPSC, SSC, IBPS, RRB, NDA, CDS, NEET, JEE, GATE, UGC NET, and state PSC exams.",
+    category: "Exams",
+    order: 4,
+    isActive: true,
+  },
+  {
+    question: "Can I get notifications for specific exams?",
+    answer:
+      "Yes. You can subscribe for updates and receive alerts for result declarations, admit card releases, new vacancies, and important date changes.",
+    category: "Notifications",
+    order: 5,
+    isActive: true,
+  },
+  {
+    question: "How can I report missing or incorrect information?",
+    answer:
+      "Use the Contact page to report inaccuracies or missing information. Reports are reviewed and updated by the team.",
+    category: "Support",
+    order: 6,
+    isActive: true,
+  },
 ];
 
 export async function seedDatabase() {
@@ -415,6 +466,11 @@ export async function seedDatabase() {
           fullDescription: "WBCS is the state civil service examination of West Bengal for posts like Joint BDO, Deputy Magistrate, Sub-Inspector of Excise, and other Group A/B posts.",
         },
       ]).onConflictDoNothing();
+    }
+
+    const [existingFaq] = await db.select().from(faqTable).limit(1);
+    if (!existingFaq) {
+      await db.insert(faqTable).values(FAQ_SEED).onConflictDoNothing();
     }
 
     const [existingNews] = await db.select().from(newsTable).limit(1);

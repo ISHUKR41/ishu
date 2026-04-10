@@ -53,25 +53,26 @@ import { ThemeProvider } from "next-themes";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScrollProvider } from "@/providers/SmoothScrollProvider";
+import { AppErrorBoundary } from "@/components/performance/AppErrorBoundary";
 
 // ============================================================================
 // MAIN PAGES — Top-level route modules
 // ============================================================================
 const Home = lazy(() => import("@/pages/home/index"));
-const Results = lazy(() => import("@modules/Results/index"));
+const Results = lazy(() => import("@/pages/results/index"));
 const ResultDetail = lazy(() => import("@/pages/results/detail"));
-const Tools = lazy(() => import("@modules/Tools/index"));
+const Tools = lazy(() => import("@/pages/tools/index"));
 const ToolDetail = lazy(() => import("@/pages/tools/detail"));
-const News = lazy(() => import("@modules/News/index"));
+const News = lazy(() => import("@/pages/news/index"));
 const NewsDetail = lazy(() => import("@/pages/news/detail"));
-const Blog = lazy(() => import("@modules/Blog/index"));
+const Blog = lazy(() => import("@/pages/blog/index"));
 const BlogDetail = lazy(() => import("@/pages/blog/detail"));
-const About = lazy(() => import("@modules/About/index"));
-const Contact = lazy(() => import("@modules/Contact/index"));
+const About = lazy(() => import("@modules/About/frontend/index"));
+const Contact = lazy(() => import("@modules/Contact/frontend/index"));
 const TestPage = lazy(() => import("@/pages/test/frontend"));
-const Resources = lazy(() => import("@modules/Resources/index"));
-const Privacy = lazy(() => import("@modules/Privacy/index"));
-const Terms = lazy(() => import("@modules/Terms/index"));
+const Resources = lazy(() => import("@/pages/resources/index"));
+const Privacy = lazy(() => import("@modules/Privacy/frontend/index"));
+const Terms = lazy(() => import("@modules/Terms/frontend/index"));
 const Login = lazy(() => import("@modules/Auth/Login/frontend"));
 const Register = lazy(() => import("@modules/Auth/Register/frontend"));
 const AdminDashboard = lazy(() => import("@/pages/admin/index"));
@@ -111,6 +112,30 @@ const NewsBanking = lazy(() => import("@modules/News/Categories/banking/frontend
 const NewsRailway = lazy(() => import("@modules/News/Categories/railway/frontend"));
 const NewsScholarships = lazy(() => import("@modules/News/Categories/scholarships/frontend"));
 const NewsAdmitCards = lazy(() => import("@modules/News/Categories/admit-cards/frontend"));
+const NewsEngineering = lazy(() => import("@modules/News/Categories/engineering/frontend"));
+const NewsResults = lazy(() => import("@modules/News/Categories/results-news/frontend"));
+const NewsEducation = lazy(() => import("@modules/News/Categories/education/frontend"));
+const NewsTechnology = lazy(() => import("@modules/News/Categories/technology/frontend"));
+const NewsScience = lazy(() => import("@modules/News/Categories/science/frontend"));
+const NewsTeaching = lazy(() => import("@modules/News/Categories/teaching/frontend"));
+const NewsMedical = lazy(() => import("@modules/News/Categories/medical/frontend"));
+const NewsPolitics = lazy(() => import("@modules/News/Categories/politics/frontend"));
+const NewsSports = lazy(() => import("@modules/News/Categories/sports/frontend"));
+const NewsBusiness = lazy(() => import("@modules/News/Categories/business/frontend"));
+const NewsHealth = lazy(() => import("@modules/News/Categories/health/frontend"));
+const NewsInternational = lazy(() => import("@modules/News/Categories/international/frontend"));
+const NewsNational = lazy(() => import("@modules/News/Categories/national/frontend"));
+const NewsState = lazy(() => import("@modules/News/Categories/state/frontend"));
+const NewsAgriculture = lazy(() => import("@modules/News/Categories/agriculture/frontend"));
+const NewsEnvironment = lazy(() => import("@modules/News/Categories/environment/frontend"));
+const NewsLegal = lazy(() => import("@modules/News/Categories/legal/frontend"));
+const NewsInnovation = lazy(() => import("@modules/News/Categories/innovation/frontend"));
+const NewsStartups = lazy(() => import("@modules/News/Categories/startups/frontend"));
+const NewsGovtSchemes = lazy(() => import("@modules/News/Categories/govt-schemes/frontend"));
+const NewsJEE = lazy(() => import("@modules/News/Categories/jee/frontend"));
+const NewsNEET = lazy(() => import("@modules/News/Categories/neet/frontend"));
+const NewsDefence = lazy(() => import("@modules/News/Categories/defence/frontend"));
+const NewsPolice = lazy(() => import("@modules/News/Categories/police/frontend"));
 
 // ============================================================================
 // BLOG CATEGORY PAGES — 4 isolated sub-modules (migrated from @/pages/)
@@ -298,6 +323,31 @@ function Router() {
         <Route path="/news/category/railway" component={() => <Layout><NewsRailway /></Layout>} />
         <Route path="/news/category/scholarships" component={() => <Layout><NewsScholarships /></Layout>} />
         <Route path="/news/category/admit-cards" component={() => <Layout><NewsAdmitCards /></Layout>} />
+        <Route path="/news/category/engineering" component={() => <Layout><NewsEngineering /></Layout>} />
+        <Route path="/news/category/results-news" component={() => <Layout><NewsResults /></Layout>} />
+        <Route path="/news/category/results" component={() => <Layout><NewsResults /></Layout>} />
+        <Route path="/news/category/education" component={() => <Layout><NewsEducation /></Layout>} />
+        <Route path="/news/category/technology" component={() => <Layout><NewsTechnology /></Layout>} />
+        <Route path="/news/category/science" component={() => <Layout><NewsScience /></Layout>} />
+        <Route path="/news/category/teaching" component={() => <Layout><NewsTeaching /></Layout>} />
+        <Route path="/news/category/medical" component={() => <Layout><NewsMedical /></Layout>} />
+        <Route path="/news/category/politics" component={() => <Layout><NewsPolitics /></Layout>} />
+        <Route path="/news/category/sports" component={() => <Layout><NewsSports /></Layout>} />
+        <Route path="/news/category/business" component={() => <Layout><NewsBusiness /></Layout>} />
+        <Route path="/news/category/health" component={() => <Layout><NewsHealth /></Layout>} />
+        <Route path="/news/category/international" component={() => <Layout><NewsInternational /></Layout>} />
+        <Route path="/news/category/national" component={() => <Layout><NewsNational /></Layout>} />
+        <Route path="/news/category/state" component={() => <Layout><NewsState /></Layout>} />
+        <Route path="/news/category/agriculture" component={() => <Layout><NewsAgriculture /></Layout>} />
+        <Route path="/news/category/environment" component={() => <Layout><NewsEnvironment /></Layout>} />
+        <Route path="/news/category/legal" component={() => <Layout><NewsLegal /></Layout>} />
+        <Route path="/news/category/innovation" component={() => <Layout><NewsInnovation /></Layout>} />
+        <Route path="/news/category/startups" component={() => <Layout><NewsStartups /></Layout>} />
+        <Route path="/news/category/govt-schemes" component={() => <Layout><NewsGovtSchemes /></Layout>} />
+        <Route path="/news/category/jee" component={() => <Layout><NewsJEE /></Layout>} />
+        <Route path="/news/category/neet" component={() => <Layout><NewsNEET /></Layout>} />
+        <Route path="/news/category/defence" component={() => <Layout><NewsDefence /></Layout>} />
+        <Route path="/news/category/police" component={() => <Layout><NewsPolice /></Layout>} />
         <Route path="/news/:id" component={() => <Layout><NewsDetail /></Layout>} />
 
         {/* Blog — main + subcategories */}
@@ -341,7 +391,9 @@ function App() {
             <TooltipProvider>
               <SmoothScrollProvider>
                 <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-                <Router />
+                <AppErrorBoundary>
+                  <Router />
+                </AppErrorBoundary>
                 <Toaster />
               </SmoothScrollProvider>
             </TooltipProvider>

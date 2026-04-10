@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/news/sections/grid/NewsGrid.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { useListNews } from "@workspace/api-client-react";

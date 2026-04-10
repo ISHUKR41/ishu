@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/privacy/sections/content/PrivacyContent.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import styles from "./privacy-content.module.css";
 

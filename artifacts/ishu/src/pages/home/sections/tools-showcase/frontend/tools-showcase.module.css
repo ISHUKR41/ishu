@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/home/sections/tools-showcase/frontend/tools-showcase.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .section {
   padding: 5rem 0 6rem;
   background: hsl(var(--muted)/0.2);

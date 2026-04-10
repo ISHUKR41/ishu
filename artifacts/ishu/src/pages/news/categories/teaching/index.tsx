@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/news/categories/teaching/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { PageMeta } from "@/components/layout/PageMeta";
 import { useListNews } from "@workspace/api-client-react";
 import { Link } from "wouter";

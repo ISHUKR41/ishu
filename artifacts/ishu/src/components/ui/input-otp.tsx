@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/input-otp.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import { OTPInput, OTPInputContext } from "input-otp"
 import { Minus } from "lucide-react"

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/terms/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { PageMeta } from "@/components/layout/PageMeta";
 import { TermsHero } from "./sections/hero/TermsHero";
 import { TermsContent } from "./sections/content/TermsContent";

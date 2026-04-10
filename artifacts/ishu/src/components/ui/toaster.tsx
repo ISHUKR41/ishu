@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/toaster.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useToast } from "@/hooks/use-toast"
 import {
   Toast,

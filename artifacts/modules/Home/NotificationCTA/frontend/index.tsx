@@ -1,5 +1,15 @@
+// ============================================================================
+// FILE: index.tsx
+// MODULE: Home
+// PURPOSE: This file provides the implementation for index.
+// It is designed to be easy to understand, following the Hyper-Modular architecture.
+// 
+// Every component, page, section, and sub-section is strictly separated into frontend
+// and backend codebases to ensure 100+ developers can work simultaneously without conflicts.
+// ============================================================================
+
 // @ts-nocheck
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link } from "wouter";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,6 +24,24 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export default function NotificationCTA() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [metrics, setMetrics] = useState({
+    activeSubscribers: 0,
+    activeGlobalNotifications: 0,
+  });
+
+  useEffect(() => {
+    fetch("/api/home/sections/notification-cta")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json?.success && json?.data) {
+          setMetrics({
+            activeSubscribers: json.data.activeSubscribers ?? 0,
+            activeGlobalNotifications: json.data.activeGlobalNotifications ?? 0,
+          });
+        }
+      })
+      .catch((err) => console.error("Failed to load CTA metrics:", err));
+  }, []);
   
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -70,6 +98,14 @@ export default function NotificationCTA() {
               <p className="text-lg text-zinc-400 max-w-xl mx-auto md:mx-0">
                 Subscribe to our notification channels to get instant alerts on new exam schedules, result declarations, and study materials.
               </p>
+              <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-zinc-300">
+                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
+                  {metrics.activeSubscribers.toLocaleString()} subscribers
+                </span>
+                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
+                  {metrics.activeGlobalNotifications.toLocaleString()} active alerts
+                </span>
+              </div>
            </div>
 
            <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10 w-full md:w-auto">

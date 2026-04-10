@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/blog/sections/filters/BlogFilters.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { Search } from "lucide-react";
 import { useListBlogCategories } from "@workspace/api-client-react";
 import styles from "./BlogFilters.module.css";

@@ -3,13 +3,12 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "..",
-    "baseUrl": ".",
     "paths": {
       "bcryptjs": [
-        "node_modules/bcryptjs"
+        "./node_modules/bcryptjs"
       ],
       "drizzle-orm": [
-        "node_modules/drizzle-orm"
+        "./node_modules/drizzle-orm"
       ],
       "@workspace/db": [
         "../../lib/db"
@@ -18,7 +17,7 @@
         "../../lib/api-zod"
       ],
       "zod": [
-        "node_modules/zod"
+        "./node_modules/zod"
       ]
     },
     "types": [

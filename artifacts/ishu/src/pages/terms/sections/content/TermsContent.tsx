@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/terms/sections/content/TermsContent.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import styles from "./terms-content.module.css";
 

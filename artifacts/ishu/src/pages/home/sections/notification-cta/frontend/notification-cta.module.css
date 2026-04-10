@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/home/sections/notification-cta/frontend/notification-cta.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .section {
   padding: 5rem 0;
   position: relative;
@@ -121,6 +126,53 @@
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
+}
+
+.categoryBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.categoryLabel {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: hsl(var(--muted-foreground));
+}
+
+.categoryGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.categoryChip {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.45);
+  color: hsl(var(--foreground)/0.8);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.35rem 0.65rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.categoryChip:hover {
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+.categoryChipActive {
+  background: rgba(34, 197, 94, 0.18);
+  border-color: rgba(34, 197, 94, 0.45);
+  color: #22c55e;
+}
+
+.categoryHint {
+  margin: 0;
+  font-size: 0.72rem;
+  color: hsl(var(--muted-foreground)/0.75);
 }
 
 .input {

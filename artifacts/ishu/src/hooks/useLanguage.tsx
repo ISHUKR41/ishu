@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/hooks/useLanguage.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useState, useEffect } from 'react';
 
 const LANGUAGES = [

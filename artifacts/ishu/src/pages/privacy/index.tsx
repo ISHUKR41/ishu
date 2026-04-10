@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/privacy/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { PageMeta } from "@/components/layout/PageMeta";
 import { PrivacyHero } from "./sections/hero/PrivacyHero";
 import { PrivacyContent } from "./sections/content/PrivacyContent";

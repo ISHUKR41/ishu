@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/scroll-area.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
 

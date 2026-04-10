@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/checkbox.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
 import { Check } from "lucide-react"

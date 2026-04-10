@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/about/sections/values/AboutValues.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Target, Users, Zap, Shield } from "lucide-react";
 import styles from "./about-values.module.css";

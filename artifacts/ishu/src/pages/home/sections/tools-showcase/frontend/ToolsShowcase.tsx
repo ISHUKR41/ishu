@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/home/sections/tools-showcase/frontend/ToolsShowcase.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, File, Scissors, Archive, FileText, Image as ImageIcon, Lock, Wrench } from "lucide-react";

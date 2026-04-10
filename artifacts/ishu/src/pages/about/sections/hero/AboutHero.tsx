@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/about/sections/hero/AboutHero.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import styles from "./about-hero.module.css";
 

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/admin/AdminRoute.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useAuth } from "@/hooks/useAuth";
 import { Link, useLocation } from "wouter";
 import { PageMeta } from "@/components/layout/PageMeta";

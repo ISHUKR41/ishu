@@ -1,9 +1,13 @@
+// FILE: artifacts/ishu/src/pages/tools/categories/_shared/ToolsCategoryPage.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowLeft, Search, Wrench, Sparkles, Star } from "lucide-react";
 import { useListTools } from "@workspace/api-client-react";
 import { PageMeta } from "@/components/layout/PageMeta";
+import { ProfessionalIcon } from "@/components/icons/ProfessionalIcon";
 
 interface ToolsCategoryPageProps {
   categorySlug: string;
@@ -41,7 +45,7 @@ export function ToolsCategoryPage({ categorySlug, categoryName, description, ico
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
                 <div style={{ width: 56, height: 56, borderRadius: "0.75rem", background: `${accentColor}20`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.75rem" }}>
-                  {icon}
+                  <ProfessionalIcon icon={icon} size={28} style={{ color: accentColor }} />
                 </div>
                 <div>
                   <h1 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 700, color: "hsl(var(--foreground))", margin: 0 }}>{categoryName}</h1>
@@ -85,8 +89,8 @@ export function ToolsCategoryPage({ categorySlug, categoryName, description, ico
                       onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "hsl(var(--border))"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
                     >
                       <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-                        <div style={{ width: 44, height: 44, borderRadius: "0.625rem", background: `${accentColor}15`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.25rem", flexShrink: 0 }}>
-                          {tool.icon ?? "🔧"}
+                        <div style={{ width: 44, height: 44, borderRadius: "0.625rem", background: `${accentColor}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <ProfessionalIcon icon={tool.icon ?? "Wrench"} size={20} style={{ color: accentColor }} />
                         </div>
                         <div style={{ flex: 1 }}>
                           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.25rem" }}>

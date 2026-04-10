@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/popover.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as PopoverPrimitive from "@radix-ui/react-popover"
 

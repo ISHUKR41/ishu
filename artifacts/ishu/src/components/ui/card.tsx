@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/card.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"

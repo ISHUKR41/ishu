@@ -1,32 +1,55 @@
 // ============================================================================
 // FILE: Home/StatsSection/Counters/frontend/index.tsx
-// PURPOSE: This is the dedicated frontend module for the Counters section.
-//          It handles all the rendering, UI logic, and user interactions.
-//          This file strictly adheres to the principle of isolating frontend and backend code.
-//
-// HOW TO USE: Import this default export into its parent component. Do not mix
-//             backend logic (like direct database access) in this file. Always use
-//             API calls to fetch data from the corresponding backend module.
+// PURPOSE: Real-data counters card group for isolated Stats/Counters module.
 // ============================================================================
 
-import React from "react";
+import { useEffect, useState } from "react";
 
-/**
- * Counters Frontend Component
- * 
- * This component is responsible for displaying the content to the user.
- * It is completely separated from its backend counterpart.
- */
+type CounterItem = {
+  id: string;
+  label: string;
+  value: number;
+  suffix: string;
+};
+
 export default function CountersFrontend() {
+  const [items, setItems] = useState<CounterItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const response = await fetch("/api/modules/home/stats/counters");
+        const json = await response.json();
+        setItems(json?.data ?? []);
+      } catch (error) {
+        console.error("Failed to load counters:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    void load();
+  }, []);
+
+  if (loading) {
+    return <div className="text-sm text-zinc-400">Loading live counters...</div>;
+  }
+
   return (
-    <div className="relative w-full border border-white/5 p-4 rounded-xl">
-      {/* 
-        This is a placeholder for your actual UI. 
-        Please replace this with your intricate design using GSAP, Three.js, etc.
-        Ensure you fetch data from the backend using standard web requests to its paired backend module.
-      */}
-      <h2 className="text-xl text-white font-bold">Counters Component</h2>
-      <p className="text-zinc-400">Frontend module loaded successfully!</p>
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {items.map((item) => (
+        <article
+          key={item.id}
+          className="rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm"
+        >
+          <div className="text-2xl font-bold text-white">
+            {item.value.toLocaleString()}
+            <span className="text-blue-400">{item.suffix}</span>
+          </div>
+          <p className="mt-1 text-xs uppercase tracking-wide text-zinc-400">{item.label}</p>
+        </article>
+      ))}
     </div>
   );
 }

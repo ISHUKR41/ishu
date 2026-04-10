@@ -1,3 +1,13 @@
+// ============================================================================
+// FILE: index.ts
+// MODULE: Auth
+// PURPOSE: This file provides the implementation for index.
+// It is designed to be easy to understand, following the Hyper-Modular architecture.
+// 
+// Every component, page, section, and sub-section is strictly separated into frontend
+// and backend codebases to ensure 100+ developers can work simultaneously without conflicts.
+// ============================================================================
+
 // @ts-nocheck
 /**
  * Register Backend Module
@@ -5,7 +15,7 @@
  */
 import { Router, type IRouter, type Request, type Response } from "express";
 import bcrypt from "bcryptjs";
-import { db, usersTable } from "@workspace/db";
+import { db, isInMemoryDatabase, usersTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
 import { RegisterUserBody } from "@workspace/api-zod";
 
@@ -21,8 +31,11 @@ router.post("/register", async (req: Request, res: Response): Promise<void> => {
   const { name, email, password, whatsappNumber } = parsed.data;
 
   // Check if the email already exists in the database
-  const existing = await db.select().from(usersTable).where(eq(usersTable.email, email)).limit(1);
-  if (existing.length > 0) {
+  const existingUser = isInMemoryDatabase
+    ? (await db.select().from(usersTable)).find((row) => row.email === email)
+    : (await db.select().from(usersTable).where(eq(usersTable.email, email)).limit(1))[0];
+
+  if (existingUser) {
     res.status(400).json({ error: "Email already registered" });
     return;
   }
@@ -39,11 +52,6 @@ router.post("/register", async (req: Request, res: Response): Promise<void> => {
     role: "user",
   }).returning();
 
-  // Initialize and assign session details securely
-  if (!(req as any).session) (req as any).session = {};
-  (req as any).session.userId = user.id;
-  (req as any).session.role = user.role;
-
   res.status(201).json({
     user: {
       id: user.id,
@@ -53,7 +61,7 @@ router.post("/register", async (req: Request, res: Response): Promise<void> => {
       role: user.role,
       createdAt: user.createdAt,
     },
-    message: "Registration successful",
+    message: "Registration successful. Please sign in.",
   });
 });
 

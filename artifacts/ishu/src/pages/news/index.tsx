@@ -1,8 +1,19 @@
-import { useState } from "react";
+// FILE: artifacts/ishu/src/pages/news/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
+import { lazy, useState } from "react";
 import { PageMeta } from "@/components/layout/PageMeta";
-import { NewsHero } from "./sections/hero/NewsHero";
-import { NewsFilters } from "./sections/filters/NewsFilters";
-import { NewsGrid } from "./sections/grid/NewsGrid";
+import { LazySection } from "@/components/performance/LazySection";
+
+const NewsHero = lazy(() =>
+  import("./sections/hero/NewsHero").then((module) => ({ default: module.NewsHero })),
+);
+const NewsFilters = lazy(() =>
+  import("./sections/filters/NewsFilters").then((module) => ({ default: module.NewsFilters })),
+);
+const NewsGrid = lazy(() =>
+  import("./sections/grid/NewsGrid").then((module) => ({ default: module.NewsGrid })),
+);
 
 export default function News() {
   const [search, setSearch] = useState("");
@@ -26,19 +37,31 @@ export default function News() {
         }}
       />
       <div>
-        <NewsHero />
-        <NewsFilters
-          search={search}
-          category={category}
-          onSearch={(v) => { setSearch(v); setPage(1); }}
-          onCategory={(v) => { setCategory(v); setPage(1); }}
-        />
-        <NewsGrid
-          search={search}
-          category={category}
-          page={page}
-          onPageChange={setPage}
-        />
+        <LazySection minHeight={320} eager>
+          <NewsHero />
+        </LazySection>
+        <LazySection minHeight={130}>
+          <NewsFilters
+            search={search}
+            category={category}
+            onSearch={(v) => {
+              setSearch(v);
+              setPage(1);
+            }}
+            onCategory={(v) => {
+              setCategory(v);
+              setPage(1);
+            }}
+          />
+        </LazySection>
+        <LazySection minHeight={560}>
+          <NewsGrid
+            search={search}
+            category={category}
+            page={page}
+            onPageChange={setPage}
+          />
+        </LazySection>
       </div>
     </>
   );

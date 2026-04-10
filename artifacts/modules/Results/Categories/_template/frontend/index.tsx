@@ -61,7 +61,7 @@ export default function CategoryResultsTemplate({
   const listRef = useRef<HTMLDivElement>(null);
 
   // Find the category metadata from our constants
-  const category = RESULT_CATEGORIES.find((c) => c.slug === categorySlug);
+  const category = RESULT_CATEGORIES.find((c: any) => c.slug === categorySlug);
 
   // Fetch results filtered by this category
   const { data: results = [], isLoading } = useQuery<Result[]>({

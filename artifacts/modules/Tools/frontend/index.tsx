@@ -3,10 +3,12 @@
 // PURPOSE: Tools page orchestrator.
 // ============================================================================
 
-import React from "react";
+import { lazy } from "react";
 import { PageMeta } from "@/components/layout/PageMeta";
-import ToolsHeroSection from "./HeroSection/frontend";
-import ToolGrid from "./ToolGrid/frontend";
+import { LazySection } from "@/components/performance/LazySection";
+
+const ToolsHeroSection = lazy(() => import("../HeroSection/frontend"));
+const ToolGrid = lazy(() => import("../ToolGrid/frontend"));
 
 export default function ToolsPage() {
   return (
@@ -25,8 +27,12 @@ export default function ToolsPage() {
         }}
       />
       <div className="flex flex-col min-h-screen">
-        <ToolsHeroSection />
-        <ToolGrid />
+        <LazySection minHeight={320} eager>
+          <ToolsHeroSection />
+        </LazySection>
+        <LazySection minHeight={560}>
+          <ToolGrid />
+        </LazySection>
       </div>
     </>
   );

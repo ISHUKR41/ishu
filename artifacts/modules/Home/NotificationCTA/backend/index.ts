@@ -4,17 +4,33 @@
 // ============================================================================
 
 import { Router, type IRouter, Request, Response } from "express";
+import { and, count, eq } from "drizzle-orm";
+import { db } from "../../../../../lib/db/src";
+import {
+  notificationsTable,
+  notificationSubscriptionsTable,
+} from "../../../../../lib/db/src/schema";
 
 const router: IRouter = Router();
 
-// This endpoint is largely a placeholder since CTA handles clicks not data fetching currently.
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (_req: Request, res: Response) => {
   try {
+    const [subscribersRow, activeNotificationsRow] = await Promise.all([
+      db.select({ value: count() }).from(notificationSubscriptionsTable),
+      db
+        .select({ value: count() })
+        .from(notificationsTable)
+        .where(
+          and(eq(notificationsTable.active, true), eq(notificationsTable.isGlobal, true)),
+        ),
+    ]);
+
     res.json({
       success: true,
       data: {
-         activeSubscribers: 15420
-      }
+        activeSubscribers: subscribersRow[0]?.value ?? 0,
+        activeGlobalNotifications: activeNotificationsRow[0]?.value ?? 0,
+      },
     });
   } catch (err) {
     console.error("Error fetching data for NotificationCTA:", err);

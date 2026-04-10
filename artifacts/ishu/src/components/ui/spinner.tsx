@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/spinner.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { Loader2Icon } from "lucide-react"
 
 import { cn } from "@/lib/utils"

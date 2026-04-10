@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/tools/sections/hero/ToolsHero.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Zap } from "lucide-react";
 import styles from "./ToolsHero.module.css";

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/kbd.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { cn } from "@/lib/utils"
 
 function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/news/sections/filters/NewsFilters.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { Search } from "lucide-react";
 import { useListNewsCategories } from "@workspace/api-client-react";
 import styles from "./NewsFilters.module.css";

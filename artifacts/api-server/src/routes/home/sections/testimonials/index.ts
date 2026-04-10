@@ -1,3 +1,6 @@
+// FILE: artifacts/api-server/src/routes/home/sections/testimonials/index.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { Router, type IRouter } from "express";
 import { db, blogsTable, newsTable, resultsTable } from "@workspace/db";
 import { desc } from "drizzle-orm";

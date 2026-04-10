@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/alert-dialog.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
 

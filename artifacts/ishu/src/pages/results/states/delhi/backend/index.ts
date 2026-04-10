@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/states/delhi/backend/index.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useStateResults } from "../../_shared/backend/useStateResults";
 
 export const stateModule = {

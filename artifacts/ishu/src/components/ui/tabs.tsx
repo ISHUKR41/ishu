@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/tabs.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/states/ladakh/frontend/index.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { PageMeta } from "@/components/layout/PageMeta";
 import { StateComingSoon } from "../../_shared/frontend/StateComingSoon";
 import { stateModule } from "../backend";

@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/separator.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as SeparatorPrimitive from "@radix-ui/react-separator"
 

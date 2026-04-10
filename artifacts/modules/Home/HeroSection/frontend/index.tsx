@@ -1,3 +1,13 @@
+// ============================================================================
+// FILE: index.tsx
+// MODULE: Home
+// PURPOSE: This file provides the implementation for index.
+// It is designed to be easy to understand, following the Hyper-Modular architecture.
+// 
+// Every component, page, section, and sub-section is strictly separated into frontend
+// and backend codebases to ensure 100+ developers can work simultaneously without conflicts.
+// ============================================================================
+
 // @ts-nocheck
 import React, { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -10,7 +20,7 @@ import { ArrowRight, Sparkles } from "lucide-react"; // Using professional icons
  * 
  * This component handles the landing intro using a complex integration of
  * GSAP for DOM animations and Three.js for a high-end 3D visual background.
- * It strictly fetches its data from its corresponding backend module to eliminate fake data.
+ * It strictly fetches its data from its corresponding backend module.
  */
 export default function HomeHero() {
   const containerRef = useRef<HTMLDivElement>(null);

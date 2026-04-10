@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/toggle.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as TogglePrimitive from "@radix-ui/react-toggle"
 import { cva, type VariantProps } from "class-variance-authority"

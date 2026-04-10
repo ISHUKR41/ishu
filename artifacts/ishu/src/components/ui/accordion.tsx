@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/accordion.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { ChevronDown } from "lucide-react"

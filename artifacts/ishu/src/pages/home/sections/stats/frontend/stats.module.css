@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/home/sections/stats/frontend/stats.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .statsSection {
   padding: 3.5rem 0;
   border-top: 1px solid hsl(var(--border));

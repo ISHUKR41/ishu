@@ -1,3 +1,13 @@
+// ============================================================================
+// FILE: index.tsx
+// MODULE: Auth
+// PURPOSE: This file provides the implementation for index.
+// It is designed to be easy to understand, following the Hyper-Modular architecture.
+// 
+// Every component, page, section, and sub-section is strictly separated into frontend
+// and backend codebases to ensure 100+ developers can work simultaneously without conflicts.
+// ============================================================================
+
 // @ts-nocheck
 /**
  * Register Frontend Module
@@ -13,15 +23,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/useAuth";
 import { Eye, EyeOff, UserPlus } from "lucide-react";
 
 export default function AuthRegister() {
   // Navigation hook to redirect the user after registration
   const [, setLocation] = useLocation();
-  
-  // Custom hook containing our global session state manager logic
-  const { login } = useAuth();
   const { toast } = useToast();
   
   // Local state representing the complete registration form data structure
@@ -48,16 +54,13 @@ export default function AuthRegister() {
     
     try {
       // Call the strict modular Auth Register backend -> /api/auth/register
-      const result = await mutation.mutateAsync({ data: form });
-      
-      // Update global context directly assuming registration automatically forces a session creation
-      login(result as any);
+      await mutation.mutateAsync({ data: form });
       
       // Provide positive feedback
-      toast({ title: "Account created!", description: `Welcome to Ishu, ${(result as any).name}!` });
+      toast({ title: "Account created!", description: "Your account is ready. Please sign in to continue." });
       
-      // Send the user to the platform home screen
-      setLocation("/");
+      // Force explicit sign-in after registration to prevent surprise auto-login behavior
+      setLocation("/auth/login");
     } catch (err: any) {
       // Display specific server error or generic fallback
       toast({

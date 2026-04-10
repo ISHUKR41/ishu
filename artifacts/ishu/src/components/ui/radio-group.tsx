@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/radio-group.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
 import { Circle } from "lucide-react"

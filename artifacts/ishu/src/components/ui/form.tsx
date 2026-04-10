@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/form.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
 import { Slot } from "@radix-ui/react-slot"

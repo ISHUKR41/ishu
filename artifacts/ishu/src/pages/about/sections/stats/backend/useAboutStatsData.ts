@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/about/sections/stats/backend/useAboutStatsData.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import {
   useGetResultStats,
   useListTools,

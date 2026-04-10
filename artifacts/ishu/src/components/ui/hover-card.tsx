@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/hover-card.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import * as React from "react"
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card"
 

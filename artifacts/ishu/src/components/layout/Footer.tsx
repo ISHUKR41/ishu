@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/layout/Footer.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { Link } from "wouter";
 import { Twitter, Youtube, Instagram, Send } from "lucide-react";
 

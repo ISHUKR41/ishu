@@ -1,9 +1,13 @@
+// FILE: artifacts/ishu/src/pages/resources/categories/_shared/ResourcesCategoryPage.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Search, Download, ExternalLink, BookMarked } from "lucide-react";
 import { PageMeta } from "@/components/layout/PageMeta";
+import { ProfessionalIcon } from "@/components/icons/ProfessionalIcon";
 
 const BASE = import.meta.env.BASE_URL?.replace(/\/$/, "") ?? "";
 
@@ -53,7 +57,9 @@ export function ResourcesCategoryPage({ categorySlug, categoryName, description,
             </Link>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                <div style={{ width: 56, height: 56, borderRadius: "0.75rem", background: `${accentColor}20`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.75rem" }}>{icon}</div>
+                <div style={{ width: 56, height: 56, borderRadius: "0.75rem", background: `${accentColor}20`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <ProfessionalIcon icon={icon} size={28} style={{ color: accentColor }} />
+                </div>
                 <div>
                   <h1 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 700, color: "hsl(var(--foreground))", margin: 0 }}>Free {categoryName}</h1>
                   <p style={{ color: "hsl(var(--muted-foreground))", margin: "0.25rem 0 0", fontSize: "0.95rem" }}>{description}</p>
@@ -100,7 +106,9 @@ export function ResourcesCategoryPage({ categorySlug, categoryName, description,
                     onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "hsl(var(--border))"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
                   >
                     <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem" }}>
-                      <div style={{ width: 44, height: 44, borderRadius: "0.625rem", background: `${accentColor}15`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.25rem", flexShrink: 0 }}>📄</div>
+                      <div style={{ width: 44, height: 44, borderRadius: "0.625rem", background: `${accentColor}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <ProfessionalIcon icon="FileText" size={20} style={{ color: accentColor }} />
+                      </div>
                       <div>
                         <span style={{ fontSize: "0.7rem", background: `${accentColor}15`, color: accentColor, padding: "0.1rem 0.4rem", borderRadius: "9999px", fontWeight: 600 }}>{resource.exam}</span>
                         <h3 style={{ fontSize: "0.9rem", fontWeight: 600, color: "hsl(var(--foreground))", marginTop: "0.25rem", lineHeight: 1.3 }}>{resource.title}</h3>

@@ -2,10 +2,12 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+import { createRequire } from "node:module";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 const rawPort = process.env.PORT || "5173";
 const port = Number(rawPort);
+const apiProxyTarget = process.env.API_PROXY_TARGET || "http://127.0.0.1:5000";
 
 if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
@@ -13,9 +15,57 @@ if (Number.isNaN(port) || port <= 0) {
 
 const basePath = process.env.BASE_PATH || "/";
 
+/**
+ * Resolve bare package imports for files living in ../modules.
+ *
+ * Why this is needed:
+ * - Module files are outside artifacts/ishu.
+ * - Their nearest ancestor does not contain the app's node_modules.
+ * - Dev server import analysis can fail for imports like "gsap".
+ *
+ * This plugin forces Node-style resolution from artifacts/ishu/package.json,
+ * so both dev and build can resolve package dependencies consistently.
+ */
+function resolveModulesNodeDepsPlugin() {
+  const requireFromApp = createRequire(
+    path.resolve(import.meta.dirname, "package.json"),
+  );
+
+  return {
+    name: "resolve-modules-node-deps",
+    enforce: "pre" as const,
+    resolveId(source: string, importer: string | undefined) {
+      if (
+        !importer ||
+        source.startsWith(".") ||
+        source.startsWith("/") ||
+        source.startsWith("@/") ||
+        source.startsWith("@modules") ||
+        source.startsWith("@assets") ||
+        source.startsWith("\0") ||
+        source.includes("?")
+      ) {
+        return null;
+      }
+
+      const normalizedImporter = importer.replace(/\\/g, "/");
+      if (!normalizedImporter.includes("/modules/")) {
+        return null;
+      }
+
+      try {
+        return requireFromApp.resolve(source);
+      } catch {
+        return null;
+      }
+    },
+  };
+}
+
 export default defineConfig({
   base: basePath,
   plugins: [
+    resolveModulesNodeDepsPlugin(),
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),
@@ -45,56 +95,23 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
-    rollupOptions: {
-      plugins: [
-        {
-          // CRITICAL PLUGIN: Resolves bare package imports from @modules/ directory.
-          // Files in @modules/ live OUTSIDE ishu/ so Rollup can't find ishu/node_modules.
-          // This plugin uses Node's createRequire to resolve from ishu/node_modules.
-          name: "resolve-modules-node-deps",
-          async resolveId(source: string, importer: string | undefined) {
-            if (
-              !importer ||
-              source.startsWith(".") ||
-              source.startsWith("/") ||
-              source.startsWith("@/") ||
-              source.startsWith("@modules") ||
-              source.startsWith("@assets") ||
-              source.startsWith("\0") ||
-              source.includes("?")
-            ) {
-              return null;
-            }
-
-            const normalizedImporter = importer.replace(/\\/g, "/");
-            if (!normalizedImporter.includes("/modules/")) {
-              return null;
-            }
-
-            // Use Node's createRequire to resolve from ishu directory context
-            // This properly handles package.json "exports" maps (e.g., gsap/ScrollTrigger)
-            try {
-              const { createRequire } = await import("module");
-              const require = createRequire(
-                path.resolve(import.meta.dirname, "package.json")
-              );
-              const resolved = require.resolve(source);
-              return { id: resolved, external: false };
-            } catch {
-              return null;
-            }
-          },
-        },
-      ],
-    },
+    rollupOptions: {},
     commonjsOptions: {
       include: [/node_modules/, /modules/],
     },
   },
   server: {
     port,
+    // Fail fast on port conflicts so developers do not unknowingly use stale app instances.
+    strictPort: true,
     host: "0.0.0.0",
     allowedHosts: true,
+    proxy: {
+      "/api": {
+        target: apiProxyTarget,
+        changeOrigin: true,
+      },
+    },
     fs: {
       // Allow serving files from the parent directory (where @modules lives)
       strict: false,
@@ -108,6 +125,7 @@ export default defineConfig({
   },
   preview: {
     port,
+    strictPort: true,
     host: "0.0.0.0",
     allowedHosts: true,
   },

@@ -61,7 +61,7 @@ export default function ToolsHeroSection() {
         </div>
 
         <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-12 max-w-5xl mx-auto">
-          {TOOL_CATEGORIES.map((cat) => {
+          {TOOL_CATEGORIES.map((cat: any) => {
             const Icon = ICON_MAP[cat.icon] || Wrench;
             return (
               <Link

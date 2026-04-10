@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/sections/filters/ResultsFilters.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { Search } from "lucide-react";
 import { useListResultCategories } from "@workspace/api-client-react";
 import styles from "./ResultsFilters.module.css";

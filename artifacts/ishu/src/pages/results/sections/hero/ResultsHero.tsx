@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/results/sections/hero/ResultsHero.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { CheckCircle, Zap, RefreshCw } from "lucide-react";
 import styles from "./ResultsHero.module.css";

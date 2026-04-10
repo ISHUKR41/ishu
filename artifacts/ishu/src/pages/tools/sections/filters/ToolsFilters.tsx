@@ -1,15 +1,9 @@
-import { Search } from "lucide-react";
-import styles from "./ToolsFilters.module.css";
+// FILE: artifacts/ishu/src/pages/tools/sections/filters/ToolsFilters.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
 
-const CATEGORIES = [
-  { value: "", label: "All Tools" },
-  { value: "PDF Tools", label: "PDF Tools" },
-  { value: "PDF Convert", label: "Convert" },
-  { value: "PDF Edit", label: "Edit" },
-  { value: "PDF Security", label: "Security" },
-  { value: "Image Convert", label: "Images" },
-  { value: "PDF AI", label: "AI Tools" },
-];
+import { Search } from "lucide-react";
+import { useToolFilterCategories } from "./backend/api";
+import styles from "./ToolsFilters.module.css";
 
 interface ToolsFiltersProps {
   search: string;
@@ -24,6 +18,8 @@ export function ToolsFilters({
   onSearch,
   onCategory,
 }: ToolsFiltersProps) {
+  const { categories } = useToolFilterCategories();
+
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
@@ -39,7 +35,7 @@ export function ToolsFilters({
           />
         </div>
         <div className={styles.tabs}>
-          {CATEGORIES.map((c) => (
+          {categories.map((c) => (
             <button
               key={c.value}
               onClick={() => onCategory(c.value)}

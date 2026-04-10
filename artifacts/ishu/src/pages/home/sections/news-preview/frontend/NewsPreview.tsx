@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/home/sections/news-preview/frontend/NewsPreview.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, Clock, Eye, Newspaper } from "lucide-react";

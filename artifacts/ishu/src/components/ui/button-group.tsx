@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/components/ui/button-group.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 

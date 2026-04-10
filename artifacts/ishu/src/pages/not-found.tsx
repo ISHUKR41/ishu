@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/not-found.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";

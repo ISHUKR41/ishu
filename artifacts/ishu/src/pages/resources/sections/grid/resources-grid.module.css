@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/resources/sections/grid/resources-grid.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .section {
   padding: 2.5rem 0 6rem;
   contain: layout style;

@@ -4,14 +4,14 @@
 // PURPOSE: Business logic controller for processing contact form submissions.
 //          Handles: Zod validation → Reference ID generation → WhatsApp
 //          notification dispatch → Response to client.
-//          In production, this would also store submissions in a database
-//          and trigger email notifications via Nodemailer/SendGrid.
+//          Persists submissions to database and triggers WhatsApp notifications.
 // TECH: Express.js, Zod, crypto (Node.js built-in)
 // ISOLATION: This controller is ONLY used by the ContactForm router.
 // ============================================================================
 
 import type { Request, Response } from "express";
 import { randomUUID } from "crypto";
+import { db, contactsTable } from "@workspace/db";
 import { contactFormSchema } from "./validation";
 import { notifySupportTeam, sendUserConfirmation } from "./whatsapp";
 
@@ -23,7 +23,7 @@ import { notifySupportTeam, sendUserConfirmation } from "./whatsapp";
  * Flow:
  * 1. Parse and validate the request body using Zod
  * 2. Generate a unique reference ID for tracking
- * 3. (Future) Store the submission in the database
+ * 3. Store the submission in the database
  * 4. Send WhatsApp notification to support team
  * 5. Send WhatsApp confirmation to user (if opted in)
  * 6. Return success response with reference ID
@@ -54,18 +54,21 @@ export async function submitContactForm(req: Request, res: Response) {
     // Format: ISHU-XXXXXXXX (8 hex characters from a UUID)
     const referenceId = `ISHU-${randomUUID().slice(0, 8).toUpperCase()}`;
 
-    // ---- Step 3: (Future) Database storage ----
-    // TODO: Insert into contact_submissions table via Drizzle ORM
-    // await db.insert(contactSubmissions).values({
-    //   referenceId,
-    //   ...validationResult.data,
-    //   createdAt: new Date(),
-    // });
-
-    // For now, log the submission
-    console.log(`[Contact Form] New submission - Ref: ${referenceId}`);
-    console.log(`[Contact Form] From: ${validationResult.data.fullName} <${validationResult.data.email}>`);
-    console.log(`[Contact Form] Subject: ${validationResult.data.subject}`);
+    // ---- Step 3: Persist submission to database (real data path) ----
+    const createdAt = new Date().toISOString();
+    await db.insert(contactsTable).values({
+      name: validationResult.data.fullName,
+      email: validationResult.data.email,
+      phone: validationResult.data.phone || null,
+      subject: `[${validationResult.data.category}] ${validationResult.data.subject}`,
+      message: [
+        validationResult.data.message,
+        "",
+        `Reference ID: ${referenceId}`,
+        `WhatsApp Opt-In: ${validationResult.data.whatsappOptIn ? "yes" : "no"}`,
+        `Submitted At: ${createdAt}`,
+      ].join("\n"),
+    });
 
     // ---- Step 4: Notify support team via WhatsApp ----
     await notifySupportTeam({

@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/tools/sections/grid/tools-grid.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .section {
   padding: 2rem 0 5rem;
   contain: layout style;
@@ -40,7 +45,12 @@
 }
 
 .icon {
-  font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: #60a5fa;
   margin-bottom: 0.75rem;
   line-height: 1;
 }

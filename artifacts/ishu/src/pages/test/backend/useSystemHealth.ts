@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/test/backend/useSystemHealth.ts
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { useQuery } from "@tanstack/react-query";
 
 interface HealthResponse {

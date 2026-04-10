@@ -1,3 +1,8 @@
+/*
+ * FILE: artifacts/ishu/src/pages/contact/sections/info/contact-info.module.css
+ * PURPOSE: Styling file for a dedicated ISHU module section.
+ */
+
 .section {
   padding: 0;
   contain: layout style;
@@ -14,6 +19,25 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+}
+
+.loadingItem {
+  height: 3rem;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--border));
+  background: linear-gradient(90deg, hsl(var(--muted)/0.2), hsl(var(--muted)/0.35), hsl(var(--muted)/0.2));
+  background-size: 200% 100%;
+  animation: contactShimmer 1.3s ease-in-out infinite;
+}
+
+.statusMessage {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--muted)/0.3);
+  color: hsl(var(--muted-foreground));
+  font-size: 0.9rem;
 }
 
 .item {
@@ -90,4 +114,13 @@
   background: hsl(var(--muted));
   color: hsl(var(--foreground));
   border-color: hsl(var(--border));
+}
+
+@keyframes contactShimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }

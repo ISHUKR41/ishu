@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/blog/sections/hero/BlogHero.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { BookOpen } from "lucide-react";
 import styles from "./BlogHero.module.css";

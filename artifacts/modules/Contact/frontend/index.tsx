@@ -19,13 +19,13 @@ import { Suspense, lazy, useEffect } from "react";
 // reducing the initial bundle size significantly.
 // ---------------------------------------------------------------------------
 
-const ContactSEO = lazy(() => import("./SEO/frontend/index"));
-const ContactHero = lazy(() => import("./HeroSection/frontend/index"));
-const ContactInfoSection = lazy(() => import("./ContactInfo/frontend/index"));
-const ContactFormSection = lazy(() => import("./ContactForm/frontend/index"));
-const MapSection = lazy(() => import("./MapSection/frontend/index"));
-const FAQSection = lazy(() => import("./FAQSection/frontend/index"));
-const SocialLinksSection = lazy(() => import("./SocialLinks/frontend/index"));
+const ContactSEO = lazy(() => import("../SEO/frontend/index"));
+const ContactHero = lazy(() => import("../HeroSection/frontend/index"));
+const ContactInfoSection = lazy(() => import("../ContactInfo/frontend/index"));
+const ContactFormSection = lazy(() => import("../ContactForm/frontend/index"));
+const MapSection = lazy(() => import("../MapSection/frontend/index"));
+const FAQSection = lazy(() => import("../FAQSection/frontend/index"));
+const SocialLinksSection = lazy(() => import("../SocialLinks/frontend/index"));
 
 // ---------------------------------------------------------------------------
 // Loading Fallback — Shown while a section's JS is still loading

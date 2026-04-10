@@ -5,7 +5,7 @@
 
 import React from "react";
 import { PageMeta } from "@/components/layout/PageMeta";
-import AboutHeroSection from "./HeroSection/frontend";
+import AboutHeroSection from "../HeroSection/frontend";
 
 export default function AboutPage() {
   return (

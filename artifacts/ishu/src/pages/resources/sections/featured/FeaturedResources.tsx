@@ -1,3 +1,6 @@
+// FILE: artifacts/ishu/src/pages/resources/sections/featured/FeaturedResources.tsx
+// PURPOSE: Implementation file for a dedicated ISHU module section.
+
 import { motion } from "framer-motion";
 import { Star, Download, ExternalLink, Flame, Loader2 } from "lucide-react";
 import { useFeaturedResources } from "./backend/useFeaturedResources";
