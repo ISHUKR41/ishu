@@ -69,16 +69,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
+    if (currentUser && typeof currentUser === "object" && "id" in currentUser) {
+      sessionStorage.removeItem("ishu_logged_out");
+      setUser(currentUser as User);
+      return;
+    }
+
     // Block the auto-login loop if explicitly logged out
     const isLoggedOut = sessionStorage.getItem("ishu_logged_out") === "true";
     if (isLoggedOut) {
       setUser(null);
-      return;
-    }
-
-    if (currentUser && typeof currentUser === "object" && "id" in currentUser) {
-      sessionStorage.removeItem("ishu_logged_out");
-      setUser(currentUser as User);
       return;
     }
 
@@ -90,6 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [currentUser, isLoading, isError, isAuthError]);
 
   const login = (newUser: User) => {
+    sessionStorage.removeItem("ishu_logged_out");
     setUser(newUser);
     queryClient.setQueryData(CURRENT_USER_QUERY_KEY, newUser);
   };
