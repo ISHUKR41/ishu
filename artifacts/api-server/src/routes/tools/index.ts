@@ -43,6 +43,11 @@ let pythonHealthCache: { ok: boolean; checkedAt: number } | null = null;
 
 type CompressionLevel = "low" | "medium" | "high";
 
+function sanitizeFilename(raw: string): string {
+  const normalized = raw.replace(/[\\\/]+/g, "_").replace(/[^a-zA-Z0-9._-]/g, "_");
+  return normalized.length > 0 ? normalized.slice(0, 120) : "upload.bin";
+}
+
 function sendPdf(res: any, bytes: Uint8Array, filename: string): void {
   res.setHeader("Content-Type", "application/pdf");
   res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
@@ -87,11 +92,6 @@ async function isPythonProcessorAvailable(): Promise<boolean> {
 }
 
 function appendUploadedFiles(formData: FormData, fieldName: string, files: Express.Multer.File[]): void {
-  const sanitizeFilename = (raw: string): string => {
-    const normalized = raw.replace(/[\\\/]+/g, "_").replace(/[^a-zA-Z0-9._-]/g, "_");
-    return normalized.length > 0 ? normalized.slice(0, 120) : "upload.bin";
-  };
-
   for (const file of files) {
     const blob = new globalThis.Blob([file.buffer], {
       type: file.mimetype || "application/pdf",
@@ -397,11 +397,6 @@ router.post("/tools/process/:slug", upload.any(), async (req, res): Promise<void
   }
 
   try {
-    const sanitizeFilename = (raw: string): string => {
-      const normalized = raw.replace(/[\\\/]+/g, "_").replace(/[^a-zA-Z0-9._-]/g, "_");
-      return normalized.length > 0 ? normalized.slice(0, 120) : "upload.bin";
-    };
-
     const formData = new globalThis.FormData();
 
     for (const file of files) {
