@@ -90,6 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [currentUser, isLoading, isError, isAuthError]);
 
   const login = (newUser: User) => {
+    sessionStorage.removeItem("ishu_logged_out");
     setUser(newUser);
     queryClient.setQueryData(CURRENT_USER_QUERY_KEY, newUser);
   };
