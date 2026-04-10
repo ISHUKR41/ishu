@@ -32,6 +32,12 @@ const pythonToolsBaseUrl = (
 ).replace(/\/+$/, "");
 const toolsProcessorMode = (process.env.TOOLS_PROCESSOR_MODE || "auto").toLowerCase();
 const pythonHealthCacheTtlMs = 30_000;
+const PYTHON_DIRECT_PROXY_SLUGS = new Set([
+  "pdf-to-word",
+  "word-to-pdf",
+  "pdf-to-jpg",
+  "jpg-to-pdf",
+]);
 
 let pythonHealthCache: { ok: boolean; checkedAt: number } | null = null;
 
@@ -356,6 +362,78 @@ router.post("/tools/pdf/split", upload.single("file"), async (req, res): Promise
       return;
     }
     res.status(400).json({ error: message });
+  }
+});
+
+router.post("/tools/process/:slug", upload.any(), async (req, res): Promise<void> => {
+  const slug = String(req.params.slug ?? "").trim();
+  if (!PYTHON_DIRECT_PROXY_SLUGS.has(slug)) {
+    res.status(404).json({ error: "Tool processor route is not available for this slug." });
+    return;
+  }
+
+  if (!shouldUsePythonProcessor()) {
+    res.status(501).json({ error: "Python tool processor is disabled by server configuration." });
+    return;
+  }
+
+  if (toolsProcessorMode === "auto") {
+    const available = await isPythonProcessorAvailable();
+    if (!available) {
+      res.status(503).json({ error: "Python tool processor is unavailable right now." });
+      return;
+    }
+  }
+
+  const files = (req.files as Express.Multer.File[] | undefined) ?? [];
+  if (files.length === 0) {
+    res.status(400).json({ error: "Please upload at least one file." });
+    return;
+  }
+
+  try {
+    const formData = new globalThis.FormData();
+
+    for (const file of files) {
+      const blob = new globalThis.Blob([file.buffer], {
+        type: file.mimetype || "application/octet-stream",
+      });
+      formData.append(file.fieldname || "file", blob, file.originalname || "upload.bin");
+    }
+
+    for (const [key, value] of Object.entries(req.body ?? {})) {
+      if (Array.isArray(value)) {
+        value.forEach((item) => formData.append(key, String(item)));
+      } else if (value !== undefined && value !== null) {
+        formData.append(key, String(value));
+      }
+    }
+
+    const response = await fetch(`${pythonToolsBaseUrl}/api/tools/process/${slug}`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const bodyText = await response.text();
+      res.status(502).json({
+        error: `Python tool processor failed (${response.status}).`,
+        detail: bodyText.slice(0, 500),
+      });
+      return;
+    }
+
+    const defaultFilename = {
+      "pdf-to-word": "converted.docx",
+      "word-to-pdf": "converted.pdf",
+      "pdf-to-jpg": "converted.bin",
+      "jpg-to-pdf": "converted.pdf",
+    }[slug] ?? `processed-${Date.now()}.bin`;
+
+    await relayProcessorResponse(res, response, defaultFilename);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unexpected processor error.";
+    res.status(502).json({ error: `Unable to process file with python service: ${message}` });
   }
 });
 
