@@ -10,7 +10,8 @@ import { eq, asc } from "drizzle-orm";
 
 const router: IRouter = Router();
 
-router.get("/about/team", async (_req, res): Promise<void> => {
+// Mounted in routes/index.ts at /about, so this resolves to /api/about/team.
+router.get("/team", async (_req, res): Promise<void> => {
   try {
     const admins = await db
       .select({

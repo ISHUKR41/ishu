@@ -18,6 +18,13 @@ import { useToast } from "@/hooks/use-toast";
 
 const DEFAULT_PDF_TO_JPG_DPI = "200";
 const DEFAULT_JPG_TO_PDF_ORIENTATION = "portrait";
+const DEFAULT_ROTATE_ANGLE = "90";
+const DEFAULT_IMAGE_QUALITY = "82";
+const DEFAULT_RESIZE_WIDTH = "1200";
+const DEFAULT_RESIZE_HEIGHT = "1200";
+const DEFAULT_CONVERT_IMAGE_FORMAT = "png";
+const DEFAULT_PAGE_NUMBER_START = "1";
+const DEFAULT_PAGE_NUMBER_POSITION = "bottom-right";
 const WORD_INPUT_ACCEPT =
   ".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 const IMAGE_INPUT_ACCEPT = "image/*,.jpg,.jpeg,.png,.bmp,.gif,.webp,.tiff";
@@ -27,6 +34,17 @@ const HOW_TO_USE: Record<string, string> = {
   "merge-pdf": "Upload two or more PDF files, arrange them in order, then click Process to combine them into a single PDF.",
   "split-pdf": "Upload your PDF, choose the pages or page ranges you want to split, then download each part separately.",
   "compress-pdf": "Upload your PDF file and select the compression level. The tool will reduce the file size while maintaining quality.",
+  "rotate-pdf": "Upload your PDF, choose a rotation angle, then process to get a corrected orientation copy.",
+  "extract-pdf-pages": "Upload your PDF and provide page ranges (for example 1-3,5) to extract only those pages.",
+  "delete-pdf-pages": "Upload your PDF and provide page ranges to remove unwanted pages from the final file.",
+  "reorder-pdf": "Upload your PDF and provide page order as comma-separated values like 3,1,2.",
+  "add-page-numbers": "Upload your PDF, set start number and position, then process to print page numbers.",
+  "protect-pdf": "Upload your PDF, set a password, and download the encrypted protected copy.",
+  "unlock-pdf": "Upload a protected PDF and provide the password if required to remove protection.",
+  "pdf-to-text": "Upload a PDF to extract machine-readable text into a downloadable .txt file.",
+  "compress-image": "Upload an image and choose quality level to reduce file size for faster sharing.",
+  "resize-image": "Upload an image and set width/height. Keep aspect ratio to avoid distortion.",
+  "convert-image": "Upload an image and choose output format like PNG, JPG, WEBP, BMP, TIFF, or GIF.",
   "pdf-to-word": "Upload your PDF and click Process. The tool will extract text and layout to create an editable Word document.",
   "word-to-pdf": "Upload your Word document (.docx) and click Process to convert it into a PDF with full formatting preserved.",
 };
@@ -34,6 +52,17 @@ const HOW_TO_USE: Record<string, string> = {
 const FEATURES: Record<string, string[]> = {
   "merge-pdf": ["Merge unlimited PDFs", "Drag-and-drop reordering", "No file size limit", "Preserve original quality"],
   "compress-pdf": ["Reduce size up to 90%", "Choose compression level", "Batch processing", "No quality loss option"],
+  "rotate-pdf": ["90/180/270 rotation", "Orientation repair", "Zero layout loss", "Fast processing"],
+  "extract-pdf-pages": ["Range-based extraction", "Selective page export", "No watermark", "Original quality"],
+  "delete-pdf-pages": ["Remove unwanted pages", "Range-based deletion", "Instant output", "Secure processing"],
+  "reorder-pdf": ["Custom page order", "Partial reorder support", "Append remaining pages", "No quality change"],
+  "add-page-numbers": ["Start from custom number", "Bottom-left/center/right", "Readable font sizing", "Bulk page numbering"],
+  "protect-pdf": ["Password encryption", "Share safely", "Quick download", "No signup"],
+  "unlock-pdf": ["Remove protection", "Password supported", "Recover editable copy", "Private processing"],
+  "pdf-to-text": ["Text extraction", "Multi-page output", "Readable TXT format", "Fast export"],
+  "compress-image": ["Adjust quality", "Smaller file size", "Optimized output", "Quick sharing"],
+  "resize-image": ["Custom dimensions", "Aspect ratio control", "High quality scaling", "Format-aware output"],
+  "convert-image": ["Multiple output formats", "Transparent conversion", "Color-safe output", "Single-click export"],
   "pdf-to-word": ["Editable output", "Preserve formatting", "Table extraction", "Image extraction"],
 };
 
@@ -42,6 +71,17 @@ export default function ToolDetail() {
   const slug = params?.slug ?? "";
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [pageRanges, setPageRanges] = useState("1-1");
+  const [pageOrder, setPageOrder] = useState("1");
+  const [rotateAngle, setRotateAngle] = useState(DEFAULT_ROTATE_ANGLE);
+  const [password, setPassword] = useState("");
+  const [pageNumberStart, setPageNumberStart] = useState(DEFAULT_PAGE_NUMBER_START);
+  const [pageNumberPosition, setPageNumberPosition] = useState(DEFAULT_PAGE_NUMBER_POSITION);
+  const [imageQuality, setImageQuality] = useState(DEFAULT_IMAGE_QUALITY);
+  const [resizeWidth, setResizeWidth] = useState(DEFAULT_RESIZE_WIDTH);
+  const [resizeHeight, setResizeHeight] = useState(DEFAULT_RESIZE_HEIGHT);
+  const [keepAspect, setKeepAspect] = useState(true);
+  const [targetImageFormat, setTargetImageFormat] = useState(DEFAULT_CONVERT_IMAGE_FORMAT);
+  const [isProxyPending, setIsProxyPending] = useState(false);
   const [quality, setQuality] = useState<"low" | "medium" | "high">("medium");
   const { toast } = useToast();
 
@@ -60,6 +100,22 @@ export default function ToolDetail() {
   const isWordToPdfTool = slug === "word-to-pdf";
   const isPdfToJpgTool = slug === "pdf-to-jpg";
   const isJpgToPdfTool = slug === "jpg-to-pdf";
+  const isRotateTool = slug === "rotate-pdf";
+  const isExtractPagesTool = slug === "extract-pdf-pages";
+  const isDeletePagesTool = slug === "delete-pdf-pages";
+  const isReorderTool = slug === "reorder-pdf";
+  const isAddPageNumbersTool = slug === "add-page-numbers";
+  const isProtectTool = slug === "protect-pdf";
+  const isUnlockTool = slug === "unlock-pdf";
+  const isPdfToTextTool = slug === "pdf-to-text";
+  const isCompressImageTool = slug === "compress-image";
+  const isResizeImageTool = slug === "resize-image";
+  const isConvertImageTool = slug === "convert-image";
+
+  const requiresPageRanges = isSplitTool || isExtractPagesTool || isDeletePagesTool;
+  const requiresPageOrder = isReorderTool;
+  const requiresPassword = isProtectTool;
+  const isImageInputTool = isJpgToPdfTool || isCompressImageTool || isResizeImageTool || isConvertImageTool;
   const supportsServerProcessing =
     isMergeTool ||
     isSplitTool ||
@@ -67,18 +123,43 @@ export default function ToolDetail() {
     isPdfToWordTool ||
     isWordToPdfTool ||
     isPdfToJpgTool ||
-    isJpgToPdfTool;
+    isJpgToPdfTool ||
+    isRotateTool ||
+    isExtractPagesTool ||
+    isDeletePagesTool ||
+    isReorderTool ||
+    isAddPageNumbersTool ||
+    isProtectTool ||
+    isUnlockTool ||
+    isPdfToTextTool ||
+    isCompressImageTool ||
+    isResizeImageTool ||
+    isConvertImageTool;
 
-  const isPending = mergePdf.isPending || compressPdf.isPending || splitPdf.isPending;
+  const isPending = mergePdf.isPending || compressPdf.isPending || splitPdf.isPending || isProxyPending;
+
+  const resizeWidthValue = Number.parseInt(resizeWidth, 10);
+  const resizeHeightValue = Number.parseInt(resizeHeight, 10);
+  const hasValidResizeDimensions =
+    Number.isInteger(resizeWidthValue) &&
+    Number.isInteger(resizeHeightValue) &&
+    resizeWidthValue > 0 &&
+    resizeHeightValue > 0;
+
+  const hasRequiredToolSpecificInput =
+    (!requiresPageRanges || Boolean(pageRanges.trim())) &&
+    (!requiresPageOrder || Boolean(pageOrder.trim())) &&
+    (!requiresPassword || Boolean(password.trim())) &&
+    (!isResizeImageTool || hasValidResizeDimensions);
 
   const canProcess =
     supportsServerProcessing &&
     (isMergeTool ? selectedFiles.length >= 2 : selectedFiles.length >= 1) &&
-    (!isSplitTool || Boolean(pageRanges.trim()));
+    hasRequiredToolSpecificInput;
 
   const inputAccept = isWordToPdfTool
     ? WORD_INPUT_ACCEPT
-    : isJpgToPdfTool
+    : isImageInputTool
       ? IMAGE_INPUT_ACCEPT
       : PDF_INPUT_ACCEPT;
 
@@ -92,7 +173,7 @@ export default function ToolDetail() {
       : `${selectedFiles.length} files selected`;
 
   const pickFiles = (files: File[]) => {
-    if (isMergeTool) {
+    if (isMergeTool || isJpgToPdfTool) {
       setSelectedFiles(files);
       return;
     }
@@ -176,14 +257,21 @@ export default function ToolDetail() {
         title: "Missing input",
         description: isMergeTool
           ? "Please upload at least 2 PDF files for merge."
-          : isSplitTool
-          ? "Please upload a PDF and provide page ranges."
-          : "Please upload a PDF file to continue.",
+          : requiresPageRanges
+          ? "Please upload a PDF and provide page ranges (example: 1-3,5)."
+          : requiresPageOrder
+          ? "Please provide page order (example: 3,1,2)."
+          : requiresPassword
+          ? "Please enter a password to protect this PDF."
+          : isResizeImageTool && !hasValidResizeDimensions
+          ? "Please enter valid width and height values greater than zero."
+          : "Please upload the required file to continue.",
         variant: "destructive",
       });
       return;
     }
 
+    setIsProxyPending(true);
     try {
       let blob: Blob;
       let filename = `${tool.slug}-${Date.now()}.pdf`;
@@ -217,6 +305,72 @@ export default function ToolDetail() {
         });
         blob = output.blob;
         filename = output.filename;
+      } else if (isRotateTool) {
+        const output = await processViaToolsProxy("rotate-pdf", selectedFiles, {
+          angle: rotateAngle,
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isExtractPagesTool) {
+        const output = await processViaToolsProxy("extract-pdf-pages", selectedFiles, {
+          pages: pageRanges,
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isDeletePagesTool) {
+        const output = await processViaToolsProxy("delete-pdf-pages", selectedFiles, {
+          pages: pageRanges,
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isReorderTool) {
+        const output = await processViaToolsProxy("reorder-pdf", selectedFiles, {
+          order: pageOrder,
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isAddPageNumbersTool) {
+        const output = await processViaToolsProxy("add-page-numbers", selectedFiles, {
+          start: pageNumberStart,
+          position: pageNumberPosition,
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isProtectTool) {
+        const output = await processViaToolsProxy("protect-pdf", selectedFiles, {
+          password,
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isUnlockTool) {
+        const extras = password.trim().length > 0 ? { password } : undefined;
+        const output = await processViaToolsProxy("unlock-pdf", selectedFiles, extras);
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isPdfToTextTool) {
+        const output = await processViaToolsProxy("pdf-to-text", selectedFiles);
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isCompressImageTool) {
+        const output = await processViaToolsProxy("compress-image", selectedFiles, {
+          quality: imageQuality,
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isResizeImageTool) {
+        const output = await processViaToolsProxy("resize-image", selectedFiles, {
+          width: resizeWidth,
+          height: resizeHeight,
+          keep_aspect: keepAspect ? "true" : "false",
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isConvertImageTool) {
+        const output = await processViaToolsProxy("convert-image", selectedFiles, {
+          target_format: targetImageFormat,
+        });
+        blob = output.blob;
+        filename = output.filename;
       } else {
         throw new Error("Unsupported tool processing flow.");
       }
@@ -226,6 +380,8 @@ export default function ToolDetail() {
     } catch (e) {
       const message = e instanceof Error ? e.message : "Unable to process this file.";
       toast({ title: "Processing failed", description: message, variant: "destructive" });
+    } finally {
+      setIsProxyPending(false);
     }
   };
 
@@ -333,12 +489,12 @@ export default function ToolDetail() {
                   <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4 mb-6 flex items-start gap-3">
                     <AlertCircle className="h-5 w-5 text-yellow-400 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-yellow-300/90 text-left">
-                      Processing endpoint for this tool is not mapped yet. Live processing is currently available for Merge PDF, Split PDF, Compress PDF, PDF to Word, Word to PDF, PDF to JPG, and JPG to PDF.
+                      Processing endpoint for this tool is not mapped yet. Live processing is currently available for core PDF operations, conversions, security tools, and selected image tools.
                     </p>
                   </div>
                 )}
 
-                {isSplitTool && (
+                {requiresPageRanges && (
                   <div className="mb-4 text-left">
                     <label className="block text-sm text-muted-foreground mb-2" htmlFor="page-ranges">Page ranges</label>
                     <input
@@ -347,6 +503,80 @@ export default function ToolDetail() {
                       value={pageRanges}
                       onChange={(e) => setPageRanges(e.target.value)}
                       placeholder="e.g. 1-3,5"
+                    />
+                  </div>
+                )}
+
+                {requiresPageOrder && (
+                  <div className="mb-4 text-left">
+                    <label className="block text-sm text-muted-foreground mb-2" htmlFor="page-order">Page order</label>
+                    <input
+                      id="page-order"
+                      className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                      value={pageOrder}
+                      onChange={(e) => setPageOrder(e.target.value)}
+                      placeholder="e.g. 3,1,2"
+                    />
+                  </div>
+                )}
+
+                {isRotateTool && (
+                  <div className="mb-4 text-left">
+                    <label className="block text-sm text-muted-foreground mb-2" htmlFor="rotate-angle">Rotation angle</label>
+                    <select
+                      id="rotate-angle"
+                      className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                      value={rotateAngle}
+                      onChange={(e) => setRotateAngle(e.target.value)}
+                    >
+                      <option value="90">90 degrees</option>
+                      <option value="180">180 degrees</option>
+                      <option value="270">270 degrees</option>
+                    </select>
+                  </div>
+                )}
+
+                {isAddPageNumbersTool && (
+                  <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
+                    <div>
+                      <label className="block text-sm text-muted-foreground mb-2" htmlFor="page-number-start">Start number</label>
+                      <input
+                        id="page-number-start"
+                        className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                        value={pageNumberStart}
+                        onChange={(e) => setPageNumberStart(e.target.value)}
+                        inputMode="numeric"
+                        placeholder="1"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-muted-foreground mb-2" htmlFor="page-number-position">Position</label>
+                      <select
+                        id="page-number-position"
+                        className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                        value={pageNumberPosition}
+                        onChange={(e) => setPageNumberPosition(e.target.value)}
+                      >
+                        <option value="bottom-left">Bottom left</option>
+                        <option value="bottom-center">Bottom center</option>
+                        <option value="bottom-right">Bottom right</option>
+                      </select>
+                    </div>
+                  </div>
+                )}
+
+                {(isProtectTool || isUnlockTool) && (
+                  <div className="mb-4 text-left">
+                    <label className="block text-sm text-muted-foreground mb-2" htmlFor="pdf-password">
+                      {isProtectTool ? "Password" : "Password (optional)"}
+                    </label>
+                    <input
+                      id="pdf-password"
+                      type="password"
+                      className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder={isProtectTool ? "Enter PDF password" : "Enter password if PDF is locked"}
                     />
                   </div>
                 )}
@@ -363,6 +593,74 @@ export default function ToolDetail() {
                       <option value="low">Low (smaller file)</option>
                       <option value="medium">Medium</option>
                       <option value="high">High (better quality)</option>
+                    </select>
+                  </div>
+                )}
+
+                {isCompressImageTool && (
+                  <div className="mb-4 text-left">
+                    <label className="block text-sm text-muted-foreground mb-2" htmlFor="image-quality">Image quality (10-95)</label>
+                    <input
+                      id="image-quality"
+                      className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                      value={imageQuality}
+                      onChange={(e) => setImageQuality(e.target.value)}
+                      inputMode="numeric"
+                      placeholder="82"
+                    />
+                  </div>
+                )}
+
+                {isResizeImageTool && (
+                  <div className="mb-4 space-y-3 text-left">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-sm text-muted-foreground mb-2" htmlFor="resize-width">Width (px)</label>
+                        <input
+                          id="resize-width"
+                          className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                          value={resizeWidth}
+                          onChange={(e) => setResizeWidth(e.target.value)}
+                          inputMode="numeric"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-muted-foreground mb-2" htmlFor="resize-height">Height (px)</label>
+                        <input
+                          id="resize-height"
+                          className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                          value={resizeHeight}
+                          onChange={(e) => setResizeHeight(e.target.value)}
+                          inputMode="numeric"
+                        />
+                      </div>
+                    </div>
+                    <label className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                      <input
+                        type="checkbox"
+                        checked={keepAspect}
+                        onChange={(e) => setKeepAspect(e.target.checked)}
+                      />
+                      Keep aspect ratio
+                    </label>
+                  </div>
+                )}
+
+                {isConvertImageTool && (
+                  <div className="mb-4 text-left">
+                    <label className="block text-sm text-muted-foreground mb-2" htmlFor="target-image-format">Output format</label>
+                    <select
+                      id="target-image-format"
+                      className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+                      value={targetImageFormat}
+                      onChange={(e) => setTargetImageFormat(e.target.value)}
+                    >
+                      <option value="png">PNG</option>
+                      <option value="jpg">JPG</option>
+                      <option value="webp">WEBP</option>
+                      <option value="bmp">BMP</option>
+                      <option value="tiff">TIFF</option>
+                      <option value="gif">GIF</option>
                     </select>
                   </div>
                 )}

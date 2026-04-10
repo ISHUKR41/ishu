@@ -1,0 +1,83 @@
+{
+  "version": 2,
+  "name": "ishu-tools-platform",
+  "builds": [
+    {
+      "src": "artifacts/ishu/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "artifacts/ishu/dist/public"
+      }
+    },
+    {
+      "src": "artifacts/api-server/dist/index.mjs",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "artifacts/api-server/dist/index.mjs"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "artifacts/ishu/dist/public/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    }
+  },
+  "functions": {
+    "artifacts/api-server/dist/index.mjs": {
+      "memory": 3008,
+      "maxDuration": 60
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

@@ -23,7 +23,8 @@ const SITE_CONTACT = {
   location: process.env.SITE_CONTACT_LOCATION || "India",
 };
 
-router.get("/contact/info", (_req, res): void => {
+// Mounted in routes/index.ts at /contact, so this resolves to /api/contact/info.
+router.get("/info", (_req, res): void => {
   const whatsappDigits = SITE_CONTACT.whatsapp.replace(/\D/g, "");
 
   res.json({
@@ -39,7 +40,7 @@ router.get("/contact/info", (_req, res): void => {
   });
 });
 
-router.post("/contact", async (req, res): Promise<void> => {
+async function handleContactSubmission(req, res): Promise<void> {
   const parsed = SubmitContactBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: parsed.error.message });
@@ -52,6 +53,12 @@ router.post("/contact", async (req, res): Promise<void> => {
     message: "Message sent successfully. We will get back to you soon!",
     id: contact.id,
   });
-});
+}
+
+router.post("/", handleContactSubmission);
+
+// Keep this alias so existing frontend modules using /api/contact/submit
+// continue to work without breaking during migration.
+router.post("/submit", handleContactSubmission);
 
 export default router;

@@ -15,11 +15,11 @@ import resultsRouter from "./results";
 import newsRouter from "./news";
 import toolsRouter from "./tools";
 import blogsRouter from "./blogs";
-import contactRouter from "./contact";
+import contactRouter from "./contact/index";
 import notificationsRouter from "./notifications";
 import adminRouter from "./admin";
 import resourcesRouter from "./resources";
-import aboutRouter from "./about";
+import aboutRouter from "./about/index";
 
 /**
  * HOME SECTION ROUTES (Hyper-Modular Feature-Sliced)
@@ -120,11 +120,11 @@ router.use(resultsRouter);
 router.use(newsRouter);
 router.use(toolsRouter);
 router.use(blogsRouter);
-router.use(contactRouter);
+router.use("/contact", contactRouter);
 router.use(notificationsRouter);
 router.use(adminRouter);
 router.use(resourcesRouter);
-router.use(aboutRouter);
+router.use("/about", aboutRouter);
 
 // Home Sections Feature-Sliced Routes -> /api/home/sections/:section
 router.use("/home/sections/hero", homeHeroRouter);

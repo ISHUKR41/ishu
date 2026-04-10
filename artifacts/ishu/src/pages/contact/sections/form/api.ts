@@ -18,7 +18,7 @@ export async function submitContactForm(
   data: ContactFormData
 ): Promise<ContactFormResponse> {
   const baseUrl = import.meta.env.BASE_URL?.replace(/\/$/, "") ?? "";
-  const res = await fetch(`${baseUrl}/api/contact`, {
+  const res = await fetch(`${baseUrl}/api/contact/submit`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

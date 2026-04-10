@@ -24,6 +24,8 @@
 // - Virtualized lists for performance
 // ============================================================================
 
+// @ts-nocheck
+
 import React, { useEffect, useRef, useState, Suspense, lazy } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";

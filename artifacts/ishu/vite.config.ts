@@ -14,6 +14,12 @@ if (Number.isNaN(port) || port <= 0) {
 }
 
 const basePath = process.env.BASE_PATH || "/";
+const useSyncExternalStoreShimAlias = path.resolve(
+  import.meta.dirname,
+  "src",
+  "shims",
+  "use-sync-external-store-shim.ts",
+);
 
 /**
  * Resolve bare package imports for files living in ../modules.
@@ -30,11 +36,16 @@ function resolveModulesNodeDepsPlugin() {
   const requireFromApp = createRequire(
     path.resolve(import.meta.dirname, "package.json"),
   );
+  const appEntryForResolution = path.resolve(
+    import.meta.dirname,
+    "src",
+    "main.tsx",
+  );
 
   return {
     name: "resolve-modules-node-deps",
     enforce: "pre" as const,
-    resolveId(source: string, importer: string | undefined) {
+    async resolveId(this: { resolve: Function }, source: string, importer: string | undefined) {
       if (
         !importer ||
         source.startsWith(".") ||
@@ -51,6 +62,15 @@ function resolveModulesNodeDepsPlugin() {
       const normalizedImporter = importer.replace(/\\/g, "/");
       if (!normalizedImporter.includes("/modules/")) {
         return null;
+      }
+
+      // Resolve as if import originated from app src so Vite can pick
+      // ESM/browser-friendly entries before we fall back to Node require resolution.
+      const viteResolved = await this.resolve(source, appEntryForResolution, {
+        skipSelf: true,
+      });
+      if (viteResolved?.id) {
+        return viteResolved.id;
       }
 
       try {
@@ -88,6 +108,10 @@ export default defineConfig({
       "@": path.resolve(import.meta.dirname, "src"),
       "@assets": path.resolve(import.meta.dirname, "..", "..", "attached_assets"),
       "@modules": path.resolve(import.meta.dirname, "..", "modules"),
+      // Some module files (outside app root) import wouter source directly.
+      // Wouter re-exports a named symbol from a CJS shim path that is not
+      // valid under strict ESM. This alias points that exact path to an ESM bridge.
+      "use-sync-external-store/shim/index.js": useSyncExternalStoreShimAlias,
     },
     dedupe: ["react", "react-dom"],
   },

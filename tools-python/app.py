@@ -46,6 +46,10 @@ TOOL_ROUTER_SPECS = [
     ("tools.split_pdf", "PDF Core"),
     ("tools.compress_pdf", "PDF Core"),
     ("tools.rotate_pdf", "PDF Core"),
+    ("tools.extract_pdf_pages", "PDF Core"),
+    ("tools.delete_pdf_pages", "PDF Core"),
+    ("tools.reorder_pdf", "PDF Core"),
+    ("tools.add_page_numbers", "PDF Core"),
     ("tools.watermark", "PDF Core"),
     ("tools.page_numbers", "PDF Core"),
     ("tools.repair_pdf", "PDF Core"),
@@ -58,10 +62,14 @@ TOOL_ROUTER_SPECS = [
     ("tools.word_to_pdf", "Conversion"),
     ("tools.pdf_to_jpg", "Conversion"),
     ("tools.jpg_to_pdf", "Conversion"),
+    ("tools.pdf_to_text", "Conversion"),
     ("tools.pdf_to_excel", "Conversion"),
     ("tools.excel_to_pdf", "Conversion"),
     ("tools.pdf_to_ppt", "Conversion"),
     ("tools.ppt_to_pdf", "Conversion"),
+    ("tools.compress_image", "Image"),
+    ("tools.resize_image", "Image"),
+    ("tools.convert_image", "Image"),
 ]
 
 enabled_tools_count = 0
