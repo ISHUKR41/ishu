@@ -87,6 +87,11 @@ async function isPythonProcessorAvailable(): Promise<boolean> {
 }
 
 function appendUploadedFiles(formData: FormData, fieldName: string, files: Express.Multer.File[]): void {
+  const sanitizeFilename = (raw: string): string => {
+    const normalized = raw.replace(/[\\\/]+/g, "_").replace(/[^a-zA-Z0-9._-]/g, "_");
+    return normalized.length > 0 ? normalized.slice(0, 120) : "upload.bin";
+  };
+
   for (const file of files) {
     const blob = new globalThis.Blob([file.buffer], {
       type: file.mimetype || "application/pdf",
@@ -94,7 +99,7 @@ function appendUploadedFiles(formData: FormData, fieldName: string, files: Expre
     formData.append(
       fieldName,
       blob,
-      file.originalname || "document.pdf",
+      sanitizeFilename(file.originalname || "document.pdf"),
     );
   }
 }
@@ -392,13 +397,22 @@ router.post("/tools/process/:slug", upload.any(), async (req, res): Promise<void
   }
 
   try {
+    const sanitizeFilename = (raw: string): string => {
+      const normalized = raw.replace(/[\\\/]+/g, "_").replace(/[^a-zA-Z0-9._-]/g, "_");
+      return normalized.length > 0 ? normalized.slice(0, 120) : "upload.bin";
+    };
+
     const formData = new globalThis.FormData();
 
     for (const file of files) {
       const blob = new globalThis.Blob([file.buffer], {
         type: file.mimetype || "application/octet-stream",
       });
-      formData.append(file.fieldname || "file", blob, file.originalname || "upload.bin");
+      formData.append(
+        file.fieldname || "file",
+        blob,
+        sanitizeFilename(file.originalname || "upload.bin"),
+      );
     }
 
     for (const [key, value] of Object.entries(req.body ?? {})) {

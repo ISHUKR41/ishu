@@ -110,10 +110,24 @@ export default function ToolDetail() {
     if (!value) return null;
     const utf8Match = value.match(/filename\*=UTF-8''([^;]+)/i);
     if (utf8Match?.[1]) {
-      return decodeURIComponent(utf8Match[1]);
+      try {
+        return decodeURIComponent(utf8Match[1]);
+      } catch {
+        return null;
+      }
     }
     const asciiMatch = value.match(/filename="?([^"]+)"?/i);
     return asciiMatch?.[1] ?? null;
+  };
+
+  const getFallbackFilenameForSlug = (toolSlug: string): string => {
+    const timestamp = Date.now();
+    return {
+      "pdf-to-word": `converted-${timestamp}.docx`,
+      "word-to-pdf": `converted-${timestamp}.pdf`,
+      "pdf-to-jpg": `converted-${timestamp}.zip`,
+      "jpg-to-pdf": `converted-${timestamp}.pdf`,
+    }[toolSlug] ?? `processed-${timestamp}.pdf`;
   };
 
   const processViaToolsProxy = async (toolSlug: string, files: File[], extras?: Record<string, string>) => {
@@ -142,7 +156,7 @@ export default function ToolDetail() {
     const blob = await response.blob();
     const filename =
       extractFilenameFromContentDisposition(response.headers.get("content-disposition")) ??
-      `${toolSlug}-${Date.now()}.bin`;
+      getFallbackFilenameForSlug(toolSlug);
     return { blob, filename };
   };
 
