@@ -146,7 +146,7 @@ export default function ToolDetail() {
     const blob = await response.blob();
     const filename =
       extractFilenameFromContentDisposition(response.headers.get("content-disposition")) ??
-      `processed-${Date.now()}.dat`;
+      `processed-${Date.now()}.bin`;
     return { blob, filename };
   };
 

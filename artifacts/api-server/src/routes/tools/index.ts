@@ -32,6 +32,7 @@ const pythonToolsBaseUrl = (
 ).replace(/\/+$/, "");
 const toolsProcessorMode = (process.env.TOOLS_PROCESSOR_MODE || "auto").toLowerCase();
 const pythonHealthCacheTtlMs = 30_000;
+const MAX_FILENAME_LENGTH = 120;
 const PYTHON_DIRECT_PROXY_SLUGS = new Set([
   "pdf-to-word",
   "word-to-pdf",
@@ -51,7 +52,7 @@ function sanitizeFilename(raw: string): string {
     .replace(/[^a-zA-Z0-9._-]/g, "_")
     .replace(/_+/g, "_")
     .replace(/^\.+/g, "");
-  return normalized.length > 0 ? normalized.slice(0, 120) : "upload.bin";
+  return normalized.length > 0 ? normalized.slice(0, MAX_FILENAME_LENGTH) : "upload.bin";
 }
 
 function sendPdf(res: any, bytes: Uint8Array, filename: string): void {
@@ -443,7 +444,7 @@ router.post("/tools/process/:slug", upload.any(), async (req, res): Promise<void
       "word-to-pdf": "converted.pdf",
       "pdf-to-jpg": "converted.zip",
       "jpg-to-pdf": "converted.pdf",
-    }[slug] ?? `processed-${Date.now()}.dat`;
+    }[slug] ?? `processed-${Date.now()}.bin`;
 
     await relayProcessorResponse(res, response, defaultFilename);
   } catch (error) {
