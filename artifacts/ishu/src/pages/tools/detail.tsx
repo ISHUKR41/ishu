@@ -16,6 +16,13 @@ import { ArrowLeft, Upload, Download, Zap, AlertCircle, Info, BarChart2 } from "
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
+const DEFAULT_PDF_TO_JPG_DPI = "200";
+const DEFAULT_JPG_TO_PDF_ORIENTATION = "portrait";
+const WORD_INPUT_ACCEPT =
+  ".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+const IMAGE_INPUT_ACCEPT = "image/*,.jpg,.jpeg,.png,.bmp,.gif,.webp,.tiff";
+const PDF_INPUT_ACCEPT = "application/pdf,.pdf";
+
 const HOW_TO_USE: Record<string, string> = {
   "merge-pdf": "Upload two or more PDF files, arrange them in order, then click Process to combine them into a single PDF.",
   "split-pdf": "Upload your PDF, choose the pages or page ranges you want to split, then download each part separately.",
@@ -49,7 +56,18 @@ export default function ToolDetail() {
   const isMergeTool = slug === "merge-pdf";
   const isSplitTool = slug === "split-pdf";
   const isCompressTool = slug === "compress-pdf";
-  const supportsServerProcessing = isMergeTool || isSplitTool || isCompressTool;
+  const isPdfToWordTool = slug === "pdf-to-word";
+  const isWordToPdfTool = slug === "word-to-pdf";
+  const isPdfToJpgTool = slug === "pdf-to-jpg";
+  const isJpgToPdfTool = slug === "jpg-to-pdf";
+  const supportsServerProcessing =
+    isMergeTool ||
+    isSplitTool ||
+    isCompressTool ||
+    isPdfToWordTool ||
+    isWordToPdfTool ||
+    isPdfToJpgTool ||
+    isJpgToPdfTool;
 
   const isPending = mergePdf.isPending || compressPdf.isPending || splitPdf.isPending;
 
@@ -57,6 +75,14 @@ export default function ToolDetail() {
     supportsServerProcessing &&
     (isMergeTool ? selectedFiles.length >= 2 : selectedFiles.length >= 1) &&
     (!isSplitTool || Boolean(pageRanges.trim()));
+
+  const inputAccept = isWordToPdfTool
+    ? WORD_INPUT_ACCEPT
+    : isJpgToPdfTool
+      ? IMAGE_INPUT_ACCEPT
+      : PDF_INPUT_ACCEPT;
+
+  const allowsMultipleUpload = isMergeTool || isJpgToPdfTool;
 
   const fileLabel =
     selectedFiles.length === 0
@@ -82,6 +108,53 @@ export default function ToolDetail() {
     anchor.click();
     anchor.remove();
     URL.revokeObjectURL(href);
+  };
+
+  const extractFilenameFromContentDisposition = (value: string | null): string | null => {
+    // Supports both RFC 6266 formats:
+    // 1) filename*=UTF-8''<url-encoded-name>
+    // 2) filename="<ascii-name>"
+    if (!value) return null;
+    const utf8Match = value.match(/filename\*=UTF-8''([^;]+)/i);
+    if (utf8Match?.[1]) {
+      try {
+        return decodeURIComponent(utf8Match[1]);
+      } catch {
+        return null;
+      }
+    }
+    const asciiMatch = value.match(/filename="([^"]+)"|filename=([^;\s]+)/i);
+    return asciiMatch?.[1] ?? asciiMatch?.[2] ?? null;
+  };
+
+  const processViaToolsProxy = async (toolSlug: string, files: File[], extras?: Record<string, string>) => {
+    const formData = new FormData();
+    if (toolSlug === "jpg-to-pdf") {
+      files.forEach((file) => formData.append("files", file));
+    } else {
+      formData.append("file", files[0]);
+    }
+
+    Object.entries(extras ?? {}).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    const baseUrl = import.meta.env.BASE_URL?.replace(/\/$/, "") ?? "";
+    const response = await fetch(`${baseUrl}/api/tools/process/${toolSlug}`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const bodyText = await response.text();
+      throw new Error(bodyText || "Tool processing failed.");
+    }
+
+    const blob = await response.blob();
+    const filename =
+      extractFilenameFromContentDisposition(response.headers.get("content-disposition")) ??
+      `processed-${Date.now()}.bin`;
+    return { blob, filename };
   };
 
   const processFile = async () => {
@@ -121,9 +194,31 @@ export default function ToolDetail() {
       } else if (isSplitTool) {
         blob = await splitPdf.mutateAsync({ data: { file: selectedFiles[0], pages: pageRanges } });
         filename = `split-${Date.now()}.pdf`;
-      } else {
+      } else if (isCompressTool) {
         blob = await compressPdf.mutateAsync({ data: { file: selectedFiles[0], quality } });
         filename = `compressed-${Date.now()}.pdf`;
+      } else if (isPdfToWordTool) {
+        const output = await processViaToolsProxy("pdf-to-word", selectedFiles);
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isWordToPdfTool) {
+        const output = await processViaToolsProxy("word-to-pdf", selectedFiles);
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isPdfToJpgTool) {
+        const output = await processViaToolsProxy("pdf-to-jpg", selectedFiles, {
+          dpi: DEFAULT_PDF_TO_JPG_DPI,
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else if (isJpgToPdfTool) {
+        const output = await processViaToolsProxy("jpg-to-pdf", selectedFiles, {
+          orientation: DEFAULT_JPG_TO_PDF_ORIENTATION,
+        });
+        blob = output.blob;
+        filename = output.filename;
+      } else {
+        throw new Error("Unsupported tool processing flow.");
       }
 
       downloadBlob(blob, filename);
@@ -228,8 +323,8 @@ export default function ToolDetail() {
                 <input
                   id="file-input"
                   type="file"
-                  accept="application/pdf"
-                  multiple={isMergeTool}
+                  accept={inputAccept}
+                  multiple={allowsMultipleUpload}
                   className="hidden"
                   onChange={(e) => pickFiles(Array.from(e.target.files ?? []))}
                 />
@@ -238,7 +333,7 @@ export default function ToolDetail() {
                   <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4 mb-6 flex items-start gap-3">
                     <AlertCircle className="h-5 w-5 text-yellow-400 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-yellow-300/90 text-left">
-                      Processing endpoint for this tool is not mapped yet. Live processing is available for Merge PDF, Split PDF, and Compress PDF.
+                      Processing endpoint for this tool is not mapped yet. Live processing is currently available for Merge PDF, Split PDF, Compress PDF, PDF to Word, Word to PDF, PDF to JPG, and JPG to PDF.
                     </p>
                   </div>
                 )}
