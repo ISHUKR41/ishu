@@ -44,7 +44,13 @@ let pythonHealthCache: { ok: boolean; checkedAt: number } | null = null;
 type CompressionLevel = "low" | "medium" | "high";
 
 function sanitizeFilename(raw: string): string {
-  const normalized = raw.replace(/[\\\/]+/g, "_").replace(/[^a-zA-Z0-9._-]/g, "_");
+  const normalized = raw
+    .trim()
+    .replace(/(\.\.)+/g, "_")
+    .replace(/[\\\/]+/g, "_")
+    .replace(/[^a-zA-Z0-9._-]/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^\.+/g, "");
   return normalized.length > 0 ? normalized.slice(0, 120) : "upload.bin";
 }
 
@@ -437,7 +443,7 @@ router.post("/tools/process/:slug", upload.any(), async (req, res): Promise<void
       "word-to-pdf": "converted.pdf",
       "pdf-to-jpg": "converted.zip",
       "jpg-to-pdf": "converted.pdf",
-    }[slug] ?? `processed-${Date.now()}.bin`;
+    }[slug] ?? `processed-${Date.now()}.dat`;
 
     await relayProcessorResponse(res, response, defaultFilename);
   } catch (error) {

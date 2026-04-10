@@ -120,16 +120,6 @@ export default function ToolDetail() {
     return asciiMatch?.[1] ?? null;
   };
 
-  const getFallbackFilenameForSlug = (toolSlug: string): string => {
-    const timestamp = Date.now();
-    return {
-      "pdf-to-word": `converted-${timestamp}.docx`,
-      "word-to-pdf": `converted-${timestamp}.pdf`,
-      "pdf-to-jpg": `converted-${timestamp}.zip`,
-      "jpg-to-pdf": `converted-${timestamp}.pdf`,
-    }[toolSlug] ?? `processed-${timestamp}.pdf`;
-  };
-
   const processViaToolsProxy = async (toolSlug: string, files: File[], extras?: Record<string, string>) => {
     const formData = new FormData();
     if (toolSlug === "jpg-to-pdf") {
@@ -156,7 +146,7 @@ export default function ToolDetail() {
     const blob = await response.blob();
     const filename =
       extractFilenameFromContentDisposition(response.headers.get("content-disposition")) ??
-      getFallbackFilenameForSlug(toolSlug);
+      `processed-${Date.now()}.dat`;
     return { blob, filename };
   };
 
