@@ -39,6 +39,12 @@ const PYTHON_DIRECT_PROXY_SLUGS = new Set([
   "pdf-to-jpg",
   "jpg-to-pdf",
 ]);
+const PYTHON_PROXY_DEFAULT_FILENAMES: Record<string, string> = {
+  "pdf-to-word": "converted.docx",
+  "word-to-pdf": "converted.pdf",
+  "pdf-to-jpg": "converted.zip",
+  "jpg-to-pdf": "converted.pdf",
+};
 
 let pythonHealthCache: { ok: boolean; checkedAt: number } | null = null;
 
@@ -439,12 +445,7 @@ router.post("/tools/process/:slug", upload.any(), async (req, res): Promise<void
       return;
     }
 
-    const defaultFilename = {
-      "pdf-to-word": "converted.docx",
-      "word-to-pdf": "converted.pdf",
-      "pdf-to-jpg": "converted.zip",
-      "jpg-to-pdf": "converted.pdf",
-    }[slug] ?? `processed-${Date.now()}.bin`;
+    const defaultFilename = PYTHON_PROXY_DEFAULT_FILENAMES[slug] ?? `processed-${Date.now()}.bin`;
 
     await relayProcessorResponse(res, response, defaultFilename);
   } catch (error) {

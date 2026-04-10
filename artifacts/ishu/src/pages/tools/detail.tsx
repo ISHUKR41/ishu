@@ -18,6 +18,10 @@ import { useToast } from "@/hooks/use-toast";
 
 const DEFAULT_PDF_TO_JPG_DPI = "200";
 const DEFAULT_JPG_TO_PDF_ORIENTATION = "portrait";
+const WORD_INPUT_ACCEPT =
+  ".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+const IMAGE_INPUT_ACCEPT = "image/*,.jpg,.jpeg,.png,.bmp,.gif,.webp,.tiff";
+const PDF_INPUT_ACCEPT = "application/pdf,.pdf";
 
 const HOW_TO_USE: Record<string, string> = {
   "merge-pdf": "Upload two or more PDF files, arrange them in order, then click Process to combine them into a single PDF.",
@@ -73,10 +77,10 @@ export default function ToolDetail() {
     (!isSplitTool || Boolean(pageRanges.trim()));
 
   const inputAccept = isWordToPdfTool
-    ? ".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ? WORD_INPUT_ACCEPT
     : isJpgToPdfTool
-      ? "image/*,.jpg,.jpeg,.png,.bmp,.gif,.webp,.tiff"
-      : "application/pdf,.pdf";
+      ? IMAGE_INPUT_ACCEPT
+      : PDF_INPUT_ACCEPT;
 
   const allowsMultipleUpload = isMergeTool || isJpgToPdfTool;
 
@@ -107,6 +111,9 @@ export default function ToolDetail() {
   };
 
   const extractFilenameFromContentDisposition = (value: string | null): string | null => {
+    // Supports both RFC 6266 formats:
+    // 1) filename*=UTF-8''<url-encoded-name>
+    // 2) filename="<ascii-name>"
     if (!value) return null;
     const utf8Match = value.match(/filename\*=UTF-8''([^;]+)/i);
     if (utf8Match?.[1]) {
