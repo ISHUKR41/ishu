@@ -51,14 +51,20 @@ let pythonHealthCache: { ok: boolean; checkedAt: number } | null = null;
 type CompressionLevel = "low" | "medium" | "high";
 
 function sanitizeFilename(raw: string): string {
+  const extensionMatch = raw.trim().match(/(\.[a-zA-Z0-9]{1,10})$/);
+  const extension = extensionMatch?.[1] ?? "";
   const normalized = raw
     .trim()
     .replace(/(\.\.)+/g, "_")
     .replace(/[\\\/]+/g, "_")
     .replace(/[^a-zA-Z0-9._-]/g, "_")
     .replace(/_+/g, "_")
-    .replace(/^\.+/g, "");
-  return normalized.length > 0 ? normalized.slice(0, MAX_FILENAME_LENGTH) : "upload.bin";
+    .replace(/^\.+/g, "")
+    .replace(/\.[a-zA-Z0-9]{1,10}$/g, "");
+
+  const maxBaseLength = Math.max(1, MAX_FILENAME_LENGTH - extension.length);
+  const baseName = normalized.length > 0 ? normalized.slice(0, maxBaseLength) : "upload";
+  return `${baseName}${extension}` || "upload.bin";
 }
 
 function sendPdf(res: any, bytes: Uint8Array, filename: string): void {
@@ -445,7 +451,7 @@ router.post("/tools/process/:slug", upload.any(), async (req, res): Promise<void
       return;
     }
 
-    const defaultFilename = PYTHON_PROXY_DEFAULT_FILENAMES[slug] ?? `processed-${Date.now()}.bin`;
+    const defaultFilename = PYTHON_PROXY_DEFAULT_FILENAMES[slug] ?? `processed-${Date.now()}.pdf`;
 
     await relayProcessorResponse(res, response, defaultFilename);
   } catch (error) {

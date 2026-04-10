@@ -123,8 +123,8 @@ export default function ToolDetail() {
         return null;
       }
     }
-    const asciiMatch = value.match(/filename="?([^"]+)"?/i);
-    return asciiMatch?.[1] ?? null;
+    const asciiMatch = value.match(/filename="([^"]+)"|filename=([^;\s]+)/i);
+    return asciiMatch?.[1] ?? asciiMatch?.[2] ?? null;
   };
 
   const processViaToolsProxy = async (toolSlug: string, files: File[], extras?: Record<string, string>) => {
