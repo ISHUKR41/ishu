@@ -16,6 +16,9 @@ import { ArrowLeft, Upload, Download, Zap, AlertCircle, Info, BarChart2 } from "
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
+const DEFAULT_PDF_TO_JPG_DPI = "200";
+const DEFAULT_JPG_TO_PDF_ORIENTATION = "portrait";
+
 const HOW_TO_USE: Record<string, string> = {
   "merge-pdf": "Upload two or more PDF files, arrange them in order, then click Process to combine them into a single PDF.",
   "split-pdf": "Upload your PDF, choose the pages or page ranges you want to split, then download each part separately.",
@@ -192,11 +195,15 @@ export default function ToolDetail() {
         blob = output.blob;
         filename = output.filename;
       } else if (isPdfToJpgTool) {
-        const output = await processViaToolsProxy("pdf-to-jpg", selectedFiles, { dpi: "200" });
+        const output = await processViaToolsProxy("pdf-to-jpg", selectedFiles, {
+          dpi: DEFAULT_PDF_TO_JPG_DPI,
+        });
         blob = output.blob;
         filename = output.filename;
       } else if (isJpgToPdfTool) {
-        const output = await processViaToolsProxy("jpg-to-pdf", selectedFiles, { orientation: "portrait" });
+        const output = await processViaToolsProxy("jpg-to-pdf", selectedFiles, {
+          orientation: DEFAULT_JPG_TO_PDF_ORIENTATION,
+        });
         blob = output.blob;
         filename = output.filename;
       } else {

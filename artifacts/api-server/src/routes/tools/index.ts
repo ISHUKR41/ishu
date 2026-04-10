@@ -426,7 +426,7 @@ router.post("/tools/process/:slug", upload.any(), async (req, res): Promise<void
     const defaultFilename = {
       "pdf-to-word": "converted.docx",
       "word-to-pdf": "converted.pdf",
-      "pdf-to-jpg": "converted.bin",
+      "pdf-to-jpg": "converted.zip",
       "jpg-to-pdf": "converted.pdf",
     }[slug] ?? `processed-${Date.now()}.bin`;
 
