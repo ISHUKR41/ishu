@@ -33,3 +33,18 @@ export const CONTACT_CATEGORIES = [
 ];
 
 export const MESSAGE_MAX_LENGTH = 5000;
+
+export const MAP_CENTER = { lat: 20.5937, lng: 78.9629 };
+export const MAP_ZOOM = 5;
+export const MAP_LOCATIONS = [
+  { lat: 28.6139, lng: 77.2090, label: "New Delhi", description: "Our primary support hub." },
+  { lat: 19.0760, lng: 72.8777, label: "Mumbai", description: "Content & Tech infrastructure." },
+  { lat: 12.9716, lng: 77.5946, label: "Bengaluru", description: "Engineering & Innovation center." },
+];
+
+export const SOCIAL_LINKS = [
+  { id: "1", platform: "Twitter", url: "https://twitter.com/ishu", followers: "50k+", iconName: "Twitter", brandColor: "#1DA1F2" },
+  { id: "2", platform: "Instagram", url: "https://instagram.com/ishu", followers: "120k+", iconName: "Instagram", brandColor: "#E1306C" },
+  { id: "3", platform: "LinkedIn", url: "https://linkedin.com/company/ishu", followers: "15k+", iconName: "Linkedin", brandColor: "#0077B5" },
+  { id: "4", platform: "Facebook", url: "https://facebook.com/ishu", followers: "30k+", iconName: "Facebook", brandColor: "#1877F2" },
+];
