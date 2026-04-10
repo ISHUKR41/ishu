@@ -1,3 +1,11 @@
+// ============================================================================
+// FILE: artifacts/modules/Contact/_shared/constants.ts
+// MODULE: Contact
+// PURPOSE: Shared content/config constants used across Contact module sections.
+//          These values are isolated at module level so section changes stay
+//          local and predictable for large-team collaboration.
+// ============================================================================
+
 export const CONTACT_FAQS = [
   { question: "How long does it take for you to reply?", answer: "Usually within 24 hours." },
   { question: "What is your refund policy?", answer: "We offer a 30-day money back guarantee." },
@@ -10,7 +18,7 @@ export const CONTACT_SEO = {
   openGraph: {
     title: "Contact Us | ISHU",
     description: "Get in touch with the ISHU team for any queries or support.",
-    url: "https://ishu.fun/contact",
+    url: "https://ishu.in/contact",
   }
 };
 
@@ -20,9 +28,9 @@ export const HERO_DATA = {
 };
 
 export const CONTACT_INFO_CARDS = [
-  { id: "1", title: "Sales", description: "Talk to our sales team", email: "sales@ishu.fun", icon: "Phone" },
-  { id: "2", title: "Support", description: "Get help with your account", email: "support@ishu.fun", icon: "HelpCircle" },
-  { id: "3", title: "Press", description: "Media and press inquiries", email: "press@ishu.fun", icon: "Mic" },
+  { id: "1", title: "General Contact", description: "Talk to the ISHU team", email: "ishukryk@gmail.com", icon: "Phone" },
+  { id: "2", title: "Support", description: "Get help with your account", email: "ishukryk@gmail.com", icon: "HelpCircle" },
+  { id: "3", title: "Media", description: "Media and press inquiries", email: "ishukryk@gmail.com", icon: "Mic" },
 ];
 
 export const CONTACT_CATEGORIES = [

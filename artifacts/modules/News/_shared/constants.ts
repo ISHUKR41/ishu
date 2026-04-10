@@ -1,3 +1,10 @@
+// ============================================================================
+// FILE: artifacts/modules/News/_shared/constants.ts
+// MODULE: News
+// PURPOSE: Central shared constants for News module pagination and categories.
+//          Used by isolated News sections to keep behavior consistent.
+// ============================================================================
+
 export const MODULE_NAME = "News";
 
 export const NEWS_PER_PAGE = 12;

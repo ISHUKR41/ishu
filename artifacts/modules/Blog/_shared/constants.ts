@@ -1,3 +1,11 @@
+// ============================================================================
+// FILE: artifacts/modules/Blog/_shared/constants.ts
+// MODULE: Blog
+// PURPOSE: Shared constants and category metadata used by Blog module sections.
+//          Keeping this data in one place avoids duplication across frontend
+//          and backend module layers.
+// ============================================================================
+
 export const MODULE_NAME = "Blog";
 
 export type BlogCategory = {

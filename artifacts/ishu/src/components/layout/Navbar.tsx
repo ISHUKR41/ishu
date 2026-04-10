@@ -18,50 +18,50 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ProfessionalIcon } from "@/components/icons/ProfessionalIcon";
 
 const RESULTS_CATEGORIES = [
-  { href: "/results/category/upsc", label: "UPSC Civil Services", icon: "🏛️" },
-  { href: "/results/category/ssc", label: "SSC Exams", icon: "📋" },
-  { href: "/results/category/banking", label: "Banking & IBPS", icon: "🏦" },
-  { href: "/results/category/railway", label: "Railway / RRB", icon: "🚂" },
-  { href: "/results/category/defence", label: "Army & Defence", icon: "⚔️" },
-  { href: "/results/category/jee", label: "JEE Engineering", icon: "⚙️" },
-  { href: "/results/category/neet", label: "NEET Medical", icon: "🩺" },
-  { href: "/results/category/state-psc", label: "State PSC", icon: "🗺️" },
-  { href: "/results/category/teaching", label: "Teaching & TET", icon: "📚" },
-  { href: "/results/category/police", label: "Police Exams", icon: "👮" },
-  { href: "/results/category/engineering", label: "Engineering Jobs", icon: "🔧" },
-  { href: "/results/category/judiciary", label: "High Court & Judiciary", icon: "⚖️" },
+  { href: "/results/category/upsc", label: "UPSC Civil Services", icon: "Building" },
+  { href: "/results/category/ssc", label: "SSC Exams", icon: "Document" },
+  { href: "/results/category/banking", label: "Banking & IBPS", icon: "Building" },
+  { href: "/results/category/railway", label: "Railway / RRB", icon: "Rocket" },
+  { href: "/results/category/defence", label: "Army & Defence", icon: "Shield" },
+  { href: "/results/category/jee", label: "JEE Engineering", icon: "Settings" },
+  { href: "/results/category/neet", label: "NEET Medical", icon: "Academic" },
+  { href: "/results/category/state-psc", label: "State PSC", icon: "Location" },
+  { href: "/results/category/teaching", label: "Teaching & TET", icon: "BookOpen" },
+  { href: "/results/category/police", label: "Police Exams", icon: "Shield" },
+  { href: "/results/category/engineering", label: "Engineering Jobs", icon: "Tools" },
+  { href: "/results/category/judiciary", label: "High Court & Judiciary", icon: "Security" },
 ];
 
 const TOOLS_CATEGORIES = [
-  { href: "/tools/category/pdf", label: "PDF Tools", icon: "📄" },
-  { href: "/tools/category/ai", label: "AI Tools", icon: "🤖" },
-  { href: "/tools/category/image", label: "Image Tools", icon: "🖼️" },
-  { href: "/tools/category/text", label: "Text Tools", icon: "📝" },
-  { href: "/tools/category/conversion", label: "Conversion Tools", icon: "🔄" },
+  { href: "/tools/category/pdf", label: "PDF Tools", icon: "Document" },
+  { href: "/tools/category/ai", label: "AI Tools", icon: "AI" },
+  { href: "/tools/category/image", label: "Image Tools", icon: "Image" },
+  { href: "/tools/category/text", label: "Text Tools", icon: "Document" },
+  { href: "/tools/category/conversion", label: "Conversion Tools", icon: "Loading" },
 ];
 
 const NEWS_CATEGORIES = [
-  { href: "/news/category/upsc", label: "UPSC News", icon: "🏛️" },
-  { href: "/news/category/ssc", label: "SSC News", icon: "📋" },
-  { href: "/news/category/banking", label: "Banking News", icon: "🏦" },
-  { href: "/news/category/railway", label: "Railway News", icon: "🚂" },
-  { href: "/news/category/scholarships", label: "Scholarships", icon: "🎓" },
-  { href: "/news/category/admit-cards", label: "Admit Cards", icon: "🪪" },
+  { href: "/news/category/upsc", label: "UPSC News", icon: "Building" },
+  { href: "/news/category/ssc", label: "SSC News", icon: "Document" },
+  { href: "/news/category/banking", label: "Banking News", icon: "Building" },
+  { href: "/news/category/railway", label: "Railway News", icon: "Rocket" },
+  { href: "/news/category/scholarships", label: "Scholarships", icon: "Graduation" },
+  { href: "/news/category/admit-cards", label: "Admit Cards", icon: "CreditCard" },
 ];
 
 const BLOG_CATEGORIES = [
-  { href: "/blog/category/exam-tips", label: "Exam Tips & Tricks", icon: "💡" },
-  { href: "/blog/category/career-guidance", label: "Career Guidance", icon: "🎯" },
-  { href: "/blog/category/success-stories", label: "Success Stories", icon: "🏆" },
-  { href: "/blog/category/study-strategies", label: "Study Strategies", icon: "📖" },
+  { href: "/blog/category/exam-tips", label: "Exam Tips & Tricks", icon: "Sparkles" },
+  { href: "/blog/category/career-guidance", label: "Career Guidance", icon: "TrendingUp" },
+  { href: "/blog/category/success-stories", label: "Success Stories", icon: "Trophy" },
+  { href: "/blog/category/study-strategies", label: "Study Strategies", icon: "BookOpen" },
 ];
 
 const RESOURCES_CATEGORIES = [
-  { href: "/resources/category/previous-papers", label: "Previous Year Papers", icon: "📑" },
-  { href: "/resources/category/syllabus", label: "Syllabus & Pattern", icon: "📋" },
-  { href: "/resources/category/mock-tests", label: "Mock Tests", icon: "✍️" },
-  { href: "/resources/category/study-notes", label: "Study Notes", icon: "📓" },
-  { href: "/resources/category/formula-sheets", label: "Formula Sheets", icon: "🔢" },
+  { href: "/resources/category/previous-papers", label: "Previous Year Papers", icon: "Document" },
+  { href: "/resources/category/syllabus", label: "Syllabus & Pattern", icon: "Document" },
+  { href: "/resources/category/mock-tests", label: "Mock Tests", icon: "Edit" },
+  { href: "/resources/category/study-notes", label: "Study Notes", icon: "BookOpen" },
+  { href: "/resources/category/formula-sheets", label: "Formula Sheets", icon: "ChartBar" },
 ];
 
 interface MegaMenuProps {

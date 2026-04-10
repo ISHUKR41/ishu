@@ -1,3 +1,11 @@
+// ============================================================================
+// FILE: artifacts/modules/Results/_shared/constants.ts
+// MODULE: Results
+// PURPOSE: Shared constants for Results module APIs, categories, and geography.
+//          This file supports frontend/backend section isolation by providing
+//          one stable source of shared metadata.
+// ============================================================================
+
 export const MODULE_NAME = "Results";
 
 export const RESULTS_PER_PAGE = 20;

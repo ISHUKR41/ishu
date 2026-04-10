@@ -4,6 +4,9 @@
   "license": "MIT",
   "scripts": {
     "audit:platform": "node scripts/audit-platform-quality.cjs",
+    "dev:free-ports": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/free-dev-ports.ps1",
+    "dev:all": "concurrently -k -n API,WEB -c green,cyan \"pnpm --filter @workspace/api-server run dev\" \"pnpm --filter @workspace/ishu run dev\"",
+    "dev": "pnpm run dev:free-ports && pnpm run dev:all",
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
     "comment:headers": "node scripts/add-header-comments.cjs",
     "sync:isolation": "pnpm run sync:modules && pnpm run sync:pages",
@@ -19,6 +22,7 @@
     "@rollup/rollup-win32-x64-msvc": "^4.60.1",
     "@tailwindcss/oxide-win32-x64-msvc": "^4.2.2",
     "@types/express": "^5.0.6",
+    "concurrently": "^9.2.1",
     "lightningcss-win32-x64-msvc": "^1.32.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
