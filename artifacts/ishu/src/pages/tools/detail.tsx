@@ -314,11 +314,11 @@ export default function ToolDetail() {
                 {!supportsServerProcessing && (
                   <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4 mb-6 flex items-start gap-3">
                     <AlertCircle className="h-5 w-5 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-sm text-yellow-300/90 text-left">
-                       Processing endpoint for this tool is not mapped yet. Live processing is currently available for Merge PDF, Split PDF, Compress PDF, PDF to Word, Word to PDF, PDF to JPG, and JPG to PDF.
-                     </p>
-                   </div>
-                 )}
+                    <p className="text-sm text-yellow-300/90 text-left">
+                      Processing endpoint for this tool is not mapped yet. Live processing is currently available for Merge PDF, Split PDF, Compress PDF, PDF to Word, Word to PDF, PDF to JPG, and JPG to PDF.
+                    </p>
+                  </div>
+                )}
 
                 {isSplitTool && (
                   <div className="mb-4 text-left">
