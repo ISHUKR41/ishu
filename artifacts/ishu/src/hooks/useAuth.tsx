@@ -69,16 +69,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    if (currentUser && typeof currentUser === "object" && "id" in currentUser) {
-      sessionStorage.removeItem("ishu_logged_out");
-      setUser(currentUser as User);
-      return;
-    }
-
     // Block the auto-login loop if explicitly logged out
     const isLoggedOut = sessionStorage.getItem("ishu_logged_out") === "true";
     if (isLoggedOut) {
       setUser(null);
+      return;
+    }
+
+    if (currentUser && typeof currentUser === "object" && "id" in currentUser) {
+      sessionStorage.removeItem("ishu_logged_out");
+      setUser(currentUser as User);
       return;
     }
 
